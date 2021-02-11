@@ -17,6 +17,7 @@ library(stargazer)
 library(naniar)
 
 Peru <- read.dta("/Users/lu/Dropbox/Hertie/3/Thesis/R/Peru.dta")
+Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
 
 ```
 
@@ -29,10 +30,14 @@ Peru <- read.dta("/Users/lu/Dropbox/Hertie/3/Thesis/R/Peru.dta")
 newPeru <- Peru %>% 
   select("age_r", "gender_r","b_q01a", "b_q01a_t", "b_q02a", "b_q02c", "b_q10c", "b_q01b", "c_q01a", "c_q01c", "c_q02a", "d_q03", "d_q14", "d_q16a", "d_q18a_t", "f_q05a", "f_q05b", "f_q07b", "g_q04", "g_q05a", "g_q05c", "g_q05d", "g_q05e", "g_q05g", "g_q05h", "g_q06", "g_q07", "g_q08", "h_q04a", "h_q04b", "h_q05a", "h_q05c", "h_q05d", "h_q05e", "h_q05f", "h_q05g", "h_q05h", "j_q03a", "j_q03b", "j_q06b", "j_q07b","computerexperience", "monthlyincpr","yearlyincpr","salariotot", "f_q01b","f_q02b","f_q02c","f_q02d","f_q02e","f_q03b","f_q04a","f_q04b","f_q05a","f_q05b","g_q01a","g_q02a","g_q02b","g_q02c","g_q02d","g_q03b","g_q03c","g_q03d","g_q03f","g_q03g","g_q03h", "h_q01a", "h_q01b", "h_q01b_t", "h_q01c", "h_q01c_t", "h_q01d", "h_q01e", "h_q01e_t", "h_q01f", "h_q01g", "h_q01h", "h_q02a", "h_q02b","h_q02c", "h_q02d", "h_q03b", "h_q03c", "h_q03d", "h_q03f", "h_q03g", "h_q03h", "reg_tl2")
 
+newMexico <- Mexico %>% 
+  select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q05a", "F_Q05b", "F_Q07b", "G_Q04", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h", "REG_TL2")
+
 ## Missing variables
 ##Vsualizarion of missing variables
 
 gg_miss_var(newPeru)
+gg_miss_var(newMexico)
 
 #Variables with more than 60% of mnissing observations were excluded, this means those whose NAs surpassed 4.373 
 ##b_q02c
@@ -50,18 +55,109 @@ gg_miss_var(newPeru)
 ##g_q07
 ##g_q08
 
+#counting NAs in important variables
 table(is.na(newPeru$yearlyincpr))
 table(is.na(newPeru$monthlyincpr))
 table(is.na(newPeru$salariotot))
 
-newPeru1 <- drop_na(newPeru, yearlyincpr) # Do not worry if you don't understand this step, it is just to illustrate a point. only delete NA in a specific column in this case Variable 1
 
+table(is.na(newMexico$YEARLYINCPR))
+table(is.na(newMexico$MONTHLYINCPR))
 
+table(is.na(newMexico$MONTHLYINCPR))
+
+#droping NAs  
+newPeru1 <- drop_na(newPeru, yearlyincpr) #droping NAs  
+
+newMexico1 <- drop_na(newMexico, YEARLYINCPR)
+
+# Number of women and men 
 
 barplot(table(newPeru1$gender_r))
 
 newPeru1 %>% count(gender_r)
+newPeru1 %>% count(h_q05a)
 
+barplot(table(newMexico1$GENDER_R))
+newMexico1 %>% count(GENDER_R)
+
+
+newMexico1 %>% count(B_Q01a)
+newMexico1 %>% count(B_Q01a_T)
+newMexico1 %>% count(B_Q02a)
+newMexico1 %>% count(B_Q02c) #x - 3224 V ESTA 1
+newMexico1 %>% count(B_Q10c) #x- 3176 V ESTA 2
+newMexico1 %>% count(B_Q01b) # 2134 v ESTA 3
+newMexico1 %>% count(C_Q01a)
+newMexico1 %>% count(C_Q01c) # 3459 v ESTA 4
+newMexico1 %>% count(C_Q02a) # 3459 v ESTA 5 
+newMexico1 %>% count(D_Q03) # D 42 - r21 
+newMexico1 %>% count(D_Q14) #
+newMexico1 %>% count(D_Q16a) # V 1008
+newMexico1 %>% count(D_Q18a_T) # 13 NA
+newMexico1 %>% count(F_Q05a) #
+newMexico1 %>% count(F_Q05b)
+newMexico1 %>% count(G_Q04)
+newMexico1 %>% count(G_Q05a) # 2377 v ESTA 6 
+newMexico1 %>% count(G_Q05c) # 2377 v ESTA 7 
+newMexico1 %>% count(G_Q05d) # 2377 ESTA 8 
+newMexico1 %>% count(G_Q05e) # 2377 ESTA 9 
+newMexico1 %>% count(G_Q05g) # 2377 ESTA 10 
+newMexico1 %>% count(G_Q05h) # 2377 ESTA 11 
+newMexico1 %>% count(G_Q06) # 2377 ESTA 12 
+newMexico1 %>% count(G_Q07) # 2377 ESTA 13 
+newMexico1 %>% count(G_Q08) # 2377 ESTA 15 
+newMexico1 %>% count(H_Q04a) # 1074 V
+newMexico1 %>% count(H_Q04b) # 1198 
+newMexico1 %>% count(H_Q05a) # 2205 ESTA 16 
+newMexico1 %>% count(H_Q05c) # 2205 ESTA 17 
+newMexico1 %>% count(H_Q05d) # 2205 ESTA 18 
+newMexico1 %>% count(H_Q05e) # 2205 ESTA 19 
+newMexico1 %>% count(H_Q05f) # 2205 ESTA 20 
+newMexico1 %>% count(H_Q05g) # 2205 ESTA 21 
+newMexico1 %>% count(H_Q05h) # 2205 ESTA 22 
+newMexico1 %>% count(J_Q03a)
+newMexico1 %>% count(J_Q03b) #943
+newMexico1 %>% count(J_Q06b) 
+newMexico1 %>% count(F_Q01b) #748
+newMexico1 %>% count(F_Q02b) 
+newMexico1 %>% count(F_Q02c)
+newMexico1 %>% count(F_Q02d)
+newMexico1 %>% count(F_Q02e)
+newMexico1 %>% count(F_Q03b)
+newMexico1 %>% count(F_Q04a)
+newMexico1 %>% count(F_Q04b)
+newMexico1 %>% count(F_Q05a)
+newMexico1 %>% count(F_Q05b)
+newMexico1 %>% count(G_Q01a)
+newMexico1 %>% count(G_Q02a)
+newMexico1 %>% count(G_Q02b)
+newMexico1 %>% count(G_Q02c)
+newMexico1 %>% count(G_Q03b)
+newMexico1 %>% count(G_Q03c)
+newMexico1 %>% count(G_Q03d)
+newMexico1 %>% count(G_Q03f)
+newMexico1 %>% count(G_Q03g)
+newMexico1 %>% count(H_Q01a)
+newMexico1 %>% count(H_Q01b)
+newMexico1 %>% count(H_Q01b_T)
+newMexico1 %>% count(H_Q01d)
+newMexico1 %>% count(H_Q01e)
+newMexico1 %>% count(H_Q01e_T)
+newMexico1 %>% count(H_Q01f)
+newMexico1 %>% count(H_Q01g)
+newMexico1 %>% count(H_Q01h)
+newMexico1 %>% count(H_Q02a)
+newMexico1 %>% count(H_Q02b)
+newMexico1 %>% count(H_Q02c)
+newMexico1 %>% count(H_Q02d)
+newMexico1 %>% count(H_Q03b)
+newMexico1 %>% count(H_Q03c)
+newMexico1 %>% count(H_Q03d)
+newMexico1 %>% count(H_Q03f)
+newMexico1 %>% count(H_Q03g)
+newMexico1 %>% count(H_Q03h)
+newMexico1 %>% count(REG_TL2)
 
 ```
 
@@ -71,15 +167,13 @@ You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 
-incomePlotGender <- ggplot(newPeru1, 
-                         aes(x = newPeru1$yearlyincpr, y = newPeru1$computerexperience, 
-                             color = gender_r)) +
-  geom_point() + 
-  geom_smooth(method = "lm", se = FALSE) +
-  xlab("Incomne") + 
-  ylab("Exoe") 
 
-incomePlotGender
+## prepraring variables
+
+#1. Highest qualification
+
+
+
 
 ```
 
