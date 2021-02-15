@@ -170,7 +170,7 @@ newMexico1 %>% count(YEARLYINCPR)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
+```{r warning=FALSE, message=FALSE}
 
 #B_Q01a
 newMexico1$B_Q01an[newMexico1$B_Q01a == "D"] = NA
@@ -527,11 +527,11 @@ newMexico1$G_Q05en[newMexico1$G_Q05e == "5"] = 5
 
 newMexico1$G_Q05gn[newMexico1$G_Q05g == "V"] = NA
 newMexico1$G_Q05gn[newMexico1$G_Q05g == "N"] = NA
-newMexico1$G_Q05gn[newMexico1$G_Q05g == "1"] = NA
-newMexico1$G_Q05gn[newMexico1$G_Q05g == "2"] = NA
-newMexico1$G_Q05gn[newMexico1$G_Q05g == "3"] = NA
-newMexico1$G_Q05gn[newMexico1$G_Q05g == "4"] = NA
-newMexico1$G_Q05gn[newMexico1$G_Q05g == "5"] = NA
+newMexico1$G_Q05gn[newMexico1$G_Q05g == "1"] = 1
+newMexico1$G_Q05gn[newMexico1$G_Q05g == "2"] = 2
+newMexico1$G_Q05gn[newMexico1$G_Q05g == "3"] = 3
+newMexico1$G_Q05gn[newMexico1$G_Q05g == "4"] = 4
+newMexico1$G_Q05gn[newMexico1$G_Q05g == "5"] = 5
 
 #G_Q05h
 
@@ -897,7 +897,25 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== "R"] = NA
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-```{r pressure, echo=FALSE}
+```{r warning=FALSE, message=FALSE}
+
+#Dropping NAs in ICT work
+
+
+newMexico1ICTwork1 <- drop_na(newMexico1, G_Q05an)
+
+ICTwork1reg <- lm(YEARLYINCPR ~ AGE_R + GENDER_R + G_Q05an + G_Q05cn + G_Q05dn + G_Q05en + G_Q05gn + G_Q05hn + G_Q06n + G_Q07n + G_Q08n, newMexico1ICTwork1)
+
+ICTreg1 <- lm(YEARLYINCPR ~ AGE_R + GENDER_R + G_Q05an + G_Q05cn + G_Q05dn + G_Q05en + G_Q05gn + G_Q05hn + G_Q06n + G_Q07n + G_Q08n + H_Q05an + H_Q05cn + H_Q05dn + H_Q05en + H_Q05fn + H_Q05gn + H_Q05hn, newMexico1ICTwork1)
+
+summary(ICTwork1reg)
+summary(ICTreg1)
+
+# Dropping NAs in ICT life
+
+NewMexico1ICTlife <- drop_na(newMexico1,H_Q05gn)
+
+
 
 
 
