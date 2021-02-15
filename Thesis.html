@@ -1289,7 +1289,13 @@ barplot(table(newPeru1$gender_r))</code></pre>
 <div id="merging-variables" class="section level2">
 <h2>Merging variables</h2>
 <p>You can also embed plots, for example:</p>
-<pre class="r"><code>#B_Q01a
+<pre class="r"><code>#Gender
+
+newMexico1$GENDER_Rn[newMexico1$GENDER_R == &quot;1&quot;] = 0
+newMexico1$B_Q01an[newMexico1$B_Q01a == &quot;2&quot;] = 1
+
+
+#B_Q01a
 newMexico1$B_Q01an[newMexico1$B_Q01a == &quot;D&quot;] = NA
 newMexico1$B_Q01an[newMexico1$B_Q01a == &quot;1&quot;] = 1
 newMexico1$B_Q01an[newMexico1$B_Q01a == &quot;2&quot;] = 2
@@ -1313,8 +1319,8 @@ newMexico1$B_Q01a_Tn[newMexico1$B_Q01a_T == &quot;4&quot;] = 4
 #B_Q02a
 
 newMexico1$B_Q02an[newMexico1$B_Q02a == &quot;R&quot;] = NA
-newMexico1$B_Q02an[newMexico1$B_Q02a == &quot;1&quot;] = 1
-newMexico1$B_Q02an[newMexico1$B_Q02a== &quot;2&quot;] = 2
+newMexico1$B_Q02an[newMexico1$B_Q02a == &quot;1&quot;] = 0
+newMexico1$B_Q02an[newMexico1$B_Q02a== &quot;2&quot;] = 1
 
 #B_Q02c
 newMexico1$B_Q02cn[newMexico1$B_Q02c == &quot;V&quot;] = NA
@@ -1492,8 +1498,8 @@ newMexico1$F_Q05bn[newMexico1$F_Q05b == &quot;5&quot;] = 5
 
 newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;D&quot;] = NA
 newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;N&quot;] = NA
-newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;1&quot;] = 1
-newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;2&quot;] = 2
+newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;1&quot;] = 0
+newMexico1$F_Q07bn[newMexico1$F_Q07b == &quot;2&quot;] = 1
 
 # G_Q01a
 
@@ -1598,8 +1604,8 @@ newMexico1$G_Q03hn[newMexico1$G_Q03h == &quot;5&quot;] = 5
 # G_Q04
 
 newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;N&quot;] = NA
-newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;1&quot;] = 1
-newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;2&quot;] = 2
+newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;1&quot;] = 0
+newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;2&quot;] = 1
 
 # G_Q05a
 
@@ -1676,8 +1682,8 @@ newMexico1$G_Q06n[newMexico1$G_Q06 == &quot;5&quot;] =5
 
 newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;V&quot;] =NA
 newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;N&quot;] =NA
-newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;1&quot;] =1
-newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;2&quot;] =2
+newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;1&quot;] =0
+newMexico1$G_Q07n[newMexico1$G_Q07 == &quot;2&quot;] =1
 
 #G_Q08 
 
@@ -1685,8 +1691,8 @@ newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;V&quot;] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;N&quot;] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;D&quot;] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;R&quot;] =NA
-newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;1&quot;] =1
-newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;2&quot;] =2
+newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;1&quot;] =0
+newMexico1$G_Q08n[newMexico1$G_Q08 == &quot;2&quot;] =1
 
 #H_q01a
 
@@ -1885,15 +1891,15 @@ newMexico1$H_Q03hn[newMexico1$H_Q03h== &quot;N&quot;] = NA
 
 newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;V&quot;] =NA
 newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;N&quot;] =NA
-newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;1&quot;] =1
-newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;2&quot;] =2
+newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;1&quot;] =0
+newMexico1$H_Q04an[newMexico1$H_Q04a == &quot;2&quot;] =1
 
 #H_Q04b
 
 newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;V&quot;] =NA
 newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;N&quot;] =NA
-newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;1&quot;] =1
-newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;2&quot;] =2
+newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;1&quot;] =0
+newMexico1$H_Q04bn[newMexico1$H_Q04b == &quot;2&quot;] =1
 
 #H_Q05a
 
@@ -1968,8 +1974,8 @@ newMexico1$H_Q05hn[newMexico1$H_Q05h == &quot;5&quot;] =5
 #J_Q03a
 
 newMexico1$J_Q03an[newMexico1$J_Q03a == &quot;N&quot;] = NA
-newMexico1$J_Q03an[newMexico1$J_Q03a == &quot;1&quot;] = 1
-newMexico1$J_Q03an[newMexico1$J_Q03a == &quot;2&quot;] = 2
+newMexico1$J_Q03an[newMexico1$J_Q03a == &quot;1&quot;] = 0
+newMexico1$J_Q03an[newMexico1$J_Q03a == &quot;2&quot;] = 1
 
 #J_Q03b
 
@@ -2032,7 +2038,7 @@ summary(ICTwork1reg)</code></pre>
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.759351   0.344242   5.111 3.80e-07 ***
+## (Intercept)  2.301677   0.247161   9.312  &lt; 2e-16 ***
 ## AGE_R        0.022068   0.003922   5.627 2.34e-08 ***
 ## GENDER_R    -0.369219   0.087483  -4.220 2.65e-05 ***
 ## G_Q05an      0.116241   0.037223   3.123 0.001840 ** 
@@ -2065,7 +2071,7 @@ summary(ICTwork1reg)</code></pre>
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.186438   0.454691   2.609 0.009251 ** 
+## (Intercept)  1.866978   0.347448   5.373 1.03e-07 ***
 ## AGE_R        0.026832   0.004806   5.583 3.29e-08 ***
 ## GENDER_R    -0.216593   0.106110  -2.041 0.041576 *  
 ## G_Q05an      0.039857   0.047037   0.847 0.397058    

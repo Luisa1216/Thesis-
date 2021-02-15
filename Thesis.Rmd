@@ -172,6 +172,12 @@ You can also embed plots, for example:
 
 ```{r warning=FALSE, message=FALSE}
 
+#Gender
+
+newMexico1$GENDER_Rn[newMexico1$GENDER_R == "1"] = 0
+newMexico1$B_Q01an[newMexico1$B_Q01a == "2"] = 1
+
+
 #B_Q01a
 newMexico1$B_Q01an[newMexico1$B_Q01a == "D"] = NA
 newMexico1$B_Q01an[newMexico1$B_Q01a == "1"] = 1
@@ -196,8 +202,8 @@ newMexico1$B_Q01a_Tn[newMexico1$B_Q01a_T == "4"] = 4
 #B_Q02a
 
 newMexico1$B_Q02an[newMexico1$B_Q02a == "R"] = NA
-newMexico1$B_Q02an[newMexico1$B_Q02a == "1"] = 1
-newMexico1$B_Q02an[newMexico1$B_Q02a== "2"] = 2
+newMexico1$B_Q02an[newMexico1$B_Q02a == "1"] = 0
+newMexico1$B_Q02an[newMexico1$B_Q02a== "2"] = 1
 
 #B_Q02c
 newMexico1$B_Q02cn[newMexico1$B_Q02c == "V"] = NA
@@ -375,8 +381,8 @@ newMexico1$F_Q05bn[newMexico1$F_Q05b == "5"] = 5
 
 newMexico1$F_Q07bn[newMexico1$F_Q07b == "D"] = NA
 newMexico1$F_Q07bn[newMexico1$F_Q07b == "N"] = NA
-newMexico1$F_Q07bn[newMexico1$F_Q07b == "1"] = 1
-newMexico1$F_Q07bn[newMexico1$F_Q07b == "2"] = 2
+newMexico1$F_Q07bn[newMexico1$F_Q07b == "1"] = 0
+newMexico1$F_Q07bn[newMexico1$F_Q07b == "2"] = 1
 
 # G_Q01a
 
@@ -481,8 +487,8 @@ newMexico1$G_Q03hn[newMexico1$G_Q03h == "5"] = 5
 # G_Q04
 
 newMexico1$G_Q04n[newMexico1$G_Q04 == "N"] = NA
-newMexico1$G_Q04n[newMexico1$G_Q04 == "1"] = 1
-newMexico1$G_Q04n[newMexico1$G_Q04 == "2"] = 2
+newMexico1$G_Q04n[newMexico1$G_Q04 == "1"] = 0
+newMexico1$G_Q04n[newMexico1$G_Q04 == "2"] = 1
 
 # G_Q05a
 
@@ -559,8 +565,8 @@ newMexico1$G_Q06n[newMexico1$G_Q06 == "5"] =5
 
 newMexico1$G_Q07n[newMexico1$G_Q07 == "V"] =NA
 newMexico1$G_Q07n[newMexico1$G_Q07 == "N"] =NA
-newMexico1$G_Q07n[newMexico1$G_Q07 == "1"] =1
-newMexico1$G_Q07n[newMexico1$G_Q07 == "2"] =2
+newMexico1$G_Q07n[newMexico1$G_Q07 == "1"] =0
+newMexico1$G_Q07n[newMexico1$G_Q07 == "2"] =1
 
 #G_Q08 
 
@@ -568,8 +574,8 @@ newMexico1$G_Q08n[newMexico1$G_Q08 == "V"] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == "N"] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == "D"] =NA
 newMexico1$G_Q08n[newMexico1$G_Q08 == "R"] =NA
-newMexico1$G_Q08n[newMexico1$G_Q08 == "1"] =1
-newMexico1$G_Q08n[newMexico1$G_Q08 == "2"] =2
+newMexico1$G_Q08n[newMexico1$G_Q08 == "1"] =0
+newMexico1$G_Q08n[newMexico1$G_Q08 == "2"] =1
 
 #H_q01a
 
@@ -768,15 +774,15 @@ newMexico1$H_Q03hn[newMexico1$H_Q03h== "N"] = NA
 
 newMexico1$H_Q04an[newMexico1$H_Q04a == "V"] =NA
 newMexico1$H_Q04an[newMexico1$H_Q04a == "N"] =NA
-newMexico1$H_Q04an[newMexico1$H_Q04a == "1"] =1
-newMexico1$H_Q04an[newMexico1$H_Q04a == "2"] =2
+newMexico1$H_Q04an[newMexico1$H_Q04a == "1"] =0
+newMexico1$H_Q04an[newMexico1$H_Q04a == "2"] =1
 
 #H_Q04b
 
 newMexico1$H_Q04bn[newMexico1$H_Q04b == "V"] =NA
 newMexico1$H_Q04bn[newMexico1$H_Q04b == "N"] =NA
-newMexico1$H_Q04bn[newMexico1$H_Q04b == "1"] =1
-newMexico1$H_Q04bn[newMexico1$H_Q04b == "2"] =2
+newMexico1$H_Q04bn[newMexico1$H_Q04b == "1"] =0
+newMexico1$H_Q04bn[newMexico1$H_Q04b == "2"] =1
 
 #H_Q05a
 
@@ -851,8 +857,8 @@ newMexico1$H_Q05hn[newMexico1$H_Q05h == "5"] =5
 #J_Q03a
 
 newMexico1$J_Q03an[newMexico1$J_Q03a == "N"] = NA
-newMexico1$J_Q03an[newMexico1$J_Q03a == "1"] = 1
-newMexico1$J_Q03an[newMexico1$J_Q03a == "2"] = 2
+newMexico1$J_Q03an[newMexico1$J_Q03a == "1"] = 0
+newMexico1$J_Q03an[newMexico1$J_Q03a == "2"] = 1
 
 #J_Q03b
 
