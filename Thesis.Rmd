@@ -15,8 +15,12 @@ library(tidyr)
 library(ggplot2)
 library(stargazer)
 library(naniar)
+library(car)
+library(carData)
+library(FactoMineR)
+library("factoextra")
+library(factoextra)
 
-Peru <- read.dta("/Users/lu/Dropbox/Hertie/3/Thesis/R/Peru.dta")
 Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
 
 ```
@@ -27,8 +31,6 @@ Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
 
 ```{r cars}
 
-
-
 newMexico <- Mexico %>% 
   select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
 
@@ -37,8 +39,6 @@ newMexico <- Mexico %>%
 
 
 gg_miss_var(newMexico)
-
-
 
 
 table(is.na(newMexico$YEARLYINCPR))
@@ -887,11 +887,26 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 newMexico1ICTwork1 <- drop_na(newMexico1, G_Q05an)
 
 ICTwork1reg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + G_Q05an + G_Q05cn + G_Q05dn + G_Q05en + G_Q05gn + G_Q05hn + G_Q06n + G_Q07n + G_Q08n, newMexico1ICTwork1)
+summary(ICTwork1reg)
+
+#Multicolinearity 
+
+vif1 <- vif(ICTwork1reg)
+View(vif1)
+sqrt(vif1)
+1/(vif1)
 
 ICTreg1 <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an+ G_Q05an + G_Q05cn + G_Q05dn + G_Q05en + G_Q05gn + G_Q05hn + G_Q06n + G_Q07n + G_Q08n + H_Q05an + H_Q05cn + H_Q05dn + H_Q05en + H_Q05fn + H_Q05gn + H_Q05hn, newMexico1ICTwork1)
 
-summary(ICTwork1reg)
 summary(ICTreg1)
+
+#Multicolinearity 
+
+vif2 <- vif(ICTreg1)
+View(vif2)
+sqrt(vif2)
+1/(vif2)
+
 
 # Dropping NAs in ICT life
 
@@ -903,11 +918,23 @@ Softreg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + F_Q01bn + F_Q02bn + F_
 
 summary(Softreg)
 
+#Multicolinearity 
+
+vif3 <- vif(Softreg)
+View(vif3)
+sqrt(vif3)
+1/(vif3)
+
 #Ression Literacy work 
 
 Literacyworkreg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + G_Q01an + G_Q02an + G_Q02bn + G_Q02cn + G_Q02dn, newMexico1)
 
 summary(Literacyworkreg)
+
+vif4 <- vif(Literacyworkreg)
+View(vif4)
+sqrt(vif4)
+1/(vif4)
 
 # Regression Literacy life
 
@@ -916,16 +943,173 @@ Literacylifereg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + H_Q01an + H_Q0
 
 summary(Literacylifereg) 
 
+#Multicolinearity 
+
+vif5 <- vif(Literacylifereg)
+View(vif5)
+sqrt(vif5)
+1/(vif5)
+
 #Regression numeracy work 
 
 Numeracyworkreg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + G_Q03bn + G_Q03cn + G_Q03dn + G_Q03fn + G_Q03gn + G_Q03hn, newMexico1)  
 
 summary(Numeracyworkreg) 
 
+#Multicolinearity 
+
+vif6 <- vif(Numeracyworkreg)
+View(vif6)
+sqrt(vif6)
+1/(vif6)
+
 # Regression numeracy life
 
 Numeracylifereg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an + H_Q03bn + H_Q03cn + H_Q03dn + H_Q03fn + H_Q03gn + H_Q03hn, newMexico1)
 
 summary(Numeracylifereg) 
+
+
+#Multicolinearity 
+
+vif7 <- vif(Numeracylifereg)
+View(vif7)
+sqrt(vif7)
+1/(vif7)
+
+
+
+```
+
+
+```{r warning=FALSE, message=FALSE}
+
+##Principal component analysis for work ICT
+
+#due to NAs G_Q06n (level of computer user) + G_Q08n (Lack of skills affect the career) where not included and the lack of correlation 
+# Since there was not much correlation witj G_Q07n it was also removed
+
+ICTWork1.pca <- prcomp(newMexico1ICTwork1[,c("G_Q05an", "G_Q05cn", "G_Q05dn" , "G_Q05en" , "G_Q05gn" , "G_Q05hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+
+
+summary(ICTWork1.pca)
+loadings(ICTWork1.pca)
+
+#Correlation circle
+
+#Positively correlated variables are grouped together.
+#Negatively correlated variables are positioned on opposite sides of the plot origin (opposed quadrants).
+#The distance between variables and the origin measures the quality of the variables on the factor map. Variables that are away from the origin are well represented on the factor map.
+
+#Quality of representation
+
+
+fviz_cos2(ICTWork1.pca, choice = "var", axes = 1:2)
+
+#A high cos2 indicates a good representation of the variable on the principal component. In this case the variable is positioned close to the circumference of the correlation circle.
+
+#A low cos2 indicates that the variable is not perfectly represented by the PCs. In this case the variable is close to the center of the circle.
+# the better its representation on the factor map (and the more important it is to interpret these components) Variables that are closed to the center of the plot are less important for the first components.
+
+#variables with low cos2 values will be colored in “white”
+#variables with mid cos2 values will be colored in “blue”
+#variables with high cos2 values will be colored in red
+
+#Contributions of variables to Pcs
+
+#Variables that are correlated with PC1 (i.e., Dim.1) and PC2 (i.e., Dim.2) are the most important in explaining the variability in the data set.
+#Variables that do not correlated with any PC or correlated with the last dimensions are variables with low contribution and might be removed to simplify the overall analysis.
+
+fviz_contrib(ICTWork1.pca, choice = "var", axes = 1, top = 10)
+
+fviz_pca_var(ICTWork1.pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping
+             )
+# according to this results G_Q05dn and G_Q05gn should not be taken into account in the principal component analysis since they do not contribute much. Which can be explained because the other variables are more basic ICT akiss and G_Q05gn talks about programming language.Thus it is recommended to be leave it alone as High level ICT skill and the rest as basic
+
+
+```
+
+
+```{r warning=FALSE, message=FALSE}
+
+##Principal component analysis for work Numeracy 
+
+NumeracyWork1.pca <- prcomp(newMexico1ICTwork1[,c("G_Q03bn" , "G_Q03cn" , "G_Q03dn" , "G_Q03fn" , "G_Q03gn" , "G_Q03hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+
+
+summary(NumeracyWork1.pca)
+
+#Correlation circle
+
+#Quality of representation
+
+fviz_cos2(NumeracyWork1.pca, choice = "var", axes = 1:2)
+
+#Contributions of variables to Pcs
+
+fviz_contrib(NumeracyWork1.pca, choice = "var", axes = 1, top = 10)
+
+#G_Q03fn (prepare charts graphs or tables), Q_q03hn (advanced math or statistics), G_Q03bn (calculating costs or budgets) below the cut off
+# cn (calculate fractions or percentages), gn simple algebra or formulas, dn use a calculator are the most influential variables 
+fviz_pca_var(NumeracyWork1.pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping
+             )
+
+# The PCA does not capture advanced numeraccy skills that are represented in the variable  Q_q03hn (advanced math or statistics), it is better to leave it independelty 
+
+
+```
+
+```{r warning=FALSE, message=FALSE}
+
+##Principal component analysis for work Literacy
+
+LiteracyWork1.pca <- prcomp(newMexico1ICTwork1[,c("G_Q01an" , "G_Q02an" , "G_Q02bn" , "G_Q02cn" , "G_Q02dn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+
+
+summary(LiteracyWork1.pca)
+
+#Correlation circle
+
+#Quality of representation
+
+fviz_cos2(LiteracyWork1.pca, choice = "var", axes = 1:2)
+
+#Contributions of variables to Pcs
+
+fviz_contrib(LiteracyWork1.pca, choice = "var", axes = 1, top = 10)
+
+#G_Q01a (read directions and instructions), Q_q02b (write articles),  below the cut off
+# G_q02dn (fill in forms), G_Q02cn (write reports), Q_q02an (write letter memos and mails) are the most influential variables 
+fviz_pca_var(LiteracyWork1.pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE # Avoid text overlapping
+             )
+
+# The PCA does not capture advanced numeraccy skills that are represented in the variable  Q_q02bn (write articles)), it is better to leave it independelty, take a look at the graph in one it say that bis the one tha contributes the most but in the bars it is far below from the cut off
+
+
+```
+
+
+
+```{r warning=FALSE, message=FALSE}
+
+##Principal component analysis for soft skills
+#"F_Q01bn" "F_Q02dn" 
+
+
+summary(LiteracyWork1.pca)
+
+#Correlation circle
+
+#Quality of representation
+
+
+# The PCA does not capture advanced numeraccy skills that are represented in the variable  Q_q02bn (write articles)), it is better to leave it independelty, take a look at the graph in one it say that bis the one tha contributes the most but in the bars it is far below from the cut off
+
 
 ```
