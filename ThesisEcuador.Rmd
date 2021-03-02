@@ -20,7 +20,7 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Ecuador <- read.csv("//Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
+Ecuador <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
 ```
 
 <br>
@@ -29,17 +29,17 @@ Ecuador <- read.csv("//Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
 
 1. Selection of variables per group of skills ICT, Numeracy and Literacy
 
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR[2788], EARNMTHPPP[3823], EARNHR[3823], EARNHRBONUS[3823], EARNHRBONUSPPP[3823]. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 5702 observations to 2914. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 2377 Vs out of 3459 observations. 
---> For ICT skills in daily life 2205 Vs out of 3459 observations. 
+--> For ICT skills in work they have 2024 Vs, 1 N  out of 2914 observations. 
+--> For ICT skills in daily life 1674 V, 1 N out of 3459 observations. 
 
 --> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs
 
---> Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T
+--> Computer experience in job G_Q04 registered only 1 N and same for G_Q04_T
 
---> Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V
+--> Computer experience in daily life H_Q04a registered 889 V 1 N  and H_Q04b 1 V 887 
 
 
 <br>
@@ -58,7 +58,8 @@ table(is.na(newEcuador$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newEcuador1 <- drop_na(newEcuador, YEARLYINCPR)
+newEcuador1 <- drop_na(newEcuador, MONTHLYINCPR)
+newEcuador2 <- drop_na(newEcuador, YEARLYINCPR)
 
 # Number of women and men 
 
@@ -70,68 +71,70 @@ newEcuador1 %>% count(GENDER_R)
 newEcuador1 %>% count(B_Q01a)
 newEcuador1 %>% count(B_Q01a_T)
 newEcuador1 %>% count(B_Q02a)
-newEcuador1 %>% count(B_Q02c) #x - 3224 V ESTA 1
-newEcuador1 %>% count(B_Q10c) #x- 3176 V ESTA 2
-newEcuador1 %>% count(B_Q01b) # 2134 v ESTA 3
+newEcuador1 %>% count(B_Q02c) # 2699 Vs
+newEcuador1 %>% count(B_Q10c) # 2682 Vs
+newEcuador1 %>% count(B_Q01b) # 1451 Vs
 
 # Work status 
 newEcuador1 %>% count(C_Q01a)
-newEcuador1 %>% count(C_Q01c) # 3459 v ESTA 4
-newEcuador1 %>% count(C_Q02a) # 3459 v ESTA 5 
-newEcuador1 %>% count(D_Q03) # D 42 - r21 
+newEcuador1 %>% count(C_Q01c) # 2914 Vs
+newEcuador1 %>% count(C_Q02a) # 2914
+newEcuador1 %>% count(D_Q03) # D 5 - R 2
 newEcuador1 %>% count(D_Q14) #
-newEcuador1 %>% count(D_Q16a) # V 1008
-newEcuador1 %>% count(D_Q18a_T) # 13 NA 
+newEcuador1 %>% count(D_Q16a) # V 1150
+newEcuador1 %>% count(D_Q18a_T) # 18 NA 
 
 
 # ICT skills in Job
-newEcuador1 %>% count(G_Q04) # experience with computer in job yes no 
-newEcuador1%>% count(G_Q04_T) #** 4 N
-newEcuador1 %>% count(COMPUTEREXPERIENCE) #******
-newEcuador1 %>% count(G_Q05a) # 2377 v ESTA 6 
-newEcuador1 %>% count(G_Q05c) # 2377 v ESTA 7 
-newEcuador1 %>% count(G_Q05d) # 2377 ESTA 8 
-newEcuador1 %>% count(G_Q05e) # 2377 ESTA 9 
-newEcuador1 %>% count(G_Q05g) # 2377 ESTA 10 
-newEcuador1 %>% count(G_Q05h) # 2377 ESTA 11 
-newEcuador1 %>% count(G_Q06) # 2377 ESTA 12 
-newEcuador1 %>% count(G_Q07) # 2377 ESTA 13 
-newEcuador1 %>% count(G_Q08) # 2377 ESTA 15 
+newEcuador1 %>% count(G_Q04) # experience with computer in job yes no / N 1 
+newEcuador1%>% count(G_Q04_T) # N 1 
+newEcuador1 %>% count(COMPUTEREXPERIENCE) # NA 2 
+newEcuador1 %>% count(G_Q05a) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q05c) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q05d) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q05e) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q05g) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q05h) # N 1 , V 2024 
+newEcuador1 %>% count(G_Q06) #  N 1 , V 2024 
+newEcuador1 %>% count(G_Q07) #  N 1 , V 2024 
+newEcuador1 %>% count(G_Q08) #  N 1 , V 2024 , R 2 
+
 
 #ICT skills in daily life
-newEcuador1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
-newEcuador1 %>% count(H_Q04b) # 1198 
-newEcuador1 %>% count(H_Q05a) # 2205 ESTA 16 
-newEcuador1 %>% count(H_Q05c) # 2205 ESTA 17 
-newEcuador1 %>% count(H_Q05d) # 2205 ESTA 18 
-newEcuador1 %>% count(H_Q05e) # 2205 ESTA 19 
-newEcuador1 %>% count(H_Q05f) # 2205 ESTA 20 
-newEcuador1 %>% count(H_Q05g) # 2205 ESTA 21 
-newEcuador1 %>% count(H_Q05h) # 2205 ESTA 22 
+newEcuador1 %>% count(H_Q04a) # 889 V 1 N 
+newEcuador1 %>% count(H_Q04b) # 1 V 887 
+newEcuador1 %>% count(H_Q05a) # 1674 V N 1 
+newEcuador1 %>% count(H_Q05c) # 1 N 1674 V 
+newEcuador1 %>% count(H_Q05d) # 1 N 1674 V
+newEcuador1 %>% count(H_Q05e) # 1674 V N 1 
+newEcuador1 %>% count(H_Q05f) #1674 V N 1 
+newEcuador1 %>% count(H_Q05g) # 1674 V N 1 
+newEcuador1 %>% count(H_Q05h) # 1674 V N 1  
+
 
 # Children and parents level of education
-newEcuador1 %>% count(J_Q03a)
-newEcuador1 %>% count(J_Q03b) #943
-newEcuador1 %>% count(J_Q06b) 
+newEcuador1 %>% count(J_Q03a) #N 2 
+newEcuador1 %>% count(J_Q03b) # V 725 R 1 N 1 
+newEcuador1 %>% count(J_Q06b) # D 78 N 2 R 11
 
 # Soft skills 
-newEcuador1 %>% count(F_Q01b) #748
-newEcuador1 %>% count(F_Q02b) 
-newEcuador1 %>% count(F_Q02c)
-newEcuador1 %>% count(F_Q02d)
-newEcuador1 %>% count(F_Q02e)
-newEcuador1 %>% count(F_Q03b)
-newEcuador1 %>% count(F_Q04a)
-newEcuador1 %>% count(F_Q04b)
-newEcuador1 %>% count(F_Q05a)
-newEcuador1 %>% count(F_Q05b)
+newEcuador1 %>% count(F_Q01b) # V 863
+newEcuador1 %>% count(F_Q02b) # D 1 
+newEcuador1 %>% count(F_Q02c) # D 1 
+newEcuador1 %>% count(F_Q02d) # R 1 
+newEcuador1 %>% count(F_Q02e)# D 2 
+newEcuador1 %>% count(F_Q03b)# D 1 
+newEcuador1 %>% count(F_Q04a)# D 2
+newEcuador1 %>% count(F_Q04b)# D 2 
+newEcuador1 %>% count(F_Q05a) # D 2 
+newEcuador1 %>% count(F_Q05b)# R 3 
 
 # Literacy work 
 newEcuador1 %>% count(G_Q01a)
-newEcuador1 %>% count(G_Q02a)
-newEcuador1 %>% count(G_Q02b)
-newEcuador1 %>% count(G_Q02c)
-newEcuador1 %>% count(G_Q02d)
+newEcuador1 %>% count(G_Q02a)# D 1 # N 1
+newEcuador1 %>% count(G_Q02b) # N 1 
+newEcuador1 %>% count(G_Q02c)# N 1
+newEcuador1 %>% count(G_Q02d)# N 1 
 
 # Numeracy work 
 newEcuador1 %>% count(G_Q03b)
@@ -169,16 +172,18 @@ newEcuador1 %>% count(H_Q03h)
 newEcuador1 %>% count(REG_TL2)
 
 ## Income variables
-Ecuador %>% count(YEARLYINCPR) #2847
-Ecuador  %>% count(EARNMTH) #2847
-Ecuador  %>% count(EARNMTHPPP) #3t68
-Ecuador  %>% count(EARNHR)#3758
-Ecuador  %>% count(EARNHRBONUS) # 97 ESPACIOS VACIOS 
-Ecuador  %>% count(ICTWORK)
-Ecuador  %>% count(EARNHRBONUSPPP) # 97 vacios usd 
-Ecuador  %>% count(EARNFLAG) 
+options(max.print=999999)
+Ecuador %>% count(YEARLYINCPR) #2788
+Ecuador %>% count(MONTHLYINCPR) #2788
+Ecuador  %>% count(EARNMTH) #3823 
+Ecuador  %>% count(EARNMTHPPP) #3823
+Ecuador  %>% count(EARNHR)#3823
+Ecuador  %>% count(EARNHRBONUSPPP) # 3823 ESPACIOS VACIOS 
+Ecuador  %>% count(EARNHRBONUS) # 3823
+Ecuador  %>% count(ICTWORK) #4514Vs +65 Ns
+Ecuador  %>% count(EARNHRBONUSPPP) # 3823
+Ecuador  %>% count(EARNFLAG) #2402 vs - 386 Ns 
 ```
-
 <br>
 
 **Adaptation of the dataset **
