@@ -33,7 +33,7 @@ Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
 
 1. Selection of variables per group of skills ICT, Numeracy and Literacy
 
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 6306 observations to 3459. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
 --> For ICT skills in work they have 2377 Vs out of 3459 observations. 
@@ -69,7 +69,7 @@ table(is.na(newMexico$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newMexico1 <- drop_na(newMexico, YEARLYINCPR)
+newMexico1 <- drop_na(newMexico, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -96,10 +96,10 @@ newMexico1 %>% count(D_Q18a_T) # 13 NA
 
 
 # ICT skills in Job
-newMexico1 %>% count(G_Q04) # experience with computer in job yes no 
-newMexico1%>% count(G_Q04_T) #** 4 N
-newMexico1 %>% count(COMPUTEREXPERIENCE) #******
-newMexico1 %>% count(G_Q05a) # 2377 v ESTA 6 
+newMexico1 %>% count(G_Q04) # experience with computer in job yes no 3 ns
+newMexico1%>% count(G_Q04_T) #** 3 N
+newMexico1 %>% count(COMPUTEREXPERIENCE) # 3 n
+newMexico1 %>% count(G_Q05a) # 2377 v y 3 n 
 newMexico1 %>% count(G_Q05c) # 2377 v ESTA 7 
 newMexico1 %>% count(G_Q05d) # 2377 ESTA 8 
 newMexico1 %>% count(G_Q05e) # 2377 ESTA 9 

@@ -375,7 +375,7 @@ summary {
 <p><strong>First steps: preparing the data </strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Selection of variables per group of skills ICT, Numeracy and Literacy</p></li>
-<li><p>Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459.</p></li>
+<li><p>Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 6306 observations to 3459.</p></li>
 <li><p>More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. –&gt; For ICT skills in work they have 2377 Vs out of 3459 observations. –&gt; For ICT skills in daily life 2205 Vs out of 3459 observations.</p></li>
 </ol>
 <p>–&gt; However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs</p>
@@ -403,7 +403,7 @@ gg_miss_var(newMexico)</code></pre>
 <pre class="r"><code>#droping NAs from the independent variable 
 
 
-newMexico1 &lt;- drop_na(newMexico, YEARLYINCPR)
+newMexico1 &lt;- drop_na(newMexico, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -549,28 +549,28 @@ newMexico1 %&gt;% count(C_Q01a)</code></pre>
 ## 6        5   638
 ## 7       NA    13</code></pre>
 <pre class="r"><code># ICT skills in Job
-newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no </code></pre>
+newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no 3 ns</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04     n
 ##   &lt;fct&gt; &lt;int&gt;
 ## 1 1      1079
 ## 2 2      2377
 ## 3 N         3</code></pre>
-<pre class="r"><code>newMexico1%&gt;% count(G_Q04_T) #** 4 N</code></pre>
+<pre class="r"><code>newMexico1%&gt;% count(G_Q04_T) #** 3 N</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04_T     n
 ##   &lt;fct&gt;   &lt;int&gt;
 ## 1 1        2258
 ## 2 2        1198
 ## 3 N           3</code></pre>
-<pre class="r"><code>newMexico1 %&gt;% count(COMPUTEREXPERIENCE) #******</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(COMPUTEREXPERIENCE) # 3 n</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   COMPUTEREXPERIENCE     n
 ##                &lt;int&gt; &lt;int&gt;
 ## 1                  1  2258
 ## 2                  2  1198
 ## 3                 NA     3</code></pre>
-<pre class="r"><code>newMexico1 %&gt;% count(G_Q05a) # 2377 v ESTA 6 </code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(G_Q05a) # 2377 v y 3 n </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05a     n
 ##   &lt;fct&gt;  &lt;int&gt;
