@@ -18,17 +18,10 @@ library(naniar)
 library(car)
 library(carData)
 library(FactoMineR)
-library("factoextra")
 library(factoextra)
 
 Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
-Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv")
 
-Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
-Ecuador <- read.csv("//Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
-
-Chile %>% count(EARNHRBONUSPPP) 
-Mexico %>% count(EARNHRBONUSPPP) 
 ```
 
 ## R Markdown
@@ -60,7 +53,7 @@ Mexico %>% count(EARNHRBONUSPPP)
 ```{r cars}
 
 newMexico <- Mexico %>% 
-  select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
+  select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04", "G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
 
 ## Missing variables
 ##Vsualizarion of missing variables
@@ -73,7 +66,7 @@ table(is.na(newMexico$YEARLYINCPR))
 
 table(is.na(newMexico$MONTHLYINCPR))
 
-#droping NAs  
+#droping NAs from the independent variable 
 
 
 newMexico1 <- drop_na(newMexico, YEARLYINCPR)
@@ -84,25 +77,28 @@ newMexico1 <- drop_na(newMexico, YEARLYINCPR)
 barplot(table(newMexico1$GENDER_R))
 newMexico1 %>% count(GENDER_R)
 
-
+# Education status
 newMexico1 %>% count(B_Q01a)
 newMexico1 %>% count(B_Q01a_T)
 newMexico1 %>% count(B_Q02a)
 newMexico1 %>% count(B_Q02c) #x - 3224 V ESTA 1
 newMexico1 %>% count(B_Q10c) #x- 3176 V ESTA 2
 newMexico1 %>% count(B_Q01b) # 2134 v ESTA 3
+
+# Work status 
 newMexico1 %>% count(C_Q01a)
 newMexico1 %>% count(C_Q01c) # 3459 v ESTA 4
 newMexico1 %>% count(C_Q02a) # 3459 v ESTA 5 
 newMexico1 %>% count(D_Q03) # D 42 - r21 
 newMexico1 %>% count(D_Q14) #
 newMexico1 %>% count(D_Q16a) # V 1008
-newMexico1 %>% count(D_Q18a_T) # 13 NA
-newMexico1 %>% count(F_Q05a) #
-newMexico1 %>% count(F_Q05b)
+newMexico1 %>% count(D_Q18a_T) # 13 NA 
+
+
+# ICT skills in Job
 newMexico1 %>% count(G_Q04) # experience with computer in job yes no 
+newMexico1%>% count(G_Q04_T) #** 4 N
 newMexico1 %>% count(COMPUTEREXPERIENCE) #******
-Mexico%>% count(G_Q04_T) #***** 
 newMexico1 %>% count(G_Q05a) # 2377 v ESTA 6 
 newMexico1 %>% count(G_Q05c) # 2377 v ESTA 7 
 newMexico1 %>% count(G_Q05d) # 2377 ESTA 8 
@@ -112,6 +108,8 @@ newMexico1 %>% count(G_Q05h) # 2377 ESTA 11
 newMexico1 %>% count(G_Q06) # 2377 ESTA 12 
 newMexico1 %>% count(G_Q07) # 2377 ESTA 13 
 newMexico1 %>% count(G_Q08) # 2377 ESTA 15 
+
+#ICT skills in daily life
 newMexico1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
 newMexico1 %>% count(H_Q04b) # 1198 
 newMexico1 %>% count(H_Q05a) # 2205 ESTA 16 
@@ -121,9 +119,13 @@ newMexico1 %>% count(H_Q05e) # 2205 ESTA 19
 newMexico1 %>% count(H_Q05f) # 2205 ESTA 20 
 newMexico1 %>% count(H_Q05g) # 2205 ESTA 21 
 newMexico1 %>% count(H_Q05h) # 2205 ESTA 22 
+
+# Children and parents level of education
 newMexico1 %>% count(J_Q03a)
 newMexico1 %>% count(J_Q03b) #943
 newMexico1 %>% count(J_Q06b) 
+
+# Soft skills 
 newMexico1 %>% count(F_Q01b) #748
 newMexico1 %>% count(F_Q02b) 
 newMexico1 %>% count(F_Q02c)
@@ -134,16 +136,23 @@ newMexico1 %>% count(F_Q04a)
 newMexico1 %>% count(F_Q04b)
 newMexico1 %>% count(F_Q05a)
 newMexico1 %>% count(F_Q05b)
+
+# Literacy work 
 newMexico1 %>% count(G_Q01a)
 newMexico1 %>% count(G_Q02a)
 newMexico1 %>% count(G_Q02b)
 newMexico1 %>% count(G_Q02c)
+newMexico1 %>% count(G_Q02d)
+
+# Numeracy work 
 newMexico1 %>% count(G_Q03b)
 newMexico1 %>% count(G_Q03c)
 newMexico1 %>% count(G_Q03d)
 newMexico1 %>% count(G_Q03f)
 newMexico1 %>% count(G_Q03g)
 newMexico1 %>% count(G_Q03h)
+
+# Literacy life
 newMexico1 %>% count(H_Q01a)
 newMexico1 %>% count(H_Q01b)
 newMexico1 %>% count(H_Q01b_T)
@@ -158,24 +167,26 @@ newMexico1 %>% count(H_Q02a)
 newMexico1 %>% count(H_Q02b)
 newMexico1 %>% count(H_Q02c)
 newMexico1 %>% count(H_Q02d)
+
+# Numeracy life
 newMexico1 %>% count(H_Q03b)
 newMexico1 %>% count(H_Q03c)
 newMexico1 %>% count(H_Q03d)
 newMexico1 %>% count(H_Q03f)
 newMexico1 %>% count(H_Q03g)
 newMexico1 %>% count(H_Q03h)
-newMexico1 %>% count(REG_TL2)
-Mexico %>% count(YEARLYINCPR) #2847
 
+# Region
+newMexico1 %>% count(REG_TL2)
+
+## Income variables
+Mexico %>% count(YEARLYINCPR) #2847
 Mexico %>% count(EARNMTH) #2847
 Mexico %>% count(EARNMTHPPP) #3t68
 Mexico %>% count(EARNHR)#3758
 Mexico %>% count(EARNHRBONUS) # 97 ESPACIOS VACIOS 
 Mexico %>% count(ICTWORK)
-
 Mexico %>% count(EARNHRBONUSPPP) # 97 vacios usd 
-
-
 Mexico %>% count(EARNFLAG) #2548
 
 ```
@@ -187,7 +198,6 @@ Since there are non numeric factor in our dataset such as V, N and R we had to c
 
 <br>
 ```{r warning=FALSE, message=FALSE}
-
 
 
 #Gender
@@ -920,21 +930,14 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== "R"] = NA
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+<br>
+
+**Dropping NAs**
 
 
+<br>
 
-```{r warning=FALSE, message=FALSE}
-
-
-variablemissingsbygender<-newMexico1%>%
-  group_by(GENDER_Rn) %>%
-  miss_var_summary()
-
-
-
-
-```
 
 ```{r warning=FALSE, message=FALSE}
 
