@@ -38,14 +38,14 @@ Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv", header=T, n
 2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 2377 Vs out of 3459 observations. 
---> For ICT skills in daily life 2205 Vs out of 3459 observations. 
+--> For ICT skills in work they have 1176 Vs out of 2382 observations. 
+--> For ICT skills in daily life 859 Vs  and one N out of 2382 observations. 
 
---> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs
+--> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 2 NAs and no Vs
 
---> Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T
+--> Computer experience in job G_Q04 and G_Q04_T were complete
 
---> Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V
+--> Computer experience in daily life H_Q04a registered 1206 V and H_Q04b 364 V
 
 
 <br>
@@ -96,29 +96,29 @@ newChile1 %>% count(D_Q18a_T) # 13 NA
 
 
 # ICT skills in Job
-newChile1 %>% count(G_Q04) # experience with computer in job yes no 
-newChile1%>% count(G_Q04_T) #** 4 N
+newChile1 %>% count(G_Q04) # experience with computer in job yes no Complete
+newChile1%>% count(G_Q04_T) # Complete
 newChile1 %>% count(COMPUTEREXPERIENCE) #******
-newChile1 %>% count(G_Q05a) # 2377 v ESTA 6 
-newChile1 %>% count(G_Q05c) # 2377 v ESTA 7 
-newChile1%>% count(G_Q05d) # 2377 ESTA 8 
-newChile1 %>% count(G_Q05e) # 2377 ESTA 9 
-newChile1 %>% count(G_Q05g) # 2377 ESTA 10 
-newChile1%>% count(G_Q05h) # 2377 ESTA 11 
-newChile1%>% count(G_Q06) # 2377 ESTA 12 
-newChile1 %>% count(G_Q07) # 2377 ESTA 13 
-newChile1 %>% count(G_Q08) # 2377 ESTA 15 
+newChile1 %>% count(G_Q05a) # 1176 
+newChile1 %>% count(G_Q05c) # 1176 + r 1
+newChile1%>% count(G_Q05d) # # 1176 
+newChile1 %>% count(G_Q05e) # # 1176
+newChile1 %>% count(G_Q05g) # # 1176
+newChile1%>% count(G_Q05h) # 1176
+newChile1%>% count(G_Q06) # 1176
+newChile1 %>% count(G_Q07) # 1176 
+newChile1 %>% count(G_Q08) # 1176
 
 #ICT skills in daily life
-newChile1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
-newChile1 %>% count(H_Q04b) # 1198 
-newChile1 %>% count(H_Q05a) # 2205 ESTA 16 
-newChile1 %>% count(H_Q05c) # 2205 ESTA 17 
-newChile1 %>% count(H_Q05d) # 2205 ESTA 18 
-newChile1 %>% count(H_Q05e) # 2205 ESTA 19 
-newChile1 %>% count(H_Q05f) # 2205 ESTA 20 
-newChile1 %>% count(H_Q05g) # 2205 ESTA 21 
-newChile1 %>% count(H_Q05h) # 2205 ESTA 22 
+newChile1 %>% count(H_Q04a) # 1206 V + 1 N experience with compiuter every life
+newChile1 %>% count(H_Q04b) # 364 + 1 n
+newChile1 %>% count(H_Q05a) # 859 V + 1 N   
+newChile1 %>% count(H_Q05c) # 859 V + 1 N 
+newChile1 %>% count(H_Q05d) # 859 V + 1 N  
+newChile1 %>% count(H_Q05e) # 859 V + 1 N 
+newChile1 %>% count(H_Q05f) # 859 V + 1 N 
+newChile1 %>% count(H_Q05g) # 859 V + 1 N  
+newChile1 %>% count(H_Q05h) # 859 V + 1 N  
 
 # Children and parents level of education
 newChile1 %>% count(J_Q03a)
@@ -193,10 +193,13 @@ Chile %>% count(EARNFLAG)
 
 ```
 
-## Including Plots
+<br>
 
-You can also embed plots, for example:
+**Adaptation of the dataset **
 
+Since there are non numeric factor in our dataset such as V, N and R we had to convert them in NAs in order to work with thw variables afterwards. 
+
+<br>
 ```{r pressure, echo=FALSE}
 
 #Gender

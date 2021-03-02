@@ -35,14 +35,14 @@ Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
 2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 2377 Vs out of 3459 observations. 
---> For ICT skills in daily life 2205 Vs out of 3459 observations. 
+--> For ICT skills in work they have 3129 Vs  and 2 Ns out of 4825 observations. 
+--> For ICT skills in daily life 2465 Vs and 3 Ns out of 4825 observations. 
 
---> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs
+--> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 8 NAs and no Vs
 
---> Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T
+--> Computer experience in job G_Q04 registered only 2 Ns and same for G_Q04_T
 
---> Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V
+--> Computer experience in daily life H_Q04a registered 1694 V and H_Q04b 1425 V and 3 Ns
 
 
 <br>
@@ -91,29 +91,29 @@ newPeru1 %>% count(D_Q18a_T) # 13 NA
 
 
 # ICT skills in Job
-newPeru1 %>% count(G_Q04) # experience with computer in job yes no 
-newPeru1%>% count(G_Q04_T) #** 4 N
-newPeru1 %>% count(COMPUTEREXPERIENCE) #******
-newPeru1 %>% count(G_Q05a) # 2377 v ESTA 6 
-newPeru1 %>% count(G_Q05c) # 2377 v ESTA 7 
-newPeru1 %>% count(G_Q05d) # 2377 ESTA 8 
-newPeru1 %>% count(G_Q05e) # 2377 ESTA 9 
-newPeru1 %>% count(G_Q05g) # 2377 ESTA 10 
-newPeru1 %>% count(G_Q05h) # 2377 ESTA 11 
-newPeru1 %>% count(G_Q06) # 2377 ESTA 12 
-newPeru1 %>% count(G_Q07) # 2377 ESTA 13 
-newPeru1 %>% count(G_Q08) # 2377 ESTA 15 
+newPeru1 %>% count(G_Q04) # experience with computer in job yes no  2n
+newPeru1%>% count(G_Q04_T) #** 2N
+newPeru1 %>% count(COMPUTEREXPERIENCE) # 8Nas
+newPeru1 %>% count(G_Q05a) # 3129  + N 2
+newPeru1 %>% count(G_Q05c) # 3129  + N 2
+newPeru1 %>% count(G_Q05d) # 3129  + N 2
+newPeru1 %>% count(G_Q05e) # 3129  + N 2
+newPeru1 %>% count(G_Q05g) # 3129  + N 2
+newPeru1 %>% count(G_Q05h) # 3129  + N 2 
+newPeru1 %>% count(G_Q06) # 3129  + N 2
+newPeru1 %>% count(G_Q07) # 3129  + N 2
+newPeru1 %>% count(G_Q08) # 3129  + N 2
 
 #ICT skills in daily life
-newPeru1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
-newPeru1 %>% count(H_Q04b) # 1198 
-newPeru1 %>% count(H_Q05a) # 2205 ESTA 16 
-newPeru1 %>% count(H_Q05c) # 2205 ESTA 17 
-newPeru1 %>% count(H_Q05d) # 2205 ESTA 18 
-newPeru1 %>% count(H_Q05e) # 2205 ESTA 19 
-newPeru1 %>% count(H_Q05f) # 2205 ESTA 20 
-newPeru1 %>% count(H_Q05g) # 2205 ESTA 21 
-newPeru1 %>% count(H_Q05h) # 2205 ESTA 22 
+newPeru1 %>% count(H_Q04a) # 1694 V + 3 Ns experience with compiuter every life
+newPeru1 %>% count(H_Q04b) # 1425 V + 3 Ns
+newPeru1 %>% count(H_Q05a) # 2465 + 3 ns  
+newPeru1 %>% count(H_Q05c) # 2465 + 3 ns 
+newPeru1 %>% count(H_Q05d) # 2465 + 3 ns 
+newPeru1 %>% count(H_Q05e) # 2465 + 3 ns
+newPeru1 %>% count(H_Q05f) # 2465 + 3 ns
+newPeru1 %>% count(H_Q05g) # 2465 + 3 ns
+newPeru1 %>% count(H_Q05h) # 2465 + 3 ns 
 
 # Children and parents level of education
 newPeru1 %>% count(J_Q03a)
@@ -175,14 +175,14 @@ newPeru1 %>% count(H_Q03h)
 newPeru1 %>% count(REG_TL2)
 
 ## Income variables
-Peru %>% count(YEARLYINCPR) #2847
-Peru %>% count(EARNMTH) #2847
-Peru %>% count(EARNMTHPPP) #3t68
-Peru %>% count(EARNHR)#3758
-Peru %>% count(EARNHRBONUS) # 97 ESPACIOS VACIOS 
-Peru %>% count(ICTWORK)
-Peru %>% count(EARNHRBONUSPPP) # 97 vacios usd 
-Peru %>% count(EARNFLAG) 
+Peru %>% count(YEARLYINCPR) #2464 NAs
+Peru %>% count(EARNMTH) # N 2550 v 4627
+Peru %>% count(EARNMTHPPP) # 2550 v 4627
+Peru %>% count(EARNHR) ## N 2550 v 4627
+Peru %>% count(EARNHRBONUS) # # N 2550 v 4627
+Peru %>% count(ICTWORK) # N 2550 v 4627
+Peru %>% count(EARNHRBONUSPPP) # # N 2550 v 4627
+Peru %>% count(EARNFLAG) # N 2550 v 4627
 
 
 ```
