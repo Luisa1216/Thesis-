@@ -1,0 +1,932 @@
+---
+title: "Peru"
+author: "Luisa Olaya"
+date: "3/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(42) #for consistent results
+library(haven)
+library(foreign)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stargazer)
+library(naniar)
+library(car)
+library(carData)
+library(FactoMineR)
+library(factoextra)
+
+Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
+
+```
+
+
+<br>
+
+**First steps: preparing the data **
+
+1. Selection of variables per group of skills ICT, Numeracy and Literacy
+
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
+
+3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
+--> For ICT skills in work they have 2377 Vs out of 3459 observations. 
+--> For ICT skills in daily life 2205 Vs out of 3459 observations. 
+
+--> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs
+
+--> Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T
+
+--> Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V
+
+
+<br>
+
+###Subsetting the data 
+
+```{r cars}
+
+newPeru <- Peru %>% 
+  select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04", "G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
+
+gg_miss_var(newPeru)
+
+
+table(is.na(newPeru$YEARLYINCPR))
+
+table(is.na(newPeru$MONTHLYINCPR))
+
+#droping NAs from the independent variable 
+
+
+newPeru1 <- drop_na(newPeru, YEARLYINCPR)
+
+# Number of women and men 
+
+
+barplot(table(newPeru1$GENDER_R))
+newPeru1 %>% count(GENDER_R)
+
+# Education status
+newPeru1 %>% count(B_Q01a)
+newPeru1 %>% count(B_Q01a_T)
+newPeru1 %>% count(B_Q02a)
+newPeru1 %>% count(B_Q02c) #x - 3224 V ESTA 1
+newPeru1 %>% count(B_Q10c) #x- 3176 V ESTA 2
+newPeru1 %>% count(B_Q01b) # 2134 v ESTA 3
+
+# Work status 
+newPeru1 %>% count(C_Q01a)
+newPeru1 %>% count(C_Q01c) # 3459 v ESTA 4
+newPeru1 %>% count(C_Q02a) # 3459 v ESTA 5 
+newPeru1 %>% count(D_Q03) # D 42 - r21 
+newPeru1 %>% count(D_Q14) #
+newPeru1 %>% count(D_Q16a) # V 1008
+newPeru1 %>% count(D_Q18a_T) # 13 NA 
+
+
+# ICT skills in Job
+newPeru1 %>% count(G_Q04) # experience with computer in job yes no 
+newPeru1%>% count(G_Q04_T) #** 4 N
+newPeru1 %>% count(COMPUTEREXPERIENCE) #******
+newPeru1 %>% count(G_Q05a) # 2377 v ESTA 6 
+newPeru1 %>% count(G_Q05c) # 2377 v ESTA 7 
+newPeru1 %>% count(G_Q05d) # 2377 ESTA 8 
+newPeru1 %>% count(G_Q05e) # 2377 ESTA 9 
+newPeru1 %>% count(G_Q05g) # 2377 ESTA 10 
+newPeru1 %>% count(G_Q05h) # 2377 ESTA 11 
+newPeru1 %>% count(G_Q06) # 2377 ESTA 12 
+newPeru1 %>% count(G_Q07) # 2377 ESTA 13 
+newPeru1 %>% count(G_Q08) # 2377 ESTA 15 
+
+#ICT skills in daily life
+newPeru1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
+newPeru1 %>% count(H_Q04b) # 1198 
+newPeru1 %>% count(H_Q05a) # 2205 ESTA 16 
+newPeru1 %>% count(H_Q05c) # 2205 ESTA 17 
+newPeru1 %>% count(H_Q05d) # 2205 ESTA 18 
+newPeru1 %>% count(H_Q05e) # 2205 ESTA 19 
+newPeru1 %>% count(H_Q05f) # 2205 ESTA 20 
+newPeru1 %>% count(H_Q05g) # 2205 ESTA 21 
+newPeru1 %>% count(H_Q05h) # 2205 ESTA 22 
+
+# Children and parents level of education
+newPeru1 %>% count(J_Q03a)
+newPeru1 %>% count(J_Q03b) #943
+newPeru1 %>% count(J_Q06b) 
+
+# Soft skills 
+newPeru1 %>% count(F_Q01b) #748
+newPeru1 %>% count(F_Q02b) 
+newPeru1 %>% count(F_Q02c)
+newPeru1 %>% count(F_Q02d)
+newPeru1 %>% count(F_Q02e)
+newPeru1 %>% count(F_Q03b)
+newPeru1 %>% count(F_Q04a)
+newPeru1 %>% count(F_Q04b)
+newPeru1 %>% count(F_Q05a)
+newPeru1 %>% count(F_Q05b)
+
+# Literacy work 
+newPeru1 %>% count(G_Q01a)
+newPeru1 %>% count(G_Q02a)
+newPeru1 %>% count(G_Q02b)
+newPeru1 %>% count(G_Q02c)
+newPeru1 %>% count(G_Q02d)
+
+# Numeracy work 
+newPeru1 %>% count(G_Q03b)
+newPeru1 %>% count(G_Q03c)
+newPeru1 %>% count(G_Q03d)
+newPeru1 %>% count(G_Q03f)
+newPeru1 %>% count(G_Q03g)
+newPeru1 %>% count(G_Q03h)
+
+# Literacy life
+newPeru1 %>% count(H_Q01a)
+newPeru1 %>% count(H_Q01b)
+newPeru1 %>% count(H_Q01b_T)
+newPeru1 %>% count(H_Q01d)
+newPeru1 %>% count(H_Q01c)
+newPeru1 %>% count(H_Q01e)
+newPeru1 %>% count(H_Q01e_T)
+newPeru1 %>% count(H_Q01f)
+newPeru1 %>% count(H_Q01g)
+newPeru1 %>% count(H_Q01h)
+newPeru1 %>% count(H_Q02a)
+newPeru1 %>% count(H_Q02b)
+newPeru1 %>% count(H_Q02c)
+newPeru1 %>% count(H_Q02d)
+
+# Numeracy life
+newPeru1 %>% count(H_Q03b)
+newPeru1 %>% count(H_Q03c)
+newPeru1 %>% count(H_Q03d)
+newPeru1 %>% count(H_Q03f)
+newPeru1 %>% count(H_Q03g)
+newPeru1 %>% count(H_Q03h)
+
+# Region
+newPeru1 %>% count(REG_TL2)
+
+## Income variables
+Peru %>% count(YEARLYINCPR) #2847
+Peru %>% count(EARNMTH) #2847
+Peru %>% count(EARNMTHPPP) #3t68
+Peru %>% count(EARNHR)#3758
+Peru %>% count(EARNHRBONUS) # 97 ESPACIOS VACIOS 
+Peru %>% count(ICTWORK)
+Peru %>% count(EARNHRBONUSPPP) # 97 vacios usd 
+Peru %>% count(EARNFLAG) 
+
+
+```
+
+<br>
+
+**Adaptation of the dataset **
+
+Since there are non numeric factor in our dataset such as V, N and R we had to convert them in NAs in order to work with thw variables afterwards. 
+
+<br>
+
+```{r pressure, echo=FALSE}
+#Gender
+
+newPeru1$GENDER_Rn[newPeru1$GENDER_R == "1"] = 0
+newPeru1$GENDER_Rn[newPeru1$GENDER_R == "2"] = 1
+
+
+#B_Q01a
+newPeru1$B_Q01an[newPeru1$B_Q01a == "D"] = NA
+newPeru1$B_Q01an[newPeru1$B_Q01a == "1"] = 1
+newPeru1$B_Q01an[newPeru1$B_Q01a == "2"] = 2
+newPeru1$B_Q01an[newPeru1$B_Q01a == "5"] = 5 
+newPeru1$B_Q01an[newPeru1$B_Q01a == "6"] = 6
+newPeru1$B_Q01an[newPeru1$B_Q01a == "7"] = 7
+newPeru1$B_Q01an[newPeru1$B_Q01a == "11"] = 11
+newPeru1$B_Q01an[newPeru1$B_Q01a == "12"] = 12
+newPeru1$B_Q01an[newPeru1$B_Q01a == "13"] = 13
+newPeru1$B_Q01an[newPeru1$B_Q01a == "14"] = 14
+newPeru1$B_Q01an[newPeru1$B_Q01a == "15"] = 15
+
+#B_Q01a_T
+
+newPeru1$B_Q01a_Tn[newPeru1$B_Q01a_T == "M"] = NA
+newPeru1$B_Q01a_Tn[newPeru1$B_Q01a_T == "1"] = 1
+newPeru1$B_Q01a_Tn[newPeru1$B_Q01a_T == "2"] = 2
+newPeru1$B_Q01a_Tn[newPeru1$B_Q01a_T == "3"] = 3 
+newPeru1$B_Q01a_Tn[newPeru1$B_Q01a_T == "4"] = 4
+
+#B_Q02a
+
+newPeru1$B_Q02an[newPeru1$B_Q02a == "R"] = NA
+newPeru1$B_Q02an[newPeru1$B_Q02a == "1"] = 0
+newPeru1$B_Q02an[newPeru1$B_Q02a== "2"] = 1
+
+#B_Q02c
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "V"] = NA
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "1"] = 1
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "2"] = 2
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "3"] = 3
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "4"] = 4
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "5"] = 5
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "6"] = 6
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "7"] = 7
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "8"] = 8
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "9"] = 9 
+newPeru1$B_Q02cn[newPeru1$B_Q02c == "R"] = NA
+
+#B_Q10c
+
+newPeru1$B_Q10cn[newPeru1$B_Q10c == "V"] = NA
+newPeru1$B_Q10cn[newPeru1$B_Q10c == "1"] = 1
+newPeru1$B_Q10cn[newPeru1$B_Q10c == "2"] = 2
+newPeru1$B_Q10cn[newPeru1$B_Q10c == "3"] = 3
+newPeru1$B_Q10cn[newPeru1$B_Q10c == "4"] = 4
+
+#B_Q01b
+
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "V"] = NA
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "D"] = NA
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "R"] = NA
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "1"] = 1
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "2"] = 2
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "3"] = 3
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "4"] = 4
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "5"] = 5
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "6"] = 6
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "7"] = 7
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "8"] = 8
+newPeru1$B_Q01bn[newPeru1$B_Q01b == "9"] = 9
+
+# C_Q01c
+newPeru1$C_Q01cn[newPeru1$C_Q01c == "V"] = NA
+
+#C_Q02a
+
+newPeru1$C_Q02an[newPeru1$C_Q02a == "V"] = NA
+
+#D_Q03
+
+newPeru1$D_Q03n[newPeru1$D_Q03 == "R"] = NA
+newPeru1$D_Q03n[newPeru1$D_Q03 == "D"] = NA
+newPeru1$D_Q03n[newPeru1$D_Q03 == "1"] = 1
+newPeru1$D_Q03n[newPeru1$D_Q03 == "2"] = 2
+newPeru1$D_Q03n[newPeru1$D_Q03 == "3"] = 3
+
+#D_Q14
+
+newPeru1$D_Q14n[newPeru1$D_Q14 == "D"] = NA
+newPeru1$D_Q14n[newPeru1$D_Q14 == "1"] = 1
+newPeru1$D_Q14n[newPeru1$D_Q14 == "2"] = 2
+newPeru1$D_Q14n[newPeru1$D_Q14 == "3"] = 3
+newPeru1$D_Q14n[newPeru1$D_Q14 == "4"] = 4
+newPeru1$D_Q14n[newPeru1$D_Q14 == "5"] = 5
+
+#D_Q16a
+
+newPeru1$D_Q16an[newPeru1$D_Q16a == "V"] = NA
+newPeru1$D_Q16an[newPeru1$D_Q16a == "1"] = 1
+newPeru1$D_Q16an[newPeru1$D_Q16a == "2"] = 2
+newPeru1$D_Q16an[newPeru1$D_Q16a == "3"] = 3
+newPeru1$D_Q16an[newPeru1$D_Q16a == "4"] = 4
+newPeru1$D_Q16an[newPeru1$D_Q16a == "5"] = 5
+newPeru1$D_Q16an[newPeru1$D_Q16a == "6"] = 6
+newPeru1$D_Q16an[newPeru1$D_Q16a == "7"] = 7
+
+#F_Q01b
+
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "1"] = 1
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "2"] = 2
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "3"] = 3
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "4"] = 4
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "5"] = 5
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "N"] = NA
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "R"] = NA
+newPeru1$F_Q01bn[newPeru1$F_Q01b== "V"] = NA
+
+#F_Q02b
+
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "1"] = 1
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "2"] = 2
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "3"] = 3
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "4"] = 4
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "5"] = 5
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "N"] = NA
+newPeru1$F_Q02bn[newPeru1$F_Q02b== "R"] = NA
+
+#F_Q02c
+
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "1"] = 1
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "2"] = 2
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "3"] = 3
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "4"] = 4
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "5"] = 5
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "N"] = NA
+newPeru1$F_Q02cn[newPeru1$F_Q02c== "R"] = NA
+
+#F_Q02d
+
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "1"] = 1
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "2"] = 2
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "3"] = 3
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "4"] = 4
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "5"] = 5
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "D"] = NA
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "N"] = NA 
+newPeru1$F_Q02dn[newPeru1$F_Q02d== "R"] = NA
+
+#F_Q02e
+
+newPeru1$F_Q02en[newPeru1$F_Q02e== "1"] = 1
+newPeru1$F_Q02en[newPeru1$F_Q02e== "2"] = 2
+newPeru1$F_Q02en[newPeru1$F_Q02e== "3"] = 3
+newPeru1$F_Q02en[newPeru1$F_Q02e== "4"] = 4
+newPeru1$F_Q02en[newPeru1$F_Q02e== "5"] = 5
+newPeru1$F_Q02en[newPeru1$F_Q02e== "N"] = NA 
+newPeru1$F_Q02en[newPeru1$F_Q02e== "R"] = NA
+
+#F_Q03b
+
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "1"] = 1
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "2"] = 2
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "3"] = 3
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "4"] = 4
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "5"] = 5
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "D"] = NA
+newPeru1$F_Q03bn[newPeru1$F_Q03b== "N"] = NA
+
+#F_Q04a
+
+newPeru1$F_Q04an[newPeru1$F_Q04a== "1"] = 1
+newPeru1$F_Q04an[newPeru1$F_Q04a== "2"] = 2
+newPeru1$F_Q04an[newPeru1$F_Q04a== "3"] = 3
+newPeru1$F_Q04an[newPeru1$F_Q04a== "4"] = 4
+newPeru1$F_Q04an[newPeru1$F_Q04a== "5"] = 5
+newPeru1$F_Q04an[newPeru1$F_Q04a== "D"] = NA
+newPeru1$F_Q04an[newPeru1$F_Q04a== "N"] = NA
+
+#F_Q04b
+
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "1"] = 1
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "2"] = 2
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "3"] = 3
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "4"] = 4
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "5"] = 5
+newPeru1$F_Q04bn[newPeru1$F_Q04b== "N"] = NA
+
+#F_Q05a
+
+newPeru1$F_Q05an[newPeru1$F_Q05a == "D"] = NA
+newPeru1$F_Q05an[newPeru1$F_Q05a == "N"] = NA
+newPeru1$F_Q05an[newPeru1$F_Q05a == "1"] = 1
+newPeru1$F_Q05an[newPeru1$F_Q05a == "2"] = 2
+newPeru1$F_Q05an[newPeru1$F_Q05a == "3"] = 3
+newPeru1$F_Q05an[newPeru1$F_Q05a == "4"] = 4
+newPeru1$F_Q05an[newPeru1$F_Q05a == "5"] = 5
+
+#F_Q05b
+
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "D"] = NA
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "N"] = NA
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "1"] = 1
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "2"] = 2
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "3"] = 3
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "4"] = 4
+newPeru1$F_Q05bn[newPeru1$F_Q05b == "5"] = 5
+
+#F_Q07b
+
+newPeru1$F_Q07bn[newPeru1$F_Q07b == "D"] = NA
+newPeru1$F_Q07bn[newPeru1$F_Q07b == "N"] = NA
+newPeru1$F_Q07bn[newPeru1$F_Q07b == "1"] = 0
+newPeru1$F_Q07bn[newPeru1$F_Q07b == "2"] = 1
+
+# G_Q01a
+
+newPeru1$G_Q01an[newPeru1$G_Q01a == "N"] = NA
+newPeru1$G_Q01an[newPeru1$G_Q01a == "1"] = 1
+newPeru1$G_Q01an[newPeru1$G_Q01a == "2"] = 2
+newPeru1$G_Q01an[newPeru1$G_Q01a == "3"] = 3
+newPeru1$G_Q01an[newPeru1$G_Q01a == "4"] = 4
+newPeru1$G_Q01an[newPeru1$G_Q01a == "5"] = 5
+
+# G_Q02a
+
+newPeru1$G_Q02an[newPeru1$G_Q02a == "N"] = NA
+newPeru1$G_Q02an[newPeru1$G_Q02a == "1"] = 1
+newPeru1$G_Q02an[newPeru1$G_Q02a == "2"] = 2
+newPeru1$G_Q02an[newPeru1$G_Q02a == "3"] = 3
+newPeru1$G_Q02an[newPeru1$G_Q02a == "4"] = 4
+newPeru1$G_Q02an[newPeru1$G_Q02a == "5"] = 5
+
+# G_Q02b
+
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "1"] = 1
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "2"] = 2
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "3"] = 3
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "4"] = 4
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "5"] = 5
+newPeru1$G_Q02bn[newPeru1$G_Q02b== "N"] = NA
+
+# G_Q02c
+
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "N"] = NA
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "1"] = 1
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "2"] = 2
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "3"] = 3
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "4"] = 4
+newPeru1$G_Q02cn[newPeru1$G_Q02c == "5"] = 5
+
+# G_Q02d
+
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "N"] = NA
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "1"] = 1
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "2"] = 2
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "3"] = 3
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "4"] = 4
+newPeru1$G_Q02dn[newPeru1$G_Q02d == "5"] = 5
+
+# G_Q03b
+
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "D"] = NA
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "N"] = NA
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "1"] = 1
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "2"] = 2
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "3"] = 3
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "4"] = 4
+newPeru1$G_Q03bn[newPeru1$G_Q03b == "5"] = 5
+
+# G_Q03c
+
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "N"] = NA
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "1"] = 1
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "2"] = 2
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "3"] = 3
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "4"] = 4
+newPeru1$G_Q03cn[newPeru1$G_Q03c == "5"] = 5
+
+# G_Q03d
+
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "N"] = NA
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "1"] = 1
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "2"] = 2
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "3"] = 3
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "4"] = 4
+newPeru1$G_Q03dn[newPeru1$G_Q03d == "5"] = 5
+
+# G_Q03f
+
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "N"] = NA
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "1"] = 1
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "2"] = 2
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "3"] = 3
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "4"] = 4
+newPeru1$G_Q03fn[newPeru1$G_Q03f == "5"] = 5
+
+# G_Q03g
+
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "N"] = NA
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "1"] = 1
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "2"] = 2
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "3"] = 3
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "4"] = 4
+newPeru1$G_Q03gn[newPeru1$G_Q03g == "5"] = 5
+
+# G_Q03h
+
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "N"] = NA
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "1"] = 1
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "2"] = 2
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "3"] = 3
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "4"] = 4
+newPeru1$G_Q03hn[newPeru1$G_Q03h == "5"] = 5
+
+# G_Q04
+
+newPeru1$G_Q04n[newPeru1$G_Q04 == "N"] = NA
+newPeru1$G_Q04n[newPeru1$G_Q04 == "1"] = 0
+newPeru1$G_Q04n[newPeru1$G_Q04 == "2"] = 1
+
+# G_Q05a
+
+newPeru1$G_Q05an[newPeru1$G_Q05a == "V"] = NA
+newPeru1$G_Q05an[newPeru1$G_Q05a == "N"] = NA
+newPeru1$G_Q05an[newPeru1$G_Q05a == "1"] = 1
+newPeru1$G_Q05an[newPeru1$G_Q05a == "2"] = 2
+newPeru1$G_Q05an[newPeru1$G_Q05a == "3"] = 3
+newPeru1$G_Q05an[newPeru1$G_Q05a == "4"] = 4
+newPeru1$G_Q05an[newPeru1$G_Q05a == "5"] = 5
+
+# G_Q05c
+
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "V"] = NA
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "N"] = NA
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "1"] = 1
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "2"] = 2
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "3"] = 3
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "4"] = 4
+newPeru1$G_Q05cn[newPeru1$G_Q05c == "5"] = 5
+
+#G_Q05d 
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "V"] = NA
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "N"] = NA
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "1"] = 1
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "2"] = 2
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "3"] = 3
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "4"] = 4
+newPeru1$G_Q05dn[newPeru1$G_Q05d == "5"] = 5
+
+#G_Q05e
+
+newPeru1$G_Q05en[newPeru1$G_Q05e == "V"] = NA
+newPeru1$G_Q05en[newPeru1$G_Q05e == "N"] = NA
+newPeru1$G_Q05en[newPeru1$G_Q05e == "1"] = 1
+newPeru1$G_Q05en[newPeru1$G_Q05e == "2"] = 2
+newPeru1$G_Q05en[newPeru1$G_Q05e == "3"] = 3
+newPeru1$G_Q05en[newPeru1$G_Q05e == "4"] = 4
+newPeru1$G_Q05en[newPeru1$G_Q05e == "5"] = 5
+
+#G_Q05g 
+
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "V"] = NA
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "N"] = NA
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "1"] = 1
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "2"] = 2
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "3"] = 3
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "4"] = 4
+newPeru1$G_Q05gn[newPeru1$G_Q05g == "5"] = 5
+
+#G_Q05h
+
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "V"] =NA
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "N"] =NA
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "1"] =1
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "2"] =2
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "3"] =3
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "4"] =4
+newPeru1$G_Q05hn[newPeru1$G_Q05h == "5"] =5
+
+
+#G_Q06
+
+newPeru1$G_Q06n[newPeru1$G_Q06 == "V"] =NA
+newPeru1$G_Q06n[newPeru1$G_Q06 == "N"] =NA
+newPeru1$G_Q06n[newPeru1$G_Q06 == "R"] =NA
+newPeru1$G_Q06n[newPeru1$G_Q06 == "1"] =1
+newPeru1$G_Q06n[newPeru1$G_Q06 == "2"] =2
+newPeru1$G_Q06n[newPeru1$G_Q06 == "3"] =3
+newPeru1$G_Q06n[newPeru1$G_Q06 == "4"] =4
+newPeru1$G_Q06n[newPeru1$G_Q06 == "5"] =5
+
+#G_Q07
+
+newPeru1$G_Q07n[newPeru1$G_Q07 == "V"] =NA
+newPeru1$G_Q07n[newPeru1$G_Q07 == "N"] =NA
+newPeru1$G_Q07n[newPeru1$G_Q07 == "1"] =0
+newPeru1$G_Q07n[newPeru1$G_Q07 == "2"] =1
+
+#G_Q08 
+
+newPeru1$G_Q08n[newPeru1$G_Q08 == "V"] =NA
+newPeru1$G_Q08n[newPeru1$G_Q08 == "N"] =NA
+newPeru1$G_Q08n[newPeru1$G_Q08 == "D"] =NA
+newPeru1$G_Q08n[newPeru1$G_Q08 == "R"] =NA
+newPeru1$G_Q08n[newPeru1$G_Q08 == "1"] =0
+newPeru1$G_Q08n[newPeru1$G_Q08 == "2"] =1
+
+#H_q01a
+
+newPeru1$H_Q01an[newPeru1$H_Q01a == "N"] =NA
+newPeru1$H_Q01an[newPeru1$H_Q01a == "1"] =1
+newPeru1$H_Q01an[newPeru1$H_Q01a == "2"] =2
+newPeru1$H_Q01an[newPeru1$H_Q01a == "3"] =3
+newPeru1$H_Q01an[newPeru1$H_Q01a == "4"] =4
+newPeru1$H_Q01an[newPeru1$H_Q01a == "5"] =5
+
+#H_q01b
+
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "N"] =NA
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "1"] =1
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "2"] =2
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "3"] =3
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "4"] =4
+newPeru1$H_Q01bn[newPeru1$H_Q01b == "5"] =5
+
+#H_q01b_T
+
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "N"] =NA
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "1"] =1
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "2"] =2
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "3"] =3
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "4"] =4
+newPeru1$H_Q01b_Tn[newPeru1$H_Q01b_T == "5"] =5
+
+#H_q01c
+
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "N"] =NA
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "1"] =1
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "2"] =2
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "3"] =3
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "4"] =4
+newPeru1$H_Q01cn[newPeru1$H_Q01c == "5"] =5
+
+#H_q01c_T
+
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "N"] =NA
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "1"] =1
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "2"] =2
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "3"] =3
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "4"] =4
+newPeru1$H_Q01c_Tn[newPeru1$H_Q01c_T == "5"] =5
+
+#H_q01d
+
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "N"] =NA
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "1"] =1
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "2"] =2
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "3"] =3
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "4"] =4
+newPeru1$H_Q01dn[newPeru1$H_Q01d == "5"] =5
+
+#H_q01e
+
+newPeru1$H_Q01en[newPeru1$H_Q01e == "N"] =NA
+newPeru1$H_Q01en[newPeru1$H_Q01e == "R"] =NA
+newPeru1$H_Q01en[newPeru1$H_Q01e == "1"] =1
+newPeru1$H_Q01en[newPeru1$H_Q01e == "2"] =2
+newPeru1$H_Q01en[newPeru1$H_Q01e == "3"] =3
+newPeru1$H_Q01en[newPeru1$H_Q01e == "4"] =4
+newPeru1$H_Q01en[newPeru1$H_Q01e == "5"] =5
+
+#H_q01e_T
+
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "N"] =NA
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "R"] =NA
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "1"] =1
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "2"] =2
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "3"] =3
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "4"] =4
+newPeru1$H_Q01e_Tn[newPeru1$H_Q01e_T == "5"] =5
+
+#H_q01f
+
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "N"] =NA
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "R"] =NA
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "1"] =1
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "2"] =2
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "3"] =3
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "4"] =4
+newPeru1$H_Q01fn[newPeru1$H_Q01f == "5"] =5
+
+#H_q01g
+
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "N"] =NA
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "1"] =1
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "2"] =2
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "3"] =3
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "4"] =4
+newPeru1$H_Q01gn[newPeru1$H_Q01g == "5"] =5
+
+#H_q01h 
+
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "1"] = 1
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "2"] = 2
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "3"] = 3
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "4"] = 4
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "5"] = 5
+newPeru1$H_Q01hn[newPeru1$H_Q01h== "N"] = NA
+
+#H_q02a
+
+newPeru1$H_Q02an[newPeru1$H_Q02a== "1"] = 1
+newPeru1$H_Q02an[newPeru1$H_Q02a== "2"] = 2
+newPeru1$H_Q02an[newPeru1$H_Q02a== "3"] = 3
+newPeru1$H_Q02an[newPeru1$H_Q02a== "4"] = 4
+newPeru1$H_Q02an[newPeru1$H_Q02a== "5"] = 5
+newPeru1$H_Q02an[newPeru1$H_Q02a== "N"] = NA
+
+#H_q02b
+
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "1"] = 1
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "2"] = 2
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "3"] = 3
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "4"] = 4
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "5"] = 5
+newPeru1$H_Q02bn[newPeru1$H_Q02b== "N"] = NA
+
+#H_q02c
+
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "1"] = 1
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "2"] = 2
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "3"] = 3
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "4"] = 4
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "5"] = 5
+newPeru1$H_Q02cn[newPeru1$H_Q02c== "N"] = NA
+
+#H_q02d
+
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "1"] = 1
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "2"] = 2
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "3"] = 3
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "4"] = 4
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "5"] = 5
+newPeru1$H_Q02dn[newPeru1$H_Q02d== "N"] = NA
+
+#H_q03b
+
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "1"] = 1
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "2"] = 2
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "3"] = 3
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "4"] = 4
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "5"] = 5
+newPeru1$H_Q03bn[newPeru1$H_Q03b== "N"] = NA
+
+#H_q03c
+
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "1"] = 1
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "2"] = 2
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "3"] = 3
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "4"] = 4
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "5"] = 5
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "D"] = NA
+newPeru1$H_Q03cn[newPeru1$H_Q03c== "N"] = NA
+
+#H_q03d
+
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "1"] = 1
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "2"] = 2
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "3"] = 3
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "4"] = 4
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "5"] = 5
+newPeru1$H_Q03dn[newPeru1$H_Q03d== "N"] = NA
+
+#H_q03f
+
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "1"] = 1
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "2"] = 2
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "3"] = 3
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "4"] = 4
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "5"] = 5
+newPeru1$H_Q03fn[newPeru1$H_Q03f== "N"] = NA
+
+#H_q03g
+
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "1"] = 1
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "2"] = 2
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "3"] = 3
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "4"] = 4
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "5"] = 5
+newPeru1$H_Q03gn[newPeru1$H_Q03g== "N"] = NA
+
+#H_q03h
+
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "1"] = 1
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "2"] = 2
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "3"] = 3
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "4"] = 4
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "5"] = 5
+newPeru1$H_Q03hn[newPeru1$H_Q03h== "N"] = NA
+
+#H_Q04a
+
+newPeru1$H_Q04an[newPeru1$H_Q04a == "V"] =NA
+newPeru1$H_Q04an[newPeru1$H_Q04a == "N"] =NA
+newPeru1$H_Q04an[newPeru1$H_Q04a == "1"] =0
+newPeru1$H_Q04an[newPeru1$H_Q04a == "2"] =1
+
+#H_Q04b
+
+newPeru1$H_Q04bn[newPeru1$H_Q04b == "V"] =NA
+newPeru1$H_Q04bn[newPeru1$H_Q04b == "N"] =NA
+newPeru1$H_Q04bn[newPeru1$H_Q04b == "1"] =0
+newPeru1$H_Q04bn[newPeru1$H_Q04b == "2"] =1
+
+#H_Q05a
+
+newPeru1$H_Q05an[newPeru1$H_Q05a == "V"] =NA
+newPeru1$H_Q05an[newPeru1$H_Q05a == "N"] =NA
+newPeru1$H_Q05an[newPeru1$H_Q05a == "1"] =1
+newPeru1$H_Q05an[newPeru1$H_Q05a == "2"] =2
+newPeru1$H_Q05an[newPeru1$H_Q05a == "3"] =3
+newPeru1$H_Q05an[newPeru1$H_Q05a == "4"] =4
+newPeru1$H_Q05an[newPeru1$H_Q05a == "5"] =5
+
+#H_Q05c
+
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "V"] =NA
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "N"] =NA
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "1"] =1
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "2"] =2
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "3"] =3
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "4"] =4
+newPeru1$H_Q05cn[newPeru1$H_Q05c == "5"] =5
+
+#H_Q05d
+
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "V"] =NA
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "N"] =NA
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "1"] =1
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "2"] =2
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "3"] =3
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "4"] =4
+newPeru1$H_Q05dn[newPeru1$H_Q05d == "5"] =5
+
+#H_Q05e
+
+newPeru1$H_Q05en[newPeru1$H_Q05e == "V"] =NA
+newPeru1$H_Q05en[newPeru1$H_Q05e == "N"] =NA
+newPeru1$H_Q05en[newPeru1$H_Q05e == "1"] =1
+newPeru1$H_Q05en[newPeru1$H_Q05e == "2"] =2
+newPeru1$H_Q05en[newPeru1$H_Q05e == "3"] =3
+newPeru1$H_Q05en[newPeru1$H_Q05e == "4"] =4
+newPeru1$H_Q05en[newPeru1$H_Q05e == "5"] =5
+
+#H_Q05f
+
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "V"] =NA
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "N"] =NA
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "1"] =1
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "2"] =2
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "3"] =3
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "4"] =4
+newPeru1$H_Q05fn[newPeru1$H_Q05f == "5"] =5
+
+#H_Q05g
+
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "V"] =NA
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "N"] =NA
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "1"] =1
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "2"] =2
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "3"] =3
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "4"] =4
+newPeru1$H_Q05gn[newPeru1$H_Q05g == "5"] =5
+
+#H_Q05h
+
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "V"] =NA
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "N"] =NA
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "1"] =1
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "2"] =2
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "3"] =3
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "4"] =4
+newPeru1$H_Q05hn[newPeru1$H_Q05h == "5"] =5
+
+#J_Q03a
+
+newPeru1$J_Q03an[newPeru1$J_Q03a == "N"] = NA
+newPeru1$J_Q03an[newPeru1$J_Q03a == "1"] = 0
+newPeru1$J_Q03an[newPeru1$J_Q03a == "2"] = 1
+
+#J_Q03b
+
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "N"] = NA
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "R"] = NA
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "V"] = NA
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "1"] = 1
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "2"] = 2
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "3"] = 3
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "4"] = 4
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "5"] = 5
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "6"] = 6
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "7"] = 7
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "8"] = 8
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "9"] = 9
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "10"] = 10
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "11"] = 11
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "12"] = 12
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "13"] = 13
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "16"] = 16
+newPeru1$J_Q03bn[newPeru1$J_Q03b == "19"] = 19
+
+#J_Q06b
+
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "1"] = 1
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "2"] = 2
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "3"] = 3
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "D"] = NA
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "N"] = NA
+newPeru1$J_Q06bn[newPeru1$J_Q06b== "R"] = NA
+
+#J_Q07b
+
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "1"] = 1
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "2"] = 2
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "3"] = 3
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "D"] = NA
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "N"] = NA
+newPeru1$J_Q07bn[newPeru1$J_Q07b== "R"] = NA
+
+```
+
+<br>
+
+**Dropping NAs**
+
+<br>
