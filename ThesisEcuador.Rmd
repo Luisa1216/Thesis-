@@ -67,6 +67,11 @@ newEcuador2 <- drop_na(newEcuador, YEARLYINCPR)
 barplot(table(newEcuador1$GENDER_R))
 newEcuador1 %>% count(GENDER_R)
 
+# Subsetting the basic IT skills 
+
+EcuadorICTindex<-newEcuador1 %>% 
+  select( "G_Q04n", "G_Q04_Tn", "COMPUTEREXPERIENCE")
+
 # Education status
 newEcuador1 %>% count(B_Q01a)
 newEcuador1 %>% count(B_Q01a_T)
@@ -512,6 +517,14 @@ newEcuador1$G_Q04n[newEcuador1$G_Q04 == "N"] = NA
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "1"] = 0
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "2"] = 1
 
+#G_Q04_T
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "D"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "V"] = NA
+newEcuador1$G_Q04_Tnn[newEcuador1$G_Q04 == "R"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "N"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "1"] = 1
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "2"] = 2
+
 # G_Q05a
 
 newEcuador1$G_Q05an[newEcuador1$G_Q05a == "V"] = NA
@@ -927,3 +940,19 @@ newEcuador1$J_Q07bn[newEcuador1$J_Q07b== "R"] = NA
 **Dropping NAs**
 
 <br>
+
+
+```{r}
+#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+std_data = as.data.frame(apply(newEcuador1[87:166],2,standardize))
+```
+
+```{r}
+
+```
+

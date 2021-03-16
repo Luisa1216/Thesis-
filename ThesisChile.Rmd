@@ -23,7 +23,7 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv", header=T, na.strings=c(""))
+Chile <-read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgchlp1.csv", header=T, na.strings=c(""))
 
 ```
 
