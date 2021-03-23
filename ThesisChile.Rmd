@@ -23,7 +23,7 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Chile <-read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgchlp1.csv", header=T, na.strings=c(""))
+Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv", header=T, na.strings=c(""))
 
 ```
 
@@ -35,17 +35,17 @@ Chile <-read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgchlp1.csv", header=T, 
 
 1. Selection of variables per group of skills ICT, Numeracy and Literacy
 
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 5212 observations to 3109.
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 1176 Vs out of 2382 observations. 
---> For ICT skills in daily life 859 Vs  and one N out of 2382 observations. 
+--> For ICT skills in work they have 1599 Vs out of 3109 observations. 
+--> For ICT skills in daily life 1142 Vs  and one N out of 3109 observations. 
 
 --> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 2 NAs and no Vs
 
 --> Computer experience in job G_Q04 and G_Q04_T were complete
 
---> Computer experience in daily life H_Q04a registered 1206 V and H_Q04b 364 V
+--> Computer experience in daily life H_Q04a registered 1510 V and H_Q04b 513 V
 
 
 <br>
@@ -97,28 +97,28 @@ newChile1 %>% count(D_Q18a_T) # 13 NA
 
 # ICT skills in Job
 newChile1 %>% count(G_Q04) # experience with computer in job yes no Complete
-newChile1%>% count(G_Q04_T) # Complete
-newChile1 %>% count(COMPUTEREXPERIENCE) #******
-newChile1 %>% count(G_Q05a) # 1176 
-newChile1 %>% count(G_Q05c) # 1176 + r 1
-newChile1%>% count(G_Q05d) # # 1176 
-newChile1 %>% count(G_Q05e) # # 1176
-newChile1 %>% count(G_Q05g) # # 1176
-newChile1%>% count(G_Q05h) # 1176
-newChile1%>% count(G_Q06) # 1176
-newChile1 %>% count(G_Q07) # 1176 
-newChile1 %>% count(G_Q08) # 1176
+newChile1%>% count(G_Q04_T) # ever use a computer dComplete
+newChile1 %>% count(COMPUTEREXPERIENCE) # 2 Nas
+newChile1 %>% count(G_Q05a) #  1599
+newChile1 %>% count(G_Q05c) # 1599+ r 1
+newChile1%>% count(G_Q05d) # # 1599
+newChile1 %>% count(G_Q05e) # # 1599
+newChile1 %>% count(G_Q05g) # # 1599
+newChile1%>% count(G_Q05h) # 1599
+newChile1%>% count(G_Q06) # 1599
+newChile1 %>% count(G_Q07) # 1599 
+newChile1 %>% count(G_Q08) # 1599
 
 #ICT skills in daily life
-newChile1 %>% count(H_Q04a) # 1206 V + 1 N experience with compiuter every life
-newChile1 %>% count(H_Q04b) # 364 + 1 n
-newChile1 %>% count(H_Q05a) # 859 V + 1 N   
-newChile1 %>% count(H_Q05c) # 859 V + 1 N 
-newChile1 %>% count(H_Q05d) # 859 V + 1 N  
-newChile1 %>% count(H_Q05e) # 859 V + 1 N 
-newChile1 %>% count(H_Q05f) # 859 V + 1 N 
-newChile1 %>% count(H_Q05g) # 859 V + 1 N  
-newChile1 %>% count(H_Q05h) # 859 V + 1 N  
+newChile1 %>% count(H_Q04a) # 1510 V + 1 N experience with compiuter every life
+newChile1 %>% count(H_Q04b) # 513 + 1 n
+newChile1 %>% count(H_Q05a) # 1142 V + 1 N   
+newChile1 %>% count(H_Q05c) # 1142 V + 1 N 
+newChile1 %>% count(H_Q05d) # 1142 V + 1 N  
+newChile1 %>% count(H_Q05e) # 1142 V + 1 N 
+newChile1 %>% count(H_Q05f) # 1142 V + 1 N  
+newChile1 %>% count(H_Q05g) # 1142 V + 1 N  
+newChile1 %>% count(H_Q05h) # 1142 V + 1 N   
 
 # Children and parents level of education
 newChile1 %>% count(J_Q03a)
@@ -271,6 +271,9 @@ newChile1$B_Q01bn[newChile1$B_Q01b == "7"] = 7
 newChile1$B_Q01bn[newChile1$B_Q01b == "8"] = 8
 newChile1$B_Q01bn[newChile1$B_Q01b == "9"] = 9
 
+#C_Q01a
+newChile1$C_Q01an[newChile1$C_Q01a == "N"] = NA
+
 # C_Q01c
 newChile1$C_Q01cn[newChile1$C_Q01c == "V"] = NA
 
@@ -305,6 +308,7 @@ newChile1$D_Q16an[newChile1$D_Q16a == "4"] = 4
 newChile1$D_Q16an[newChile1$D_Q16a == "5"] = 5
 newChile1$D_Q16an[newChile1$D_Q16a == "6"] = 6
 newChile1$D_Q16an[newChile1$D_Q16a == "7"] = 7
+
 
 #F_Q01b
 
@@ -520,13 +524,11 @@ newChile1$G_Q04n[newChile1$G_Q04 == "N"] = NA
 newChile1$G_Q04n[newChile1$G_Q04 == "1"] = 0
 newChile1$G_Q04n[newChile1$G_Q04 == "2"] = 1
 
-#G_Q04_T
-newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "D"] = NA
-newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "V"] = NA
-newChile1$G_Q04_Tnn[newEcuador1$G_Q04 == "R"] = NA
-newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "N"] = NA
-newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "1"] = 1
-newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "2"] = 2
+# G_Q04_T
+
+newChile1$G_Q04_Tn[newChile1$G_Q04_T == "N"] = NA
+newChile1$G_Q04_Tn[newChile1$G_Q04_T == "1"] = 0
+newChile1$G_Q04_Tn[newChile1$G_Q04_T == "2"] = 1
 
 # G_Q05a
 
@@ -937,6 +939,11 @@ newChile1$J_Q07bn[newChile1$J_Q07b== "D"] = NA
 newChile1$J_Q07bn[newChile1$J_Q07b== "N"] = NA
 newChile1$J_Q07bn[newChile1$J_Q07b== "R"] = NA
 
+# Creation of new subset 
+
+subChile <- newChile1 %>% 
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "C_Q01cn", "C_Q02an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+
 
 ```
 
@@ -947,4 +954,48 @@ newChile1$J_Q07bn[newChile1$J_Q07b== "R"] = NA
 
 
 <br>
+```{r}
 
+
+#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+
+std_dataC = as.data.frame(apply(subChile,2,standardize))
+
+# Creation of the first index of ICT skills for work 
+
+std_dataC$meanict <- (std_dataC$G_Q05an + std_dataC$G_Q05cn + std_dataC$G_Q05dn + std_dataC$G_Q05en + std_dataC$G_Q05gn + std_dataC$G_Q06n + std_dataC$G_Q07n + std_dataC$G_Q08n)/8
+
+# Creation  of a more general index of ICT with only 3  variables 
+
+std_dataC$meanictBasic <- (std_dataC$G_Q04n + std_dataC$G_Q04_Tn + std_dataC$COMPUTEREXPERIENCE)/3
+
+# Index of Education status
+
+std_dataC$meanEducation <- (std_dataC$B_Q01an + std_dataC$B_Q01a_Tn + std_dataC$B_Q02an + std_dataC$B_Q01bn)/4
+
+# Index of Work status
+
+std_dataC$meanWorkS <- (std_dataC$C_Q01an + std_dataC$D_Q03n + std_dataC$D_Q14n + std_dataC$D_Q18a_T)/4
+
+# Index of Work status
+
+std_dataC$meanWorkS <- (std_dataC$C_Q01an + std_dataC$D_Q03n + std_dataC$D_Q14n + std_dataC$D_Q18a_T)/4
+
+# Index of Soft skills 
+
+std_dataC$meanSoftS <- (std_dataC$F_Q01bn + std_dataC$F_Q02bn + std_dataC$F_Q02cn + std_dataC$F_Q02dn + std_dataC$F_Q02en + std_dataC$F_Q03bn + std_dataC$F_Q04an + std_dataC$F_Q05an + std_dataC$F_Q05bn)/9
+
+# Index of Numeracy skills 
+
+std_dataC$meanNumeracyS <- (std_dataC$G_Q03bn + std_dataC$G_Q03cn + std_dataC$G_Q03dn + std_dataC$G_Q03fn + std_dataC$G_Q03gn + std_dataC$G_Q03hn)/6
+
+# Index of Literacy skills 
+
+std_dataC$meanLiteracyS <- (std_dataC$G_Q01an + std_dataC$G_Q02an + std_dataC$G_Q02bn + std_dataC$G_Q02cn + std_dataC$G_Q02dn)/5
+
+```

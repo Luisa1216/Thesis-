@@ -20,10 +20,7 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-
-
-#Ecuador <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
-Ecuador <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
+Ecuador <- read.csv("//Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
 ```
 
 <br>
@@ -32,21 +29,17 @@ Ecuador <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgecup1.csv")
 
 1. Selection of variables per group of skills ICT, Numeracy and Literacy
 
-<<<<<<< HEAD
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR[2788], EARNMTHPPP[3823], EARNHR[3823], EARNHRBONUS[3823], EARNHRBONUSPPP[3823]. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 5702 observations to 2914. 
-=======
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR[2788], EARNMTHPPP[3823], EARNHR[3823], EARNHRBONUS[3823], EARNHRBONUSPPP[3823]. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 5702 observations to 2914. 
->>>>>>> 21a7a1ad0853acdf1bf93a662b5d90b3b7e85d27
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 2024 Vs, 1 N  out of 2914 observations. 
---> For ICT skills in daily life 1674 V, 1 N out of 3459 observations. 
+--> For ICT skills in work they have 2377 Vs out of 3459 observations. 
+--> For ICT skills in daily life 2205 Vs out of 3459 observations. 
 
 --> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs
 
---> Computer experience in job G_Q04 registered only 1 N and same for G_Q04_T
+--> Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T
 
---> Computer experience in daily life H_Q04a registered 889 V 1 N  and H_Q04b 1 V 887 
+--> Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V
 
 
 <br>
@@ -65,8 +58,7 @@ table(is.na(newEcuador$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newEcuador1 <- drop_na(newEcuador, MONTHLYINCPR)
-newEcuador2 <- drop_na(newEcuador, YEARLYINCPR)
+newEcuador1 <- drop_na(newEcuador, YEARLYINCPR)
 
 # Number of women and men 
 
@@ -74,80 +66,72 @@ newEcuador2 <- drop_na(newEcuador, YEARLYINCPR)
 barplot(table(newEcuador1$GENDER_R))
 newEcuador1 %>% count(GENDER_R)
 
-# Subsetting the basic IT skills 
-
-
-#EcuadorICTindex<-newEcuador1 %>% 
-  #select( "G_Q04n", "G_Q04_Tn", "COMPUTEREXPERIENCE")
-
 # Education status
 newEcuador1 %>% count(B_Q01a)
 newEcuador1 %>% count(B_Q01a_T)
 newEcuador1 %>% count(B_Q02a)
-newEcuador1 %>% count(B_Q02c) # 2699 Vs
-newEcuador1 %>% count(B_Q10c) # 2682 Vs
-newEcuador1 %>% count(B_Q01b) # 1451 Vs
+newEcuador1 %>% count(B_Q02c) #x - 3224 V ESTA 1
+newEcuador1 %>% count(B_Q10c) #x- 3176 V ESTA 2
+newEcuador1 %>% count(B_Q01b) # 2134 v ESTA 3
 
 # Work status 
 newEcuador1 %>% count(C_Q01a)
-newEcuador1 %>% count(C_Q01c) # 2914 Vs
-newEcuador1 %>% count(C_Q02a) # 2914
-newEcuador1 %>% count(D_Q03) # D 5 - R 2
+newEcuador1 %>% count(C_Q01c) # 3459 v ESTA 4
+newEcuador1 %>% count(C_Q02a) # 3459 v ESTA 5 
+newEcuador1 %>% count(D_Q03) # D 42 - r21 
 newEcuador1 %>% count(D_Q14) #
-newEcuador1 %>% count(D_Q16a) # V 1150
-newEcuador1 %>% count(D_Q18a_T) # 18 NA 
+newEcuador1 %>% count(D_Q16a) # V 1008
+newEcuador1 %>% count(D_Q18a_T) # 13 NA 
 
 
 # ICT skills in Job
-newEcuador1 %>% count(G_Q04) # experience with computer in job yes no / N 1 
-newEcuador1%>% count(G_Q04_T) # N 1 
-newEcuador1 %>% count(COMPUTEREXPERIENCE) # NA 2 
-newEcuador1 %>% count(G_Q05a) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q05c) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q05d) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q05e) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q05g) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q05h) # N 1 , V 2024 
-newEcuador1 %>% count(G_Q06) #  N 1 , V 2024 
-newEcuador1 %>% count(G_Q07) #  N 1 , V 2024 
-newEcuador1 %>% count(G_Q08) #  N 1 , V 2024 , R 2 
-
+newEcuador1 %>% count(G_Q04) # experience with computer in job yes no 
+newEcuador1%>% count(G_Q04_T) #** 4 N
+newEcuador1 %>% count(COMPUTEREXPERIENCE) #******
+newEcuador1 %>% count(G_Q05a) # 2377 v ESTA 6 
+newEcuador1 %>% count(G_Q05c) # 2377 v ESTA 7 
+newEcuador1 %>% count(G_Q05d) # 2377 ESTA 8 
+newEcuador1 %>% count(G_Q05e) # 2377 ESTA 9 
+newEcuador1 %>% count(G_Q05g) # 2377 ESTA 10 
+newEcuador1 %>% count(G_Q05h) # 2377 ESTA 11 
+newEcuador1 %>% count(G_Q06) # 2377 ESTA 12 
+newEcuador1 %>% count(G_Q07) # 2377 ESTA 13 
+newEcuador1 %>% count(G_Q08) # 2377 ESTA 15 
 
 #ICT skills in daily life
-newEcuador1 %>% count(H_Q04a) # 889 V 1 N 
-newEcuador1 %>% count(H_Q04b) # 1 V 887 
-newEcuador1 %>% count(H_Q05a) # 1674 V N 1 
-newEcuador1 %>% count(H_Q05c) # 1 N 1674 V 
-newEcuador1 %>% count(H_Q05d) # 1 N 1674 V
-newEcuador1 %>% count(H_Q05e) # 1674 V N 1 
-newEcuador1 %>% count(H_Q05f) #1674 V N 1 
-newEcuador1 %>% count(H_Q05g) # 1674 V N 1 
-newEcuador1 %>% count(H_Q05h) # 1674 V N 1  
-
+newEcuador1 %>% count(H_Q04a) # 1074 V experience with compiuter every life
+newEcuador1 %>% count(H_Q04b) # 1198 
+newEcuador1 %>% count(H_Q05a) # 2205 ESTA 16 
+newEcuador1 %>% count(H_Q05c) # 2205 ESTA 17 
+newEcuador1 %>% count(H_Q05d) # 2205 ESTA 18 
+newEcuador1 %>% count(H_Q05e) # 2205 ESTA 19 
+newEcuador1 %>% count(H_Q05f) # 2205 ESTA 20 
+newEcuador1 %>% count(H_Q05g) # 2205 ESTA 21 
+newEcuador1 %>% count(H_Q05h) # 2205 ESTA 22 
 
 # Children and parents level of education
-newEcuador1 %>% count(J_Q03a) #N 2 
-newEcuador1 %>% count(J_Q03b) # V 725 R 1 N 1 
-newEcuador1 %>% count(J_Q06b) # D 78 N 2 R 11
+newEcuador1 %>% count(J_Q03a)
+newEcuador1 %>% count(J_Q03b) #943
+newEcuador1 %>% count(J_Q06b) 
 
 # Soft skills 
-newEcuador1 %>% count(F_Q01b) # V 863
-newEcuador1 %>% count(F_Q02b) # D 1 
-newEcuador1 %>% count(F_Q02c) # D 1 
-newEcuador1 %>% count(F_Q02d) # R 1 
-newEcuador1 %>% count(F_Q02e)# D 2 
-newEcuador1 %>% count(F_Q03b)# D 1 
-newEcuador1 %>% count(F_Q04a)# D 2
-newEcuador1 %>% count(F_Q04b)# D 2 
-newEcuador1 %>% count(F_Q05a) # D 2 
-newEcuador1 %>% count(F_Q05b)# R 3 
+newEcuador1 %>% count(F_Q01b) #748
+newEcuador1 %>% count(F_Q02b) 
+newEcuador1 %>% count(F_Q02c)
+newEcuador1 %>% count(F_Q02d)
+newEcuador1 %>% count(F_Q02e)
+newEcuador1 %>% count(F_Q03b)
+newEcuador1 %>% count(F_Q04a)
+newEcuador1 %>% count(F_Q04b)
+newEcuador1 %>% count(F_Q05a)
+newEcuador1 %>% count(F_Q05b)
 
 # Literacy work 
 newEcuador1 %>% count(G_Q01a)
-newEcuador1 %>% count(G_Q02a)# D 1 # N 1
-newEcuador1 %>% count(G_Q02b) # N 1 
-newEcuador1 %>% count(G_Q02c)# N 1
-newEcuador1 %>% count(G_Q02d)# N 1 
+newEcuador1 %>% count(G_Q02a)
+newEcuador1 %>% count(G_Q02b)
+newEcuador1 %>% count(G_Q02c)
+newEcuador1 %>% count(G_Q02d)
 
 # Numeracy work 
 newEcuador1 %>% count(G_Q03b)
@@ -185,18 +169,16 @@ newEcuador1 %>% count(H_Q03h)
 newEcuador1 %>% count(REG_TL2)
 
 ## Income variables
-options(max.print=999999)
-Ecuador %>% count(YEARLYINCPR) #2788
-Ecuador %>% count(MONTHLYINCPR) #2788
-Ecuador  %>% count(EARNMTH) #3823 
-Ecuador  %>% count(EARNMTHPPP) #3823
-Ecuador  %>% count(EARNHR)#3823
-Ecuador  %>% count(EARNHRBONUSPPP) # 3823 ESPACIOS VACIOS 
-Ecuador  %>% count(EARNHRBONUS) # 3823
-Ecuador  %>% count(ICTWORK) #4514Vs +65 Ns
-Ecuador  %>% count(EARNHRBONUSPPP) # 3823
-Ecuador  %>% count(EARNFLAG) #2402 vs - 386 Ns 
+Ecuador %>% count(YEARLYINCPR) #2847
+Ecuador  %>% count(EARNMTH) #2847
+Ecuador  %>% count(EARNMTHPPP) #3t68
+Ecuador  %>% count(EARNHR)#3758
+Ecuador  %>% count(EARNHRBONUS) # 97 ESPACIOS VACIOS 
+Ecuador  %>% count(ICTWORK)
+Ecuador  %>% count(EARNHRBONUSPPP) # 97 vacios usd 
+Ecuador  %>% count(EARNFLAG) 
 ```
+
 <br>
 
 **Adaptation of the dataset **
@@ -524,14 +506,6 @@ newEcuador1$G_Q03hn[newEcuador1$G_Q03h == "5"] = 5
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "N"] = NA
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "1"] = 0
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "2"] = 1
-
-#G_Q04_T
-newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "D"] = NA
-newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "V"] = NA
-newEcuador1$G_Q04_Tnn[newEcuador1$G_Q04 == "R"] = NA
-newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "N"] = NA
-newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "1"] = 1
-newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "2"] = 2
 
 # G_Q05a
 
@@ -942,40 +916,9 @@ newEcuador1$J_Q07bn[newEcuador1$J_Q07b== "D"] = NA
 newEcuador1$J_Q07bn[newEcuador1$J_Q07b== "N"] = NA
 newEcuador1$J_Q07bn[newEcuador1$J_Q07b== "R"] = NA
 
-# Creation of new subset 
-
-subEcuador <- newEcuador1 %>% 
-  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01a", "C_Q01cn", "C_Q02an", "D_Q03n", "D_Q14n", "D_Q16an", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
-
-
-
 ```
 <br>
 
 **Dropping NAs**
 
 <br>
-
-
-```{r}
-
-
-#Create function to standardize 
-standardize= function(x)
-{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
-
-#Apply function to the dataset 
-
-std_data = as.data.frame(apply(newEcuador1[87:166],2,standardize))
-
-#std_data1 = as.data.frame(apply(subEcuador,2,standardize))
-
-subEcuador$meanict <- (std_data$G_Q05an + std_data$G_Q05cn + std_data$G_Q05dn + std_data$G_Q05en + std_data$G_Q05gn + std_data$G_Q06n + std_data$G_Q07n + std_data$G_Q08n)/8
-
-
-```
-
-```{r}
-
-```
-
