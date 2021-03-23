@@ -21,8 +21,8 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
-
+#Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
+Peru <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgperp1.csv")
 ```
 
 
@@ -993,5 +993,9 @@ std_dataP$meanNumeracyS <- (std_dataP$G_Q03bn + std_dataP$G_Q03cn + std_dataP$G_
 
 std_dataP$meanLiteracyS <- (std_dataP$G_Q01an + std_dataP$G_Q02an + std_dataP$G_Q02bn + std_dataP$G_Q02cn + std_dataP$G_Q02dn)/5
 
+
+
+
+#HOLA 
 
 ```

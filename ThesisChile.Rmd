@@ -23,7 +23,8 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv", header=T, na.strings=c(""))
+#Chile <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
+Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv")
 
 ```
 
@@ -87,8 +88,6 @@ newChile1 %>% count(B_Q01b) # 2134 v ESTA 3
 
 # Work status 
 newChile1 %>% count(C_Q01a)
-newChile1 %>% count(C_Q01c) # 3459 v ESTA 4
-newChile1 %>% count(C_Q02a) # 3459 v ESTA 5 
 newChile1 %>% count(D_Q03) # D 42 - r21 
 newChile1 %>% count(D_Q14) #
 newChile1 %>% count(D_Q16a) # V 1008
@@ -272,14 +271,10 @@ newChile1$B_Q01bn[newChile1$B_Q01b == "8"] = 8
 newChile1$B_Q01bn[newChile1$B_Q01b == "9"] = 9
 
 #C_Q01a
-newChile1$C_Q01an[newChile1$C_Q01a == "N"] = NA
+newChile1$C_Q01an[newChile1$C_Q01a == "D"] = NA
+newChile1$C_Q01an[newChile1$C_Q01a == "1"] = 0
+newChile1$C_Q01an[newChile1$C_Q01a == "2"] = 1
 
-# C_Q01c
-newChile1$C_Q01cn[newChile1$C_Q01c == "V"] = NA
-
-#C_Q02a
-
-newChile1$C_Q02an[newChile1$C_Q02a == "V"] = NA
 
 #D_Q03
 
@@ -942,7 +937,7 @@ newChile1$J_Q07bn[newChile1$J_Q07b== "R"] = NA
 # Creation of new subset 
 
 subChile <- newChile1 %>% 
-  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "C_Q01cn", "C_Q02an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
 
 
 ```
@@ -997,5 +992,43 @@ std_dataC$meanNumeracyS <- (std_dataC$G_Q03bn + std_dataC$G_Q03cn + std_dataC$G_
 # Index of Literacy skills 
 
 std_dataC$meanLiteracyS <- (std_dataC$G_Q01an + std_dataC$G_Q02an + std_dataC$G_Q02bn + std_dataC$G_Q02cn + std_dataC$G_Q02dn)/5
+
+```
+<br>
+
+**Regressions**
+
+
+<br>
+
+```{r}
+
+#Income and gender 
+
+IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataC)
+
+IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataC)
+
+summary(IncomeICTgenderplus) 
+
+
+IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataC)
+
+summary(IncomeICTgender) 
+
+
+IncomeICTgender2 <- lm(YEARLYINCPR ~ meanictBasic + GENDER_Rn + meanEducation +(meanictBasic*GENDER_Rn),std_dataC)
+
+summary(IncomeICTgender2) 
+
+
+IncomesoftICT <- lm(YEARLYINCPR ~  meanict + GENDER_Rn + meanSoftS + meanEducation + (meanict *meanSoftS),std_dataC)
+
+summary(IncomesoftICT) 
+
+
+IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNumeracyS + meanEducation  + J_Q03an +J_Q06bn+C_Q01an+ J_Q07bn + (meanict *meanNumeracyS),std_dataC)
+
+summary(IncomeNumeracy)
 
 ```
