@@ -69,7 +69,7 @@ table(is.na(newChile$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newChile1 <- drop_na(newChile, YEARLYINCPR)
+newChile1 <- drop_na(newChile, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -519,6 +519,14 @@ newChile1$G_Q03hn[newChile1$G_Q03h == "5"] = 5
 newChile1$G_Q04n[newChile1$G_Q04 == "N"] = NA
 newChile1$G_Q04n[newChile1$G_Q04 == "1"] = 0
 newChile1$G_Q04n[newChile1$G_Q04 == "2"] = 1
+
+#G_Q04_T
+newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "D"] = NA
+newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "V"] = NA
+newChile1$G_Q04_Tnn[newEcuador1$G_Q04 == "R"] = NA
+newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "N"] = NA
+newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "1"] = 1
+newChile1$G_Q04_Tn[newEcuador1$G_Q04 == "2"] = 2
 
 # G_Q05a
 

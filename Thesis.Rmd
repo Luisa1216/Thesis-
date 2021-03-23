@@ -97,7 +97,7 @@ newMexico1 %>% count(C_Q02a) # 3459 v ESTA 5
 newMexico1 %>% count(D_Q03) # D 42 - r21 
 newMexico1 %>% count(D_Q14) #
 newMexico1 %>% count(D_Q16a) # V 1008
-<<<<<<< HEAD
+
 newMexico1 %>% count(D_Q18a_T) # 13 NA 
 
 
@@ -106,7 +106,7 @@ newMexico1 %>% count(G_Q04) # experience with computer in job yes no 3 ns
 newMexico1%>% count(G_Q04_T) #** 3 N
 newMexico1 %>% count(COMPUTEREXPERIENCE) # 3 n
 newMexico1 %>% count(G_Q05a) # 2377 v y 3 n 
-=======
+
 newMexico1 %>% count(D_Q18a_T) # 13 NA
 newMexico1 %>% count(F_Q05a) #
 newMexico1 %>% count(F_Q05b)
@@ -114,7 +114,7 @@ newMexico1 %>% count(G_Q04) # experience with computer in job yes no
 newMexico1 %>% count(COMPUTEREXPERIENCE) #******
 Mexico%>% count(G_Q04_T) #***** 
 newMexico1 %>% count(G_Q05a) # 2377 v ESTA 6 
->>>>>>> 21a7a1ad0853acdf1bf93a662b5d90b3b7e85d27
+
 newMexico1 %>% count(G_Q05c) # 2377 v ESTA 7 
 newMexico1 %>% count(G_Q05d) # 2377 ESTA 8 
 newMexico1 %>% count(G_Q05e) # 2377 ESTA 9 
@@ -269,6 +269,9 @@ newMexico1$B_Q01bn[newMexico1$B_Q01b == "6"] = 6
 newMexico1$B_Q01bn[newMexico1$B_Q01b == "7"] = 7
 newMexico1$B_Q01bn[newMexico1$B_Q01b == "8"] = 8
 newMexico1$B_Q01bn[newMexico1$B_Q01b == "9"] = 9
+
+#C_Q01a
+newMexico1$C_Q01an[newMexico1$C_Q01a == "N"] = NA
 
 # C_Q01c
 newMexico1$C_Q01cn[newMexico1$C_Q01c == "V"] = NA
@@ -518,6 +521,12 @@ newMexico1$G_Q03hn[newMexico1$G_Q03h == "5"] = 5
 newMexico1$G_Q04n[newMexico1$G_Q04 == "N"] = NA
 newMexico1$G_Q04n[newMexico1$G_Q04 == "1"] = 0
 newMexico1$G_Q04n[newMexico1$G_Q04 == "2"] = 1
+
+# G_Q04_T
+
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == "N"] = NA
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == "1"] = 0
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == "2"] = 1
 
 # G_Q05a
 
@@ -928,9 +937,62 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== "D"] = NA
 newMexico1$J_Q07bn[newMexico1$J_Q07b== "N"] = NA
 newMexico1$J_Q07bn[newMexico1$J_Q07b== "R"] = NA
 
+# Creation of new subset 
+
+subMexico <- newMexico1 %>% 
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "C_Q01cn", "C_Q02an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+
 
 ```
 
+
+
+<br>
+```{r}
+
+
+#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+
+std_dataM= as.data.frame(apply(subMexico,2,standardize))
+
+# Creation of the first index of ICT skills for work 
+
+std_dataM$meanict <- (std_dataM$G_Q05an + std_dataM$G_Q05cn + std_dataM$G_Q05dn + std_dataM$G_Q05en + std_dataM$G_Q05gn + std_dataM$G_Q06n + std_dataM$G_Q07n + std_dataM$G_Q08n)/8
+
+# Creation  of a more general index of ICT with only 3  variables 
+
+std_dataM$meanictBasic <- (std_dataM$G_Q04n + std_dataM$G_Q04_Tn + std_dataM$COMPUTEREXPERIENCE)/3
+
+# Index of Education status
+
+std_dataM$meanEducation <- (std_dataM$B_Q01an + std_dataM$B_Q01a_Tn + std_dataM$B_Q02an + std_dataM$B_Q01bn)/4
+
+# Index of Work status
+
+std_dataM$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+
+# Index of Work status
+
+std_dataM$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+
+# Index of Soft skills 
+
+std_dataM$meanSoftS <- (std_dataM$F_Q01bn + std_dataM$F_Q02bn + std_dataM$F_Q02cn + std_dataM$F_Q02dn + std_dataM$F_Q02en + std_dataM$F_Q03bn + std_dataM$F_Q04an + std_dataM$F_Q05an + std_dataM$F_Q05bn)/9
+
+# Index of Numeracy skills 
+
+std_dataM$meanNumeracyS <- (std_dataM$G_Q03bn + std_dataM$G_Q03cn + std_dataM$G_Q03dn + std_dataM$G_Q03fn + std_dataM$G_Q03gn + std_dataM$G_Q03hn)/6
+
+# Index of Literacy skills 
+
+std_dataM$meanLiteracyS <- (std_dataM$G_Q01an + std_dataM$G_Q02an + std_dataM$G_Q02bn + std_dataM$G_Q02cn + std_dataM$G_Q02dn)/5
+
+```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
@@ -941,8 +1003,6 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 variablemissingsbygender<-newMexico1%>%
   group_by(GENDER_Rn) %>%
   miss_var_summary()
-
-
 
 
 ```
