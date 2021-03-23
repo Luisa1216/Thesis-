@@ -18,9 +18,9 @@ library(naniar)
 library(car)
 library(carData)
 library(FactoMineR)
-library("factoextra")
 library(factoextra)
 
+#Mexico <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
 Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
 
 
