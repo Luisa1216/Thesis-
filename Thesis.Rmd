@@ -21,7 +21,7 @@ library(FactoMineR)
 library("factoextra")
 library(factoextra)
 
-Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgmexp1.csv")
+Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/Thesis.Rmd")
 
 
 Chile %>% count(EARNHRBONUSPPP) 
