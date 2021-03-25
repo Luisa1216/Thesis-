@@ -50,6 +50,12 @@ Ecuador <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
 newEcuador <- Ecuador %>% 
   select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04", "G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
 
+# Subsetting the basic IT skills 
+
+EcuadorICTindex<-newEcuador1 %>% 
+  select( "G_Q04n", "G_Q04_Tn", "COMPUTEREXPERIENCE")
+
+
 gg_miss_var(newEcuador)
 
 
@@ -88,7 +94,7 @@ newEcuador1 %>% count(D_Q18a_T) # 18 NA
 
 # ICT skills in Job
 newEcuador1 %>% count(G_Q04) # experience with computer in job yes no / N 1 
-newEcuador1%>% count(G_Q04_T) # N 1 
+newEcuador1%>% count(G_Q04_T) # N 1 # ever usead a computer 
 newEcuador1 %>% count(COMPUTEREXPERIENCE) # NA 2 
 newEcuador1 %>% count(G_Q05a) # N 1 , V 2024 
 newEcuador1 %>% count(G_Q05c) # N 1 , V 2024 
@@ -511,6 +517,15 @@ newEcuador1$G_Q03hn[newEcuador1$G_Q03h == "5"] = 5
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "N"] = NA
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "1"] = 0
 newEcuador1$G_Q04n[newEcuador1$G_Q04 == "2"] = 1
+
+#G_Q04_T
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "D"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "V"] = NA
+newEcuador1$G_Q04_Tnn[newEcuador1$G_Q04 == "R"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "N"] = NA
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "1"] = 1
+newEcuador1$G_Q04_Tn[newEcuador1$G_Q04 == "2"] = 2
+
 
 # G_Q05a
 
