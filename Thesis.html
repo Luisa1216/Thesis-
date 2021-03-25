@@ -375,7 +375,7 @@ summary {
 <p><strong>First steps: preparing the data </strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Selection of variables per group of skills ICT, Numeracy and Literacy</p></li>
-<li><p>Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459.</p></li>
+<li><p>Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 6306 observations to 3459.</p></li>
 <li><p>More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. –&gt; For ICT skills in work they have 2377 Vs out of 3459 observations. –&gt; For ICT skills in daily life 2205 Vs out of 3459 observations.</p></li>
 </ol>
 <p>–&gt; However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs</p>
@@ -384,7 +384,7 @@ summary {
 <p><br></p>
 <p>###Subsetting the data</p>
 <pre class="r"><code>newMexico &lt;- Mexico %&gt;% 
-  select(&quot;AGE_R&quot;, &quot;GENDER_R&quot;,&quot;B_Q01a&quot;, &quot;B_Q01a_T&quot;, &quot;B_Q02a&quot;, &quot;B_Q02c&quot;, &quot;B_Q10c&quot;, &quot;B_Q01b&quot;, &quot;C_Q01a&quot;, &quot;C_Q01c&quot;, &quot;C_Q02a&quot;, &quot;D_Q03&quot;, &quot;D_Q14&quot;, &quot;D_Q16a&quot;, &quot;D_Q18a_T&quot;, &quot;F_Q01b&quot;,&quot;F_Q02b&quot;,&quot;F_Q02c&quot;,&quot;F_Q02d&quot;,&quot;F_Q02e&quot;,&quot;F_Q03b&quot;,&quot;F_Q04a&quot;,&quot;F_Q04b&quot;,&quot;F_Q05a&quot;,&quot;F_Q05b&quot;,&quot;F_Q07b&quot;,&quot;G_Q01a&quot;,&quot;G_Q02a&quot;,&quot;G_Q02b&quot;,&quot;G_Q02c&quot;,&quot;G_Q02d&quot;,&quot;G_Q03b&quot;,&quot;G_Q03c&quot;,&quot;G_Q03d&quot;,&quot;G_Q03f&quot;,&quot;G_Q03g&quot;,&quot;G_Q03h&quot;, &quot;G_Q04&quot;, &quot;G_Q04_T&quot;, &quot;G_Q05a&quot;, &quot;G_Q05c&quot;, &quot;G_Q05d&quot;, &quot;G_Q05e&quot;, &quot;G_Q05g&quot;, &quot;G_Q05h&quot;, &quot;G_Q06&quot;, &quot;G_Q07&quot;, &quot;G_Q08&quot;, &quot;H_Q01a&quot;, &quot;H_Q01b&quot;, &quot;H_Q01b_T&quot;, &quot;H_Q01c&quot;, &quot;H_Q01c_T&quot;, &quot;H_Q01d&quot;, &quot;H_Q01e&quot;, &quot;H_Q01e_T&quot;, &quot;H_Q01f&quot;, &quot;H_Q01g&quot;, &quot;H_Q01h&quot;, &quot;H_Q02a&quot;, &quot;H_Q02b&quot;,&quot;H_Q02c&quot;, &quot;H_Q02d&quot;, &quot;H_Q03b&quot;, &quot;H_Q03c&quot;, &quot;H_Q03d&quot;, &quot;H_Q03f&quot;, &quot;H_Q03g&quot;, &quot;H_Q03h&quot;,&quot;H_Q04a&quot;, &quot;H_Q04b&quot;, &quot;H_Q05a&quot;, &quot;H_Q05c&quot;, &quot;H_Q05d&quot;, &quot;H_Q05e&quot;, &quot;H_Q05f&quot;, &quot;H_Q05g&quot;, &quot;H_Q05h&quot;, &quot;J_Q03a&quot;, &quot;J_Q03b&quot;, &quot;J_Q06b&quot;, &quot;J_Q07b&quot;,&quot;COMPUTEREXPERIENCE&quot;, &quot;MONTHLYINCPR&quot;,&quot;YEARLYINCPR&quot;, &quot;REG_TL2&quot;)
+  select(&quot;AGE_R&quot;, &quot;GENDER_R&quot;,&quot;B_Q01a&quot;, &quot;B_Q01a_T&quot;, &quot;B_Q02a&quot;, &quot;B_Q02c&quot;, &quot;B_Q10c&quot;, &quot;B_Q01b&quot;, &quot;C_Q01a&quot;, &quot;C_Q01c&quot;, &quot;C_Q02a&quot;, &quot;D_Q03&quot;, &quot;D_Q14&quot;, &quot;D_Q16a&quot;, &quot;D_Q18a_T&quot;, &quot;F_Q01b&quot;,&quot;F_Q02b&quot;,&quot;F_Q02c&quot;,&quot;F_Q02d&quot;,&quot;F_Q02e&quot;,&quot;F_Q03b&quot;,&quot;F_Q04a&quot;,&quot;F_Q04b&quot;,&quot;F_Q05a&quot;,&quot;F_Q05b&quot;,&quot;F_Q07b&quot;,&quot;G_Q01a&quot;,&quot;G_Q02a&quot;,&quot;G_Q02b&quot;,&quot;G_Q02c&quot;,&quot;G_Q02d&quot;,&quot;G_Q03b&quot;,&quot;G_Q03c&quot;,&quot;G_Q03d&quot;,&quot;G_Q03f&quot;,&quot;G_Q03g&quot;,&quot;G_Q03h&quot;, &quot;G_Q04&quot;,&quot;G_Q04_T&quot;, &quot;G_Q05a&quot;, &quot;G_Q05c&quot;, &quot;G_Q05d&quot;, &quot;G_Q05e&quot;, &quot;G_Q05g&quot;, &quot;G_Q05h&quot;, &quot;G_Q06&quot;, &quot;G_Q07&quot;, &quot;G_Q08&quot;, &quot;H_Q01a&quot;, &quot;H_Q01b&quot;, &quot;H_Q01b_T&quot;, &quot;H_Q01c&quot;, &quot;H_Q01c_T&quot;, &quot;H_Q01d&quot;, &quot;H_Q01e&quot;, &quot;H_Q01e_T&quot;, &quot;H_Q01f&quot;, &quot;H_Q01g&quot;, &quot;H_Q01h&quot;, &quot;H_Q02a&quot;, &quot;H_Q02b&quot;,&quot;H_Q02c&quot;, &quot;H_Q02d&quot;, &quot;H_Q03b&quot;, &quot;H_Q03c&quot;, &quot;H_Q03d&quot;, &quot;H_Q03f&quot;, &quot;H_Q03g&quot;, &quot;H_Q03h&quot;,&quot;H_Q04a&quot;, &quot;H_Q04b&quot;, &quot;H_Q05a&quot;, &quot;H_Q05c&quot;, &quot;H_Q05d&quot;, &quot;H_Q05e&quot;, &quot;H_Q05f&quot;, &quot;H_Q05g&quot;, &quot;H_Q05h&quot;, &quot;J_Q03a&quot;, &quot;J_Q03b&quot;, &quot;J_Q06b&quot;, &quot;J_Q07b&quot;,&quot;COMPUTEREXPERIENCE&quot;, &quot;MONTHLYINCPR&quot;,&quot;YEARLYINCPR&quot;, &quot;REG_TL2&quot;)
 
 ## Missing variables
 ##Vsualizarion of missing variables
@@ -400,10 +400,10 @@ gg_miss_var(newMexico)</code></pre>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  3459  2847</code></pre>
-<pre class="r"><code>#droping NAs from the independent variable 
+<pre class="r"><code>#droping NAs  
 
 
-newMexico1 &lt;- drop_na(newMexico, YEARLYINCPR)
+newMexico1 &lt;- drop_na(newMexico, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -416,8 +416,7 @@ barplot(table(newMexico1$GENDER_R))</code></pre>
 ##      &lt;int&gt; &lt;int&gt;
 ## 1        1  2055
 ## 2        2  1404</code></pre>
-<pre class="r"><code># Education status
-newMexico1 %&gt;% count(B_Q01a)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(B_Q01a)</code></pre>
 <pre><code>## # A tibble: 12 x 2
 ##    B_Q01a     n
 ##    &lt;fct&gt;  &lt;int&gt;
@@ -489,8 +488,7 @@ newMexico1 %&gt;% count(B_Q01a)</code></pre>
 ## 10 D          4
 ## 11 R          3
 ## 12 V       2134</code></pre>
-<pre class="r"><code># Work status 
-newMexico1 %&gt;% count(C_Q01a)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(C_Q01a)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   C_Q01a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -549,20 +547,78 @@ newMexico1 %&gt;% count(C_Q01a)</code></pre>
 ## 6        5   638
 ## 7       NA    13</code></pre>
 <pre class="r"><code># ICT skills in Job
-newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no </code></pre>
+newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no 3 ns</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04     n
 ##   &lt;fct&gt; &lt;int&gt;
 ## 1 1      1079
 ## 2 2      2377
 ## 3 N         3</code></pre>
-<pre class="r"><code>newMexico1%&gt;% count(G_Q04_T) #** 4 N</code></pre>
+<pre class="r"><code>newMexico1%&gt;% count(G_Q04_T) #** 3 N</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04_T     n
 ##   &lt;fct&gt;   &lt;int&gt;
 ## 1 1        2258
 ## 2 2        1198
 ## 3 N           3</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(COMPUTEREXPERIENCE) # 3 n</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   COMPUTEREXPERIENCE     n
+##                &lt;int&gt; &lt;int&gt;
+## 1                  1  2258
+## 2                  2  1198
+## 3                 NA     3</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(G_Q05a) # 2377 v y 3 n </code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   G_Q05a     n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 1        186
+## 2 2         72
+## 3 3         50
+## 4 4        139
+## 5 5        632
+## 6 N          3
+## 7 V       2377</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(D_Q18a_T) # 13 NA</code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   D_Q18a_T     n
+##      &lt;int&gt; &lt;int&gt;
+## 1        0    79
+## 2        1   742
+## 3        2   667
+## 4        3   692
+## 5        4   628
+## 6        5   638
+## 7       NA    13</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(F_Q05a) #</code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   F_Q05a     n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 1        711
+## 2 2        673
+## 3 3        456
+## 4 4        646
+## 5 5        970
+## 6 D          2
+## 7 N          1</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(F_Q05b)</code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   F_Q05b     n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 1       1122
+## 2 2        848
+## 3 3        501
+## 4 4        590
+## 5 5        394
+## 6 D          3
+## 7 N          1</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no </code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   G_Q04     n
+##   &lt;fct&gt; &lt;int&gt;
+## 1 1      1079
+## 2 2      2377
+## 3 N         3</code></pre>
 <pre class="r"><code>newMexico1 %&gt;% count(COMPUTEREXPERIENCE) #******</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   COMPUTEREXPERIENCE     n
@@ -570,6 +626,15 @@ newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no </code><
 ## 1                  1  2258
 ## 2                  2  1198
 ## 3                 NA     3</code></pre>
+<pre class="r"><code>Mexico%&gt;% count(G_Q04_T) #***** </code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   G_Q04_T     n
+##   &lt;fct&gt;   &lt;int&gt;
+## 1 &quot;&quot;         30
+## 2 &quot;1&quot;      3895
+## 3 &quot;2&quot;      2370
+## 4 &quot;N&quot;        10
+## 5 &quot;V&quot;         1</code></pre>
 <pre class="r"><code>newMexico1 %&gt;% count(G_Q05a) # 2377 v ESTA 6 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05a     n
@@ -664,8 +729,7 @@ newMexico1 %&gt;% count(G_Q04) # experience with computer in job yes no </code><
 ## 4 N         3
 ## 5 R         1
 ## 6 V      2377</code></pre>
-<pre class="r"><code>#ICT skills in daily life
-newMexico1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   H_Q04a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -758,8 +822,7 @@ newMexico1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</c
 ## 5 5        576
 ## 6 N          3
 ## 7 V       2205</code></pre>
-<pre class="r"><code># Children and parents level of education
-newMexico1 %&gt;% count(J_Q03a)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(J_Q03a)</code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   J_Q03a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -798,8 +861,7 @@ newMexico1 %&gt;% count(J_Q03a)</code></pre>
 ## 4 D        109
 ## 5 N          3
 ## 6 R         44</code></pre>
-<pre class="r"><code># Soft skills 
-newMexico1 %&gt;% count(F_Q01b) #748</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(F_Q01b) #748</code></pre>
 <pre><code>## # A tibble: 8 x 2
 ##   F_Q01b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -910,8 +972,7 @@ newMexico1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 5 5        394
 ## 6 D          3
 ## 7 N          1</code></pre>
-<pre class="r"><code># Literacy work 
-newMexico1 %&gt;% count(G_Q01a)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(G_Q01a)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   G_Q01a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -951,18 +1012,7 @@ newMexico1 %&gt;% count(G_Q01a)</code></pre>
 ## 4 4        290
 ## 5 5        618
 ## 6 N          2</code></pre>
-<pre class="r"><code>newMexico1 %&gt;% count(G_Q02d)</code></pre>
-<pre><code>## # A tibble: 6 x 2
-##   G_Q02d     n
-##   &lt;fct&gt;  &lt;int&gt;
-## 1 1       2020
-## 2 2        181
-## 3 3        151
-## 4 4        281
-## 5 5        824
-## 6 N          2</code></pre>
-<pre class="r"><code># Numeracy work 
-newMexico1 %&gt;% count(G_Q03b)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(G_Q03b)</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q03b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -1023,8 +1073,7 @@ newMexico1 %&gt;% count(G_Q03b)</code></pre>
 ## 4 4         87
 ## 5 5        115
 ## 6 N          3</code></pre>
-<pre class="r"><code># Literacy life
-newMexico1 %&gt;% count(H_Q01a)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(H_Q01a)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   H_Q01a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -1165,8 +1214,7 @@ newMexico1 %&gt;% count(H_Q01a)</code></pre>
 ## 4 4        131
 ## 5 5        106
 ## 6 N          3</code></pre>
-<pre class="r"><code># Numeracy life
-newMexico1 %&gt;% count(H_Q03b)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(H_Q03b)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   H_Q03b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -1227,8 +1275,7 @@ newMexico1 %&gt;% count(H_Q03b)</code></pre>
 ## 4 4         89
 ## 5 5         68
 ## 6 N          3</code></pre>
-<pre class="r"><code># Region
-newMexico1 %&gt;% count(REG_TL2)</code></pre>
+<pre class="r"><code>newMexico1 %&gt;% count(REG_TL2)</code></pre>
 <pre><code>## # A tibble: 32 x 2
 ##    REG_TL2     n
 ##    &lt;fct&gt;   &lt;int&gt;
@@ -1243,8 +1290,7 @@ newMexico1 %&gt;% count(REG_TL2)</code></pre>
 ##  9 ME09      292
 ## 10 ME10       48
 ## # … with 22 more rows</code></pre>
-<pre class="r"><code>## Income variables
-Mexico %&gt;% count(YEARLYINCPR) #2847</code></pre>
+<pre class="r"><code>Mexico %&gt;% count(YEARLYINCPR) #2847</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   YEARLYINCPR     n
 ##         &lt;int&gt; &lt;int&gt;
@@ -1425,6 +1471,9 @@ newMexico1$B_Q01bn[newMexico1$B_Q01b == &quot;6&quot;] = 6
 newMexico1$B_Q01bn[newMexico1$B_Q01b == &quot;7&quot;] = 7
 newMexico1$B_Q01bn[newMexico1$B_Q01b == &quot;8&quot;] = 8
 newMexico1$B_Q01bn[newMexico1$B_Q01b == &quot;9&quot;] = 9
+
+#C_Q01a
+newMexico1$C_Q01an[newMexico1$C_Q01a == &quot;N&quot;] = NA
 
 # C_Q01c
 newMexico1$C_Q01cn[newMexico1$C_Q01c == &quot;V&quot;] = NA
@@ -1674,6 +1723,12 @@ newMexico1$G_Q03hn[newMexico1$G_Q03h == &quot;5&quot;] = 5
 newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;N&quot;] = NA
 newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;1&quot;] = 0
 newMexico1$G_Q04n[newMexico1$G_Q04 == &quot;2&quot;] = 1
+
+# G_Q04_T
+
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == &quot;N&quot;] = NA
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == &quot;1&quot;] = 0
+newMexico1$G_Q04_Tn[newMexico1$G_Q04_T == &quot;2&quot;] = 1
 
 # G_Q05a
 
@@ -2082,10 +2137,57 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;2&quot;] = 2
 newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;3&quot;] = 3
 newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;D&quot;] = NA
 newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;N&quot;] = NA
-newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;R&quot;] = NA</code></pre>
+newMexico1$J_Q07bn[newMexico1$J_Q07b== &quot;R&quot;] = NA
+
+# Creation of new subset 
+
+subMexico &lt;- newMexico1 %&gt;% 
+  select(&quot;AGE_R&quot;, &quot;GENDER_Rn&quot;,&quot;B_Q01an&quot;, &quot;B_Q01a_Tn&quot;, &quot;B_Q02an&quot;, &quot;B_Q02cn&quot;, &quot;B_Q10cn&quot;, &quot;B_Q01bn&quot;, &quot;C_Q01an&quot;, &quot;C_Q01cn&quot;, &quot;C_Q02an&quot;, &quot;D_Q03n&quot;, &quot;D_Q14n&quot;, &quot;D_Q16an&quot;, &quot;D_Q18a_T&quot;, &quot;F_Q01bn&quot;,&quot;F_Q02bn&quot;,&quot;F_Q02cn&quot;,&quot;F_Q02dn&quot;,&quot;F_Q02en&quot;,&quot;F_Q03bn&quot;,&quot;F_Q04an&quot;,&quot;F_Q04bn&quot;,&quot;F_Q05an&quot;,&quot;F_Q05bn&quot;,&quot;F_Q07bn&quot;,&quot;G_Q01an&quot;,&quot;G_Q02an&quot;,&quot;G_Q02bn&quot;,&quot;G_Q02cn&quot;,&quot;G_Q02dn&quot;,&quot;G_Q03bn&quot;,&quot;G_Q03cn&quot;,&quot;G_Q03dn&quot;,&quot;G_Q03fn&quot;,&quot;G_Q03gn&quot;,&quot;G_Q03hn&quot;, &quot;G_Q04n&quot;, &quot;G_Q04_Tn&quot;, &quot;G_Q05an&quot;, &quot;G_Q05cn&quot;, &quot;G_Q05dn&quot;, &quot;G_Q05en&quot;, &quot;G_Q05gn&quot;, &quot;G_Q05hn&quot;, &quot;G_Q06n&quot;, &quot;G_Q07n&quot;, &quot;G_Q08n&quot;, &quot;H_Q01an&quot;, &quot;H_Q01bn&quot;, &quot;H_Q01b_Tn&quot;, &quot;H_Q01cn&quot;, &quot;H_Q01c_Tn&quot;, &quot;H_Q01dn&quot;, &quot;H_Q01en&quot;, &quot;H_Q01e_Tn&quot;, &quot;H_Q01fn&quot;, &quot;H_Q01gn&quot;, &quot;H_Q01hn&quot;, &quot;H_Q02an&quot;, &quot;H_Q02bn&quot;,&quot;H_Q02cn&quot;, &quot;H_Q02dn&quot;, &quot;H_Q03bn&quot;, &quot;H_Q03cn&quot;, &quot;H_Q03dn&quot;, &quot;H_Q03fn&quot;, &quot;H_Q03gn&quot;, &quot;H_Q03hn&quot;,&quot;H_Q04an&quot;, &quot;H_Q04bn&quot;, &quot;H_Q05an&quot;, &quot;H_Q05cn&quot;, &quot;H_Q05dn&quot;, &quot;H_Q05en&quot;, &quot;H_Q05fn&quot;, &quot;H_Q05gn&quot;, &quot;H_Q05hn&quot;, &quot;J_Q03an&quot;, &quot;J_Q03bn&quot;, &quot;J_Q06bn&quot;, &quot;J_Q07bn&quot;,&quot;COMPUTEREXPERIENCE&quot;, &quot;MONTHLYINCPR&quot;,&quot;YEARLYINCPR&quot;)</code></pre>
 <p><br></p>
-<p><strong>Dropping NAs</strong></p>
-<p><br></p>
+<pre class="r"><code>#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+
+std_dataM= as.data.frame(apply(subMexico,2,standardize))
+
+# Creation of the first index of ICT skills for work 
+
+std_dataM$meanict &lt;- (std_dataM$G_Q05an + std_dataM$G_Q05cn + std_dataM$G_Q05dn + std_dataM$G_Q05en + std_dataM$G_Q05gn + std_dataM$G_Q06n + std_dataM$G_Q07n + std_dataM$G_Q08n)/8
+
+# Creation  of a more general index of ICT with only 3  variables 
+
+std_dataM$meanictBasic &lt;- (std_dataM$G_Q04n + std_dataM$G_Q04_Tn + std_dataM$COMPUTEREXPERIENCE)/3
+
+# Index of Education status
+
+std_dataM$meanEducation &lt;- (std_dataM$B_Q01an + std_dataM$B_Q01a_Tn + std_dataM$B_Q02an + std_dataM$B_Q01bn)/4
+
+# Index of Work status
+
+std_dataM$meanWorkS &lt;- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+
+# Index of Work status
+
+std_dataM$meanWorkS &lt;- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+
+# Index of Soft skills 
+
+std_dataM$meanSoftS &lt;- (std_dataM$F_Q01bn + std_dataM$F_Q02bn + std_dataM$F_Q02cn + std_dataM$F_Q02dn + std_dataM$F_Q02en + std_dataM$F_Q03bn + std_dataM$F_Q04an + std_dataM$F_Q05an + std_dataM$F_Q05bn)/9
+
+# Index of Numeracy skills 
+
+std_dataM$meanNumeracyS &lt;- (std_dataM$G_Q03bn + std_dataM$G_Q03cn + std_dataM$G_Q03dn + std_dataM$G_Q03fn + std_dataM$G_Q03gn + std_dataM$G_Q03hn)/6
+
+# Index of Literacy skills 
+
+std_dataM$meanLiteracyS &lt;- (std_dataM$G_Q01an + std_dataM$G_Q02an + std_dataM$G_Q02bn + std_dataM$G_Q02cn + std_dataM$G_Q02dn)/5</code></pre>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<pre class="r"><code>variablemissingsbygender&lt;-newMexico1%&gt;%
+  group_by(GENDER_Rn) %&gt;%
+  miss_var_summary()</code></pre>
 <pre class="r"><code>#Dropping NAs in ICT work
 
 

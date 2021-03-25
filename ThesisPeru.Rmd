@@ -21,8 +21,8 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
-
+#Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
+Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
 ```
 
 
@@ -32,11 +32,11 @@ Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
 
 1. Selection of variables per group of skills ICT, Numeracy and Literacy
 
-2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459. 
+2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 6289 observations to 4826. 
 
 3. More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. 
---> For ICT skills in work they have 3129 Vs  and 2 Ns out of 4825 observations. 
---> For ICT skills in daily life 2465 Vs and 3 Ns out of 4825 observations. 
+--> For ICT skills in work they have 3130 Vs  and 2 Ns out of 4826 observations. 
+--> For ICT skills in daily life 2465 Vs and 3 Ns out of 4826 observations. 
 
 --> However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 8 NAs and no Vs
 
@@ -64,7 +64,7 @@ table(is.na(newPeru$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newPeru1 <- drop_na(newPeru, YEARLYINCPR)
+newPeru1 <- drop_na(newPeru, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -94,15 +94,15 @@ newPeru1 %>% count(D_Q18a_T) # 13 NA
 newPeru1 %>% count(G_Q04) # experience with computer in job yes no  2n
 newPeru1%>% count(G_Q04_T) #** 2N
 newPeru1 %>% count(COMPUTEREXPERIENCE) # 8Nas
-newPeru1 %>% count(G_Q05a) # 3129  + N 2
-newPeru1 %>% count(G_Q05c) # 3129  + N 2
-newPeru1 %>% count(G_Q05d) # 3129  + N 2
-newPeru1 %>% count(G_Q05e) # 3129  + N 2
-newPeru1 %>% count(G_Q05g) # 3129  + N 2
-newPeru1 %>% count(G_Q05h) # 3129  + N 2 
-newPeru1 %>% count(G_Q06) # 3129  + N 2
-newPeru1 %>% count(G_Q07) # 3129  + N 2
-newPeru1 %>% count(G_Q08) # 3129  + N 2
+newPeru1 %>% count(G_Q05a) # 3130  + N 2
+newPeru1 %>% count(G_Q05c) # 3130  + N 2
+newPeru1 %>% count(G_Q05d) # 3130  + N 2
+newPeru1 %>% count(G_Q05e) # 3130  + N 2
+newPeru1 %>% count(G_Q05g) # 3130  + N 2
+newPeru1 %>% count(G_Q05h) # 3130  + N 2 
+newPeru1 %>% count(G_Q06) # 3130  + N 2
+newPeru1 %>% count(G_Q07) # 3130  + N 2
+newPeru1 %>% count(G_Q08) # 3130  + N 2
 
 #ICT skills in daily life
 newPeru1 %>% count(H_Q04a) # 1694 V + 3 Ns experience with compiuter every life
@@ -265,12 +265,10 @@ newPeru1$B_Q01bn[newPeru1$B_Q01b == "7"] = 7
 newPeru1$B_Q01bn[newPeru1$B_Q01b == "8"] = 8
 newPeru1$B_Q01bn[newPeru1$B_Q01b == "9"] = 9
 
-# C_Q01c
-newPeru1$C_Q01cn[newPeru1$C_Q01c == "V"] = NA
-
-#C_Q02a
-
-newPeru1$C_Q02an[newPeru1$C_Q02a == "V"] = NA
+#C_Q01a
+newPeru1$C_Q01an[newPeru1$C_Q01a == "D"] = NA
+newPeru1$C_Q01an[newPeru1$C_Q01a == "1"] = 0
+newPeru1$C_Q01an[newPeru1$C_Q01a == "2"] = 1
 
 #D_Q03
 
@@ -279,6 +277,9 @@ newPeru1$D_Q03n[newPeru1$D_Q03 == "D"] = NA
 newPeru1$D_Q03n[newPeru1$D_Q03 == "1"] = 1
 newPeru1$D_Q03n[newPeru1$D_Q03 == "2"] = 2
 newPeru1$D_Q03n[newPeru1$D_Q03 == "3"] = 3
+
+
+
 
 #D_Q14
 
@@ -513,6 +514,12 @@ newPeru1$G_Q03hn[newPeru1$G_Q03h == "5"] = 5
 newPeru1$G_Q04n[newPeru1$G_Q04 == "N"] = NA
 newPeru1$G_Q04n[newPeru1$G_Q04 == "1"] = 0
 newPeru1$G_Q04n[newPeru1$G_Q04 == "2"] = 1
+
+# G_Q04_T
+
+newPeru1$G_Q04_Tn[newPeru1$G_Q04_T == "N"] = NA
+newPeru1$G_Q04_Tn[newPeru1$G_Q04_T == "1"] = 0
+newPeru1$G_Q04_Tn[newPeru1$G_Q04_T == "2"] = 1
 
 # G_Q05a
 
@@ -923,6 +930,11 @@ newPeru1$J_Q07bn[newPeru1$J_Q07b== "D"] = NA
 newPeru1$J_Q07bn[newPeru1$J_Q07b== "N"] = NA
 newPeru1$J_Q07bn[newPeru1$J_Q07b== "R"] = NA
 
+# Creation of new subset 
+
+subPeru <- newPeru1 %>% 
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+
 ```
 
 <br>
@@ -930,3 +942,86 @@ newPeru1$J_Q07bn[newPeru1$J_Q07b== "R"] = NA
 **Dropping NAs**
 
 <br>
+
+
+```{r}
+
+
+#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+
+std_dataP = as.data.frame(apply(subPeru,2,standardize))
+
+# Creation of the first index of ICT skills for work 
+
+std_dataP$meanict <- (std_dataP$G_Q05an + std_dataP$G_Q05cn + std_dataP$G_Q05dn + std_dataP$G_Q05en + std_dataP$G_Q05gn + std_dataP$G_Q06n + std_dataP$G_Q07n + std_dataP$G_Q08n)/8
+
+# Creation  of a more general index of ICT with only 3  variables 
+
+std_dataP$meanictBasic <- (std_dataP$G_Q04n + std_dataP$G_Q04_Tn + std_dataP$COMPUTEREXPERIENCE)/3
+
+# Index of Education status
+
+std_dataP$meanEducation <- (std_dataP$B_Q01an + std_dataP$B_Q01a_Tn + std_dataP$B_Q02an + std_dataP$B_Q01bn)/4
+
+# Index of Work status
+
+std_dataP$meanWorkS <- (std_dataP$C_Q01an + std_dataP$D_Q03n + std_dataP$D_Q14n + std_dataP$D_Q18a_T)/4
+
+# Index of Work status
+
+std_dataP$meanWorkS <- (std_dataP$C_Q01an + std_dataP$D_Q03n + std_dataP$D_Q14n + std_dataP$D_Q18a_T)/4
+
+# Index of Soft skills 
+
+std_dataP$meanSoftS <- (std_dataP$F_Q01bn + std_dataP$F_Q02bn + std_dataP$F_Q02cn + std_dataP$F_Q02dn + std_dataP$F_Q02en + std_dataP$F_Q03bn + std_dataP$F_Q04an + std_dataP$F_Q05an + std_dataP$F_Q05bn)/9
+
+# Index of Numeracy skills 
+
+std_dataP$meanNumeracyS <- (std_dataP$G_Q03bn + std_dataP$G_Q03cn + std_dataP$G_Q03dn + std_dataP$G_Q03fn + std_dataP$G_Q03gn + std_dataP$G_Q03hn)/6
+
+# Index of Literacy skills 
+
+std_dataP$meanLiteracyS <- (std_dataP$G_Q01an + std_dataP$G_Q02an + std_dataP$G_Q02bn + std_dataP$G_Q02cn + std_dataP$G_Q02dn)/5
+
+```
+
+<br>
+**Regressions**
+
+<br>
+```{r}
+
+#Income and gender 
+
+IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataP)
+
+IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataP)
+
+summary(IncomeICTgenderplus) 
+
+
+IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataP)
+
+summary(IncomeICTgender) 
+
+
+IncomeICTgender2 <- lm(YEARLYINCPR ~ meanictBasic + GENDER_Rn + meanEducation +(meanictBasic*GENDER_Rn),std_dataP)
+
+summary(IncomeICTgender2) 
+
+
+IncomesoftICT <- lm(YEARLYINCPR ~  meanict + GENDER_Rn + meanSoftS + meanEducation + (meanict *meanSoftS),std_dataP)
+
+summary(IncomesoftICT) 
+
+
+IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNumeracyS + meanEducation  + J_Q03an +J_Q06bn+C_Q01an+ J_Q07bn + (meanict *meanNumeracyS),std_dataP)
+
+summary(IncomeNumeracy)
+
+```

@@ -372,13 +372,15 @@ summary {
 <p><br></p>
 <p><strong>First steps: preparing the data </strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Selection of variables per group of skills ICT, Numeracy and Literacy</p></li>
-<li><p>Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR, EARNMTHPPP, EARNHR, EARNHRBONUS, EARNHRBONUSPPP. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 6306 observations to 3459.</p></li>
-<li><p>More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. –&gt; For ICT skills in work they have 2377 Vs out of 3459 observations. –&gt; For ICT skills in daily life 2205 Vs out of 3459 observations.</p></li>
+<li>Selection of variables per group of skills ICT, Numeracy and Literacy</li>
+</ol>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR[2788], EARNMTHPPP[3823], EARNHR[3823], EARNHRBONUS[3823], EARNHRBONUSPPP[3823]. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable MONTHLYINCPR, which reduces our data set from 5702 observations to 2914. ======= 2. Identification of NAs in the possible independent variables (all those that signal income) for this the explored variables were YEARLYINCPR[2788], EARNMTHPPP[3823], EARNHR[3823], EARNHRBONUS[3823], EARNHRBONUSPPP[3823]. What we found was that almost all of them have at least 2847 NAs or V that stands in the data ser for valid skip. Thus, taking into account that this is the most important variable of our study we reduced the data set to the number of observations that reported something in the variable YEARLYINCPR, which reduces our data set from 5702 observations to 2914. &gt;&gt;&gt;&gt;&gt;&gt;&gt; 21a7a1ad0853acdf1bf93a662b5d90b3b7e85d27</p>
+<ol start="3" style="list-style-type: decimal">
+<li>More over we analyed the number of NAs or V in the other variables selected. The main findings were that ICT skills are the ones with more missings. –&gt; For ICT skills in work they have 2024 Vs, 1 N out of 2914 observations. –&gt; For ICT skills in daily life 1674 V, 1 N out of 3459 observations.</li>
 </ol>
 <p>–&gt; However more general questions about the use of computer and whose answers were limited to (yes/no) such as computer COMPUTEREXPERIENCE had only 4 NAs and no Vs</p>
-<p>–&gt; Computer experience in job G_Q04 registered only 3 Ns and same for G_Q04_T</p>
-<p>–&gt; Computer experience in daily life H_Q04a registered 1074 V and H_Q04b 1198 V</p>
+<p>–&gt; Computer experience in job G_Q04 registered only 1 N and same for G_Q04_T</p>
+<p>–&gt; Computer experience in daily life H_Q04a registered 889 V 1 N and H_Q04b 1 V 887</p>
 <p><br></p>
 <pre class="r"><code>newEcuador &lt;- Ecuador %&gt;% 
   select(&quot;AGE_R&quot;, &quot;GENDER_R&quot;,&quot;B_Q01a&quot;, &quot;B_Q01a_T&quot;, &quot;B_Q02a&quot;, &quot;B_Q02c&quot;, &quot;B_Q10c&quot;, &quot;B_Q01b&quot;, &quot;C_Q01a&quot;, &quot;C_Q01c&quot;, &quot;C_Q02a&quot;, &quot;D_Q03&quot;, &quot;D_Q14&quot;, &quot;D_Q16a&quot;, &quot;D_Q18a_T&quot;, &quot;F_Q01b&quot;,&quot;F_Q02b&quot;,&quot;F_Q02c&quot;,&quot;F_Q02d&quot;,&quot;F_Q02e&quot;,&quot;F_Q03b&quot;,&quot;F_Q04a&quot;,&quot;F_Q04b&quot;,&quot;F_Q05a&quot;,&quot;F_Q05b&quot;,&quot;F_Q07b&quot;,&quot;G_Q01a&quot;,&quot;G_Q02a&quot;,&quot;G_Q02b&quot;,&quot;G_Q02c&quot;,&quot;G_Q02d&quot;,&quot;G_Q03b&quot;,&quot;G_Q03c&quot;,&quot;G_Q03d&quot;,&quot;G_Q03f&quot;,&quot;G_Q03g&quot;,&quot;G_Q03h&quot;, &quot;G_Q04&quot;, &quot;G_Q04_T&quot;, &quot;G_Q05a&quot;, &quot;G_Q05c&quot;, &quot;G_Q05d&quot;, &quot;G_Q05e&quot;, &quot;G_Q05g&quot;, &quot;G_Q05h&quot;, &quot;G_Q06&quot;, &quot;G_Q07&quot;, &quot;G_Q08&quot;, &quot;H_Q01a&quot;, &quot;H_Q01b&quot;, &quot;H_Q01b_T&quot;, &quot;H_Q01c&quot;, &quot;H_Q01c_T&quot;, &quot;H_Q01d&quot;, &quot;H_Q01e&quot;, &quot;H_Q01e_T&quot;, &quot;H_Q01f&quot;, &quot;H_Q01g&quot;, &quot;H_Q01h&quot;, &quot;H_Q02a&quot;, &quot;H_Q02b&quot;,&quot;H_Q02c&quot;, &quot;H_Q02d&quot;, &quot;H_Q03b&quot;, &quot;H_Q03c&quot;, &quot;H_Q03d&quot;, &quot;H_Q03f&quot;, &quot;H_Q03g&quot;, &quot;H_Q03h&quot;,&quot;H_Q04a&quot;, &quot;H_Q04b&quot;, &quot;H_Q05a&quot;, &quot;H_Q05c&quot;, &quot;H_Q05d&quot;, &quot;H_Q05e&quot;, &quot;H_Q05f&quot;, &quot;H_Q05g&quot;, &quot;H_Q05h&quot;, &quot;J_Q03a&quot;, &quot;J_Q03b&quot;, &quot;J_Q06b&quot;, &quot;J_Q07b&quot;,&quot;COMPUTEREXPERIENCE&quot;, &quot;MONTHLYINCPR&quot;,&quot;YEARLYINCPR&quot;, &quot;REG_TL2&quot;)
@@ -396,7 +398,8 @@ gg_miss_var(newEcuador)</code></pre>
 <pre class="r"><code>#droping NAs from the independent variable 
 
 
-newEcuador1 &lt;- drop_na(newEcuador, YEARLYINCPR)
+newEcuador1 &lt;- drop_na(newEcuador, MONTHLYINCPR)
+newEcuador2 &lt;- drop_na(newEcuador, YEARLYINCPR)
 
 # Number of women and men 
 
@@ -409,7 +412,13 @@ barplot(table(newEcuador1$GENDER_R))</code></pre>
 ##      &lt;int&gt; &lt;int&gt;
 ## 1        1  1620
 ## 2        2  1294</code></pre>
-<pre class="r"><code># Education status
+<pre class="r"><code># Subsetting the basic IT skills 
+
+
+#EcuadorICTindex&lt;-newEcuador1 %&gt;% 
+  #select( &quot;G_Q04n&quot;, &quot;G_Q04_Tn&quot;, &quot;COMPUTEREXPERIENCE&quot;)
+
+# Education status
 newEcuador1 %&gt;% count(B_Q01a)</code></pre>
 <pre><code>## # A tibble: 9 x 2
 ##   B_Q01a     n
@@ -437,7 +446,7 @@ newEcuador1 %&gt;% count(B_Q01a)</code></pre>
 ##   &lt;fct&gt;  &lt;int&gt;
 ## 1 1        238
 ## 2 2       2676</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(B_Q02c) #x - 3224 V ESTA 1</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(B_Q02c) # 2699 Vs</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##    B_Q02c     n
 ##    &lt;fct&gt;  &lt;int&gt;
@@ -451,7 +460,7 @@ newEcuador1 %&gt;% count(B_Q01a)</code></pre>
 ##  8 8         23
 ##  9 9         11
 ## 10 V       2699</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(B_Q10c) #x- 3176 V ESTA 2</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(B_Q10c) # 2682 Vs</code></pre>
 <pre><code>## # A tibble: 5 x 2
 ##   B_Q10c     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -460,7 +469,7 @@ newEcuador1 %&gt;% count(B_Q01a)</code></pre>
 ## 3 3         45
 ## 4 4        123
 ## 5 V       2682</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(B_Q01b) # 2134 v ESTA 3</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(B_Q01b) # 1451 Vs</code></pre>
 <pre><code>## # A tibble: 12 x 2
 ##    B_Q01b     n
 ##    &lt;fct&gt;  &lt;int&gt;
@@ -483,17 +492,17 @@ newEcuador1 %&gt;% count(C_Q01a)</code></pre>
 ##   &lt;fct&gt;  &lt;int&gt;
 ## 1 1       2803
 ## 2 2        111</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(C_Q01c) # 3459 v ESTA 4</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(C_Q01c) # 2914 Vs</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   C_Q01c     n
 ##   &lt;fct&gt;  &lt;int&gt;
 ## 1 V       2914</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(C_Q02a) # 3459 v ESTA 5 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(C_Q02a) # 2914</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   C_Q02a     n
 ##   &lt;fct&gt;  &lt;int&gt;
 ## 1 V       2914</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(D_Q03) # D 42 - r21 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(D_Q03) # D 5 - R 2</code></pre>
 <pre><code>## # A tibble: 5 x 2
 ##   D_Q03     n
 ##   &lt;fct&gt; &lt;int&gt;
@@ -511,7 +520,7 @@ newEcuador1 %&gt;% count(C_Q01a)</code></pre>
 ## 3 3       453
 ## 4 4       166
 ## 5 5        16</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(D_Q16a) # V 1008</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(D_Q16a) # V 1150</code></pre>
 <pre><code>## # A tibble: 8 x 2
 ##   D_Q16a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -523,7 +532,7 @@ newEcuador1 %&gt;% count(C_Q01a)</code></pre>
 ## 6 6          3
 ## 7 7         28
 ## 8 V       1150</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(D_Q18a_T) # 13 NA </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(D_Q18a_T) # 18 NA </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   D_Q18a_T     n
 ##      &lt;int&gt; &lt;int&gt;
@@ -535,28 +544,28 @@ newEcuador1 %&gt;% count(C_Q01a)</code></pre>
 ## 6        5   425
 ## 7       NA    18</code></pre>
 <pre class="r"><code># ICT skills in Job
-newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code></pre>
+newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no / N 1 </code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04     n
 ##   &lt;fct&gt; &lt;int&gt;
 ## 1 1       889
 ## 2 2      2024
 ## 3 N         1</code></pre>
-<pre class="r"><code>newEcuador1%&gt;% count(G_Q04_T) #** 4 N</code></pre>
+<pre class="r"><code>newEcuador1%&gt;% count(G_Q04_T) # N 1 </code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   G_Q04_T     n
 ##   &lt;fct&gt;   &lt;int&gt;
 ## 1 1        2026
 ## 2 2         887
 ## 3 N           1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(COMPUTEREXPERIENCE) #******</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(COMPUTEREXPERIENCE) # NA 2 </code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   COMPUTEREXPERIENCE     n
 ##                &lt;int&gt; &lt;int&gt;
 ## 1                  1  2025
 ## 2                  2   887
 ## 3                 NA     2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05a) # 2377 v ESTA 6 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05a) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -567,7 +576,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5        504
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05c) # 2377 v ESTA 7 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05c) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05c     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -578,7 +587,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5        551
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05d) # 2377 ESTA 8 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05d) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05d     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -589,7 +598,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5        131
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05e) # 2377 ESTA 9 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05e) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05e     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -600,7 +609,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5        342
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05g) # 2377 ESTA 10 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05g) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05g     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -611,7 +620,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5         79
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05h) # 2377 ESTA 11 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q05h) # N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q05h     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -622,7 +631,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 5 5        170
 ## 6 N          1
 ## 7 V       2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q06) # 2377 ESTA 12 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q06) #  N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   G_Q06     n
 ##   &lt;fct&gt; &lt;int&gt;
@@ -632,7 +641,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 4 D         2
 ## 5 N         1
 ## 6 V      2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q07) # 2377 ESTA 13 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q07) #  N 1 , V 2024 </code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   G_Q07     n
 ##   &lt;fct&gt; &lt;int&gt;
@@ -640,7 +649,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 2 2       142
 ## 3 N         1
 ## 4 V      2024</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q08) # 2377 ESTA 15 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q08) #  N 1 , V 2024 , R 2 </code></pre>
 <pre><code>## # A tibble: 5 x 2
 ##   G_Q08     n
 ##   &lt;fct&gt; &lt;int&gt;
@@ -650,7 +659,7 @@ newEcuador1 %&gt;% count(G_Q04) # experience with computer in job yes no </code>
 ## 4 R         2
 ## 5 V      2024</code></pre>
 <pre class="r"><code>#ICT skills in daily life
-newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</code></pre>
+newEcuador1 %&gt;% count(H_Q04a) # 889 V 1 N </code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   H_Q04a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -658,7 +667,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 2 2        887
 ## 3 N          1
 ## 4 V        889</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q04b) # 1198 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q04b) # 1 V 887 </code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   H_Q04b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -666,7 +675,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 2 2        787
 ## 3 N          1
 ## 4 V        887</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05a) # 2205 ESTA 16 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05a) # 1674 V N 1 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -677,7 +686,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5        480
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05c) # 2205 ESTA 17 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05c) # 1 N 1674 V </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05c     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -688,7 +697,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5        579
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05d) # 2205 ESTA 18 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05d) # 1 N 1674 V</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05d     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -699,7 +708,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5        101
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05e) # 2205 ESTA 19 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05e) # 1674 V N 1 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05e     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -710,7 +719,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5        123
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05f) # 2205 ESTA 20 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05f) #1674 V N 1 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05f     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -721,7 +730,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5        223
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05g) # 2205 ESTA 21 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05g) # 1674 V N 1 </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05g     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -732,7 +741,7 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 5 5         36
 ## 6 N          1
 ## 7 V       1674</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05h) # 2205 ESTA 22 </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(H_Q05h) # 1674 V N 1  </code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   H_Q05h     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -744,14 +753,14 @@ newEcuador1 %&gt;% count(H_Q04a) # 1074 V experience with compiuter every life</
 ## 6 N          1
 ## 7 V       1674</code></pre>
 <pre class="r"><code># Children and parents level of education
-newEcuador1 %&gt;% count(J_Q03a)</code></pre>
+newEcuador1 %&gt;% count(J_Q03a) #N 2 </code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   J_Q03a     n
 ##   &lt;fct&gt;  &lt;int&gt;
 ## 1 1       2188
 ## 2 2        724
 ## 3 N          2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(J_Q03b) #943</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(J_Q03b) # V 725 R 1 N 1 </code></pre>
 <pre><code>## # A tibble: 21 x 2
 ##    J_Q03b     n
 ##    &lt;fct&gt;  &lt;int&gt;
@@ -766,7 +775,7 @@ newEcuador1 %&gt;% count(J_Q03a)</code></pre>
 ##  9 2        645
 ## 10 20         1
 ## # … with 11 more rows</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(J_Q06b) </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(J_Q06b) # D 78 N 2 R 11</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   J_Q06b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -777,7 +786,7 @@ newEcuador1 %&gt;% count(J_Q03a)</code></pre>
 ## 5 N          2
 ## 6 R         11</code></pre>
 <pre class="r"><code># Soft skills 
-newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
+newEcuador1 %&gt;% count(F_Q01b) # V 863</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q01b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -787,7 +796,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        201
 ## 5 5       1033
 ## 6 V        863</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02b) </code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02b) # D 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q02b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -797,7 +806,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        312
 ## 5 5        555
 ## 6 D          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02c)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02c) # D 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q02c     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -807,7 +816,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        196
 ## 5 5        248
 ## 6 D          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02d)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02d) # R 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q02d     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -817,7 +826,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        213
 ## 5 5        998
 ## 6 R          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02e)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q02e)# D 2 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q02e     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -827,7 +836,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        318
 ## 5 5        890
 ## 6 D          2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q03b)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q03b)# D 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q03b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -837,7 +846,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        229
 ## 5 5        436
 ## 6 D          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q04a)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q04a)# D 2</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q04a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -847,7 +856,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        339
 ## 5 5        796
 ## 6 D          2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q04b)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q04b)# D 2 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q04b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -857,7 +866,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        298
 ## 5 5        744
 ## 6 D          2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q05a)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q05a) # D 2 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q05a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -867,7 +876,7 @@ newEcuador1 %&gt;% count(F_Q01b) #748</code></pre>
 ## 4 4        469
 ## 5 5        637
 ## 6 D          2</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(F_Q05b)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(F_Q05b)# R 3 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   F_Q05b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -887,7 +896,7 @@ newEcuador1 %&gt;% count(G_Q01a)</code></pre>
 ## 3 3        162
 ## 4 4        397
 ## 5 5        944</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02a)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02a)# D 1 # N 1</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   G_Q02a     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -898,7 +907,7 @@ newEcuador1 %&gt;% count(G_Q01a)</code></pre>
 ## 5 5        424
 ## 6 D          1
 ## 7 N          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02b)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02b) # N 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   G_Q02b     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -908,7 +917,7 @@ newEcuador1 %&gt;% count(G_Q01a)</code></pre>
 ## 4 4         58
 ## 5 5         44
 ## 6 N          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02c)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02c)# N 1</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   G_Q02c     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -918,7 +927,7 @@ newEcuador1 %&gt;% count(G_Q01a)</code></pre>
 ## 4 4        207
 ## 5 5        476
 ## 6 N          1</code></pre>
-<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02d)</code></pre>
+<pre class="r"><code>newEcuador1 %&gt;% count(G_Q02d)# N 1 </code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   G_Q02d     n
 ##   &lt;fct&gt;  &lt;int&gt;
@@ -1217,7 +1226,8 @@ newEcuador1 %&gt;% count(REG_TL2)</code></pre>
 ## 8 ECU08     585
 ## 9 ECU09     597</code></pre>
 <pre class="r"><code>## Income variables
-Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
+options(max.print=999999)
+Ecuador %&gt;% count(YEARLYINCPR) #2788</code></pre>
 <pre><code>## # A tibble: 7 x 2
 ##   YEARLYINCPR     n
 ##         &lt;int&gt; &lt;int&gt;
@@ -1228,7 +1238,18 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 ## 5           5   494
 ## 6           6   209
 ## 7          NA  2788</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNMTH) #2847</code></pre>
+<pre class="r"><code>Ecuador %&gt;% count(MONTHLYINCPR) #2788</code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   MONTHLYINCPR     n
+##          &lt;int&gt; &lt;int&gt;
+## 1            1   505
+## 2            2   357
+## 3            3   587
+## 4            4   757
+## 5            5   499
+## 6            6   209
+## 7           NA  2788</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNMTH) #3823 </code></pre>
 <pre><code>## # A tibble: 295 x 2
 ##    EARNMTH       n
 ##    &lt;fct&gt;     &lt;int&gt;
@@ -1243,7 +1264,7 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 ##  9 &quot;108.33&quot;     15
 ## 10 &quot;1080&quot;        1
 ## # … with 285 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNMTHPPP) #3t68</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNMTHPPP) #3823</code></pre>
 <pre><code>## # A tibble: 295 x 2
 ##    EARNMTHPPP     n
 ##    &lt;fct&gt;      &lt;int&gt;
@@ -1258,7 +1279,7 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 ##  9 &quot;1046.62&quot;      1
 ## 10 &quot;1054.02&quot;      1
 ## # … with 285 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNHR)#3758</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNHR)#3823</code></pre>
 <pre><code>## # A tibble: 451 x 2
 ##    EARNHR     n
 ##    &lt;fct&gt;  &lt;int&gt;
@@ -1273,37 +1294,7 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 ##  9 &quot;0.31&quot;     1
 ## 10 &quot;0.36&quot;     1
 ## # … with 441 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNHRBONUS) # 97 ESPACIOS VACIOS </code></pre>
-<pre><code>## # A tibble: 573 x 2
-##    EARNHRBONUS     n
-##    &lt;fct&gt;       &lt;int&gt;
-##  1 &quot;&quot;            118
-##  2 &quot;0.06&quot;          1
-##  3 &quot;0.07&quot;          1
-##  4 &quot;0.13&quot;          1
-##  5 &quot;0.14&quot;          1
-##  6 &quot;0.24&quot;          1
-##  7 &quot;0.29&quot;          3
-##  8 &quot;0.31&quot;          1
-##  9 &quot;0.36&quot;          1
-## 10 &quot;0.39&quot;          2
-## # … with 563 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(ICTWORK)</code></pre>
-<pre><code>## # A tibble: 562 x 2
-##    ICTWORK       n
-##    &lt;fct&gt;     &lt;int&gt;
-##  1 &quot;&quot;           35
-##  2 &quot;0.23097&quot;     3
-##  3 &quot;0.254&quot;       6
-##  4 &quot;0.33628&quot;     1
-##  5 &quot;0.33677&quot;     2
-##  6 &quot;0.36914&quot;     2
-##  7 &quot;0.38284&quot;     1
-##  8 &quot;0.41841&quot;     1
-##  9 &quot;0.42779&quot;     1
-## 10 &quot;0.4318&quot;      1
-## # … with 552 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNHRBONUSPPP) # 97 vacios usd </code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNHRBONUSPPP) # 3823 ESPACIOS VACIOS </code></pre>
 <pre><code>## # A tibble: 741 x 2
 ##    EARNHRBONUSPPP     n
 ##    &lt;fct&gt;          &lt;int&gt;
@@ -1318,7 +1309,52 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 ##  9 &quot;0.67&quot;             1
 ## 10 &quot;0.71&quot;             2
 ## # … with 731 more rows</code></pre>
-<pre class="r"><code>Ecuador  %&gt;% count(EARNFLAG) </code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNHRBONUS) # 3823</code></pre>
+<pre><code>## # A tibble: 573 x 2
+##    EARNHRBONUS     n
+##    &lt;fct&gt;       &lt;int&gt;
+##  1 &quot;&quot;            118
+##  2 &quot;0.06&quot;          1
+##  3 &quot;0.07&quot;          1
+##  4 &quot;0.13&quot;          1
+##  5 &quot;0.14&quot;          1
+##  6 &quot;0.24&quot;          1
+##  7 &quot;0.29&quot;          3
+##  8 &quot;0.31&quot;          1
+##  9 &quot;0.36&quot;          1
+## 10 &quot;0.39&quot;          2
+## # … with 563 more rows</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(ICTWORK) #4514Vs +65 Ns</code></pre>
+<pre><code>## # A tibble: 562 x 2
+##    ICTWORK       n
+##    &lt;fct&gt;     &lt;int&gt;
+##  1 &quot;&quot;           35
+##  2 &quot;0.23097&quot;     3
+##  3 &quot;0.254&quot;       6
+##  4 &quot;0.33628&quot;     1
+##  5 &quot;0.33677&quot;     2
+##  6 &quot;0.36914&quot;     2
+##  7 &quot;0.38284&quot;     1
+##  8 &quot;0.41841&quot;     1
+##  9 &quot;0.42779&quot;     1
+## 10 &quot;0.4318&quot;      1
+## # … with 552 more rows</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNHRBONUSPPP) # 3823</code></pre>
+<pre><code>## # A tibble: 741 x 2
+##    EARNHRBONUSPPP     n
+##    &lt;fct&gt;          &lt;int&gt;
+##  1 &quot;&quot;               118
+##  2 &quot;0.11&quot;             1
+##  3 &quot;0.13&quot;             1
+##  4 &quot;0.24&quot;             1
+##  5 &quot;0.26&quot;             1
+##  6 &quot;0.45&quot;             1
+##  7 &quot;0.53&quot;             3
+##  8 &quot;0.57&quot;             1
+##  9 &quot;0.67&quot;             1
+## 10 &quot;0.71&quot;             2
+## # … with 731 more rows</code></pre>
+<pre class="r"><code>Ecuador  %&gt;% count(EARNFLAG) #2402 vs - 386 Ns </code></pre>
 <pre><code>## # A tibble: 4 x 2
 ##   EARNFLAG     n
 ##   &lt;fct&gt;    &lt;int&gt;
@@ -1333,6 +1369,17 @@ Ecuador %&gt;% count(YEARLYINCPR) #2847</code></pre>
 <p><br></p>
 <p><strong>Dropping NAs</strong></p>
 <p><br></p>
+<pre class="r"><code>#Create function to standardize 
+standardize= function(x)
+{return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
+
+#Apply function to the dataset 
+
+std_data = as.data.frame(apply(newEcuador1[87:166],2,standardize))
+
+#std_data1 = as.data.frame(apply(subEcuador,2,standardize))
+
+subEcuador$meanict &lt;- (std_data$G_Q05an + std_data$G_Q05cn + std_data$G_Q05dn + std_data$G_Q05en + std_data$G_Q05gn + std_data$G_Q06n + std_data$G_Q07n + std_data$G_Q08n)/8</code></pre>
 
 
 
