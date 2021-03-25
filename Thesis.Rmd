@@ -21,7 +21,7 @@ library(FactoMineR)
 library("factoextra")
 library(factoextra)
 
-Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/Thesis.Rmd")
+Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
 
 
 Chile %>% count(EARNHRBONUSPPP) 
@@ -59,6 +59,9 @@ Mexico %>% count(EARNHRBONUSPPP)
 newMexico <- Mexico %>% 
   select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04","G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
 
+
+
+  
 ## Missing variables
 ##Vsualizarion of missing variables
 
@@ -267,13 +270,15 @@ newMexico1$B_Q01bn[newMexico1$B_Q01b == "7"] = 7
 newMexico1$B_Q01bn[newMexico1$B_Q01b == "8"] = 8
 newMexico1$B_Q01bn[newMexico1$B_Q01b == "9"] = 9
 
-
 #C_Q01a
-newMexico1$C_Q01an[newMexico1$C_Q01a == "D"] = NA
-newMexico1$C_Q01an[newMexico1$C_Q01a == "1"] = 0
-newMexico1$C_Q01an[newMexico1$C_Q01a == "2"] = 1
+newMexico1$C_Q01an[newMexico1$C_Q01a == "N"] = NA
 
+# C_Q01c
+newMexico1$C_Q01cn[newMexico1$C_Q01c == "V"] = NA
 
+#C_Q02a
+
+newMexico1$C_Q02an[newMexico1$C_Q02a == "V"] = NA
 
 #D_Q03
 
@@ -935,9 +940,16 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== "R"] = NA
 # Creation of new subset 
 
 subMexico <- newMexico1 %>% 
-  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "C_Q01cn", "C_Q02an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
 
+genero <- subMexico %>% 
+  select("GENDER_Rn")
 
+ICTSKILLS <-subMexico %>% 
+  select("G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+softskills <-subMexico %>% 
+  select ("F_Q01bn" ,"F_Q02bn", "F_Q02cn", "F_Q02dn" ,"F_Q02en", "F_Q03bn", "F_Q04an", "F_Q05an", "F_Q05bn")
 ```
 
 
@@ -988,42 +1000,6 @@ std_dataM$meanNumeracyS <- (std_dataM$G_Q03bn + std_dataM$G_Q03cn + std_dataM$G_
 std_dataM$meanLiteracyS <- (std_dataM$G_Q01an + std_dataM$G_Q02an + std_dataM$G_Q02bn + std_dataM$G_Q02cn + std_dataM$G_Q02dn)/5
 
 ```
->
-
-```{r}
-
-#Income and gender 
-
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataM)
-
-IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataM)
-
-summary(IncomeICTgenderplus) 
-
-
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataM)
-
-summary(IncomeICTgender) 
-
-
-IncomeICTgender2 <- lm(YEARLYINCPR ~ meanictBasic + GENDER_Rn + meanEducation +(meanictBasic*GENDER_Rn),std_dataM)
-
-summary(IncomeICTgender2) 
-
-
-IncomesoftICT <- lm(YEARLYINCPR ~  meanict + GENDER_Rn + meanSoftS + meanEducation + (meanict *meanSoftS),std_dataM)
-
-summary(IncomesoftICT) 
-
-
-IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNumeracyS + meanEducation  + J_Q03an +J_Q06bn+C_Q01an+ J_Q07bn + (meanict *meanNumeracyS),std_dataM)
-
-summary(IncomeNumeracy)
-
-```
-
-
-
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
@@ -1329,7 +1305,132 @@ fviz_pca_var(LiteracyWork2.pca, col.var = "contrib",
 Skillsreg <- lm(YEARLYINCPR ~ AGE_R + GENDER_Rn + B_Q01an+ G_Q05gn + G_Q05an + G_Q05en + G_Q03hn + G_Q03cn + G_Q02bn + G_Q02dn + F_Q02dn,  newMexico1ICTwork1) 
 
 summary(Skillsreg)
+```
+
+```{r}
+missing.values <- subMexico %>%
+    gather(key = "key", value = "val") %>%
+    mutate(is.missing = is.na(val)) %>%
+    group_by(key, is.missing) %>%
+    summarise(num.missing = n()) %>%
+    filter(is.missing==T) %>%
+    select(-is.missing) %>%
+    arrange(desc(num.missing))
+
+
+missing.values %>%
+  ggplot() +
+    geom_bar(aes(x=key, y=num.missing), stat = 'identity') +
+    labs(x='variable', y="number of missing values", 
+         title='Number of missing values') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
+ggplot(subMexico, 
+       aes(x =G_Q05an , 
+           y = missing.values)) + 
+  geom_point()
+
+```
+
+
+```{r}
+
+#Percentage of missings by type of skills 
+missing.values <- ICTSKILLS %>%
+  gather(key = "key", value = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, total, isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.values  %>% filter(isna == T) %>%     
+           arrange(desc(pct)))$key
+
+
+percentage.plot <- missing.values %>%
+      ggplot() +
+        geom_bar(aes(x = reorder(key, desc(pct)), 
+                     y = pct, fill=isna), 
+                  stat = 'identity', alpha=0.8) +
+        scale_x_discrete(limits = levels) +
+        scale_fill_manual(name = "", 
+                          values = c('steelblue', 'tomato3'), 
+                          labels = c("Present", "Missing")) +
+        coord_flip() +
+        labs(title = "Percentage of missing values", 
+             x = 'Variable', y = "% of missing values")
+
+
+percentage.plot
+
+# 
+
+
+
+#Percentage of missings by type of skills 
+missing.values1 <- softskills %>%
+  gather(key = "key", value = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, total, isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.values1  %>% filter(isna == T) %>%     
+           arrange(desc(pct)))$key
+
+
+percentage.plot2 <- missing.values1 %>%
+      ggplot() +
+        geom_bar(aes(x = reorder(key, desc(pct)), 
+                     y = pct, fill=isna), 
+                  stat = 'identity', alpha=0.8) +
+        scale_x_discrete(limits = levels) +
+        scale_fill_manual(name = "", 
+                          values = c('steelblue', 'tomato3'), 
+                          labels = c("Present", "Missing")) +
+        coord_flip() +
+        labs(title = "Percentage of missing values", 
+             x = 'Variable', y = "% of missing values")
+percentage.plot2
+
+
+GRAPH1 <-subMexico %>% 
+  select("GENDER_Rn", "AGE_R", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+-----
+  
+
+#AGE in ranges 
+# Creating vectors 
+AGE_R <- c(16:65) 
+# Creating a factor corresponding to age with labels 
+wfact = cut(subMexico$AGE_R, 3, labels = c('Young', 'Medium', 'Aged')) 
+table(wfact) 
+
+#basic info AGE 
+with(subMexico, summary(AGE_R))
+
+tapply(subMexico,
+        list(subMexico$GENDER_Rn,subMexico$AGE_R), mean)
+
+StackedBar = ggplot(subMexico, aes(G_Q05an, AGE_R), fill = "GENDER_Rn", inherit.aes = FALSE) + 
+  geom_bar(stat="summary", fun.y="mean") + 
+  scale_fill_brewer(palette = "Set2") + ggtitle("Humor Chart")
+StackedBar
+
+
+GroupedBar = ggplot(subMexico, aes(GENDER_Rn, GQ05cn, fill = AGE_R),inherit.aes = FALSE) + geom_bar(stat="summary", fun.y="mean", position = "dodge") + 
+  scale_fill_brewer(palette = "Set2") + ggtitle("Humor Chart")
+GroupedBar
 
 
 
 ```
+
