@@ -22,9 +22,13 @@ library(car)
 library(carData)
 library(FactoMineR)
 library(factoextra)
+library(nnet)
+library(MASS)
+library(Hmisc)
+library(reshape2)
 
-#Chile <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
-Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgchlp1.csv")
+
+Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgchlp1.csv")
 
 ```
 
@@ -951,7 +955,6 @@ subChile <- newChile1 %>%
 <br>
 ```{r}
 
-
 #Create function to standardize 
 standardize= function(x)
 {return(x- mean(x, na.rm = TRUE))/ sd(x, na.rm = TRUE)}
@@ -963,35 +966,45 @@ std_dataC = as.data.frame(apply(subChile,2,standardize))
 
 # Creation of the first index of ICT skills for work 
 
-std_dataC$meanict <- (std_dataC$G_Q05an + std_dataC$G_Q05cn + std_dataC$G_Q05dn + std_dataC$G_Q05en + std_dataC$G_Q05gn + std_dataC$G_Q06n + std_dataC$G_Q07n + std_dataC$G_Q08n)/8
+subChile$meanict <- (std_dataC$G_Q05an + std_dataC$G_Q05cn + std_dataC$G_Q05dn + std_dataC$G_Q05en + std_dataC$G_Q05gn + std_dataC$G_Q06n + std_dataC$G_Q07n + std_dataC$G_Q08n)/8
+
+subChile$meanict_cat <-ntile(subChile$meanict,5)  
 
 # Creation  of a more general index of ICT with only 3  variables 
 
-std_dataC$meanictBasic <- (std_dataC$G_Q04n + std_dataC$G_Q04_Tn + std_dataC$COMPUTEREXPERIENCE)/3
+subChile$meanictBasic <- (std_dataC$G_Q04n + std_dataC$G_Q04_Tn + std_dataC$COMPUTEREXPERIENCE)/3
+
+subChile$meanict_catBasic <-ntile(subChile$meanictBasic,3)  
 
 # Index of Education status
 
-std_dataC$meanEducation <- (std_dataC$B_Q01an + std_dataC$B_Q01a_Tn + std_dataC$B_Q02an + std_dataC$B_Q01bn)/4
+subChile$meanEducation <- (std_dataC$B_Q01an + std_dataC$B_Q01a_Tn + std_dataC$B_Q02an + std_dataC$B_Q01bn)/4
+
+subChile$meanEducation_cat <-ntile(subChile$meanEducation,5)  
 
 # Index of Work status
 
-std_dataC$meanWorkS <- (std_dataC$C_Q01an + std_dataC$D_Q03n + std_dataC$D_Q14n + std_dataC$D_Q18a_T)/4
+subChile$meanWorkS <- (std_dataC$C_Q01an + std_dataC$D_Q03n + std_dataC$D_Q14n + std_dataC$D_Q18a_T)/4
 
-# Index of Work status
-
-std_dataC$meanWorkS <- (std_dataC$C_Q01an + std_dataC$D_Q03n + std_dataC$D_Q14n + std_dataC$D_Q18a_T)/4
+subChile$meanWorkS_cat <-ntile(subChile$meanWorkS,5)  
 
 # Index of Soft skills 
 
-std_dataC$meanSoftS <- (std_dataC$F_Q01bn + std_dataC$F_Q02bn + std_dataC$F_Q02cn + std_dataC$F_Q02dn + std_dataC$F_Q02en + std_dataC$F_Q03bn + std_dataC$F_Q04an + std_dataC$F_Q05an + std_dataC$F_Q05bn)/9
+subChile$meanSoftS <- (std_dataC$F_Q01bn + std_dataC$F_Q02bn + std_dataC$F_Q02cn + std_dataC$F_Q02dn + std_dataC$F_Q02en + std_dataC$F_Q03bn + std_dataC$F_Q04an + std_dataC$F_Q05an + std_dataC$F_Q05bn)/9
+
+subChile$meanSoftS_cat <-ntile(subChile$meanSoftS,5)  
 
 # Index of Numeracy skills 
 
-std_dataC$meanNumeracyS <- (std_dataC$G_Q03bn + std_dataC$G_Q03cn + std_dataC$G_Q03dn + std_dataC$G_Q03fn + std_dataC$G_Q03gn + std_dataC$G_Q03hn)/6
+subChile$meanNumeracyS <- (std_dataC$G_Q03bn + std_dataC$G_Q03cn + std_dataC$G_Q03dn + std_dataC$G_Q03fn + std_dataC$G_Q03gn + std_dataC$G_Q03hn)/6
+
+subChile$meanNumeracyS_cat <-ntile(subChile$meanNumeracyS,5)  
 
 # Index of Literacy skills 
 
-std_dataC$meanLiteracyS <- (std_dataC$G_Q01an + std_dataC$G_Q02an + std_dataC$G_Q02bn + std_dataC$G_Q02cn + std_dataC$G_Q02dn)/5
+subChile$meanLiteracyS <- (std_dataC$G_Q01an + std_dataC$G_Q02an + std_dataC$G_Q02bn + std_dataC$G_Q02cn + std_dataC$G_Q02dn)/5
+
+subChile$meanLiteracyS_cat <-ntile(subChile$meanLiteracyS,5) 
 
 ```
 <br>
@@ -1005,11 +1018,27 @@ std_dataC$meanLiteracyS <- (std_dataC$G_Q01an + std_dataC$G_Q02an + std_dataC$G_
 
 #Income and gender 
 
+subChile$YEARLYINCPR= factor (subChile$YEARLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE)
+
+test <- polr(as.factor(YEARLYINCPR) ~ meanict_cat+ GENDER_Rn + meanEducation_cat, data = subChile, Hess=TRUE)
+
+summary(test)
+
+(ctable <- coef(summary(test)))
+p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+
+(ctable <- cbind(ctable, "p value" = p))
+
+summary(subChile$YEARLYINCPR)
+
 IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataC)
 
 IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataC)
 
 summary(IncomeICTgenderplus) 
+summary(std_dataC$meanict)
+summary(std_dataC$YEARLYINCPR)
+summary(Chile$YEARLYINCPR)
 
 
 IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataC)
