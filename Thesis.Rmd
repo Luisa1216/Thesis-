@@ -21,10 +21,9 @@ library(FactoMineR)
 library("factoextra")
 library(factoextra)
 
-Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
+Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgmexp1.csv")
+#Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
 
-
-Chile %>% count(EARNHRBONUSPPP) 
 Mexico %>% count(EARNHRBONUSPPP) 
 ```
 
@@ -1126,7 +1125,7 @@ sqrt(vif7)
 #due to NAs G_Q06n (level of computer user) + G_Q08n (Lack of skills affect the career) where not included and the lack of correlation 
 # Since there was not much correlation witj G_Q07n it was also removed
 
-ICTWork1.pca <- prcomp(newMexico1ICTwork1[,c("G_Q05an", "G_Q05cn", "G_Q05dn" , "G_Q05en" , "G_Q05gn" , "G_Q05hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+std_dataM$ICTWork1pca<- prcomp(std_dataM[,c("G_Q05an", "G_Q05cn", "G_Q05dn" , "G_Q05en" , "G_Q05gn" , "G_Q05hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
 
 
 summary(ICTWork1.pca)
@@ -1165,7 +1164,7 @@ fviz_pca_var(ICTWork1.pca, col.var = "contrib",
              )
 # according to this results G_Q05dn and G_Q05gn should not be taken into account in the principal component analysis since they do not contribute much. Which can be explained because the other variables are more basic ICT akiss and G_Q05gn talks about programming language.Thus it is recommended to be leave it alone as High level ICT skill and the rest as basic thus the new Pc woult be
 
-ICTWork2.pca <- prcomp(newMexico1ICTwork1[,c("G_Q05an", "G_Q05cn", "G_Q05en" , "G_Q05hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+subMexico$ICTWork2.pca <- prcomp(subMexico[,c("G_Q05an", "G_Q05cn", "G_Q05en" , "G_Q05hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
 
 summary(ICTWork2.pca)
 loadings(ICTWork2.pca)
@@ -1186,6 +1185,7 @@ fviz_pca_var(ICTWork2.pca, col.var = "contrib",
 
 NumeracyWork1.pca <- princomp(newMexico1ICTwork1[,c("G_Q03bn" , "G_Q03cn" , "G_Q03dn" , "G_Q03fn" , "G_Q03gn" , "G_Q03hn")], na.action=na.omit, center = TRUE,scale. = TRUE)
 
+summary(subMexico$meanict)
 
 summary(NumeracyWork1.pca)
 loadings(NumeracyWork1.pca)
@@ -1240,7 +1240,7 @@ fviz_pca_var(NumeracyWork2.pca, col.var = "contrib",
 ```{r warning=FALSE, message=FALSE}
 
 
-LiteracyWork1.pca <- prcomp(newMexico1ICTwork1[,c("G_Q01an" , "G_Q02an" , "G_Q02bn" , "G_Q02cn" , "G_Q02dn")], na.action=na.omit, center = TRUE,scale. = TRUE)
+std_dataM$LiteracyworkPAC  <- prcomp(newMexico1ICTwork1[,c("G_Q01an" , "G_Q02an" , "G_Q02bn" , "G_Q02cn" , "G_Q02dn")], na.action=na.omit, center = TRUE,scale. = TRUE)
 
 
 summary(LiteracyWork1.pca)
