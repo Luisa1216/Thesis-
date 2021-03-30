@@ -22,7 +22,8 @@ library(FactoMineR)
 library(factoextra)
 
 #Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
-Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
+#Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
+Peru <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgperp1.csv")
 ```
 
 
@@ -1025,3 +1026,66 @@ IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNume
 summary(IncomeNumeracy)
 
 ```
+
+```{r}
+ICTSKILLSperu <-subPeru %>% 
+  select("G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+softskillsperu <-subPeru %>% 
+  select ("F_Q01bn" ,"F_Q02bn", "F_Q02cn", "F_Q02dn" ,"F_Q02en", "F_Q03bn", "F_Q04an", "F_Q05an", "F_Q05bn")
+
+Literacyskillsperu <- subPeru%>% 
+  select( "G_Q01an", "G_Q02an", "G_Q02bn", "G_Q02cn","G_Q02dn")
+
+#Percentage of missings by type of skills  (ESTO SI FUNCIONA)
+#ICT SKILLS
+
+missing.valuesperu <- ICTSKILLSperu %>%
+  gather(key = "key", value = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, total, isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.valuesperu  %>% filter(isna == T) %>%     
+           arrange(desc(pct)))$key
+
+
+percentage.plotperu <- missing.valuesperu %>%
+      ggplot() +
+        geom_bar(aes(x = reorder(key, desc(pct)), 
+                     y = pct, fill=isna), 
+                  stat = 'identity', alpha=0.8) +
+        scale_x_discrete(limits = levels) +
+        scale_fill_manual(name = "", 
+                          values = c('steelblue', 'tomato3'), 
+                          labels = c("Present", "Missing")) +
+        coord_flip() +
+        labs(title = "Percentage of missing values ICT skills", 
+             x = 'Variable', y = "% of missing values")
+percentage.plotperu
+```
+
+```{r}
+GRAPH1peru <-subPeru %>% 
+  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+# ICT variables by gender 
+variablemissingsbygenderperu<-GRAPH1%>%
+  group_by(GENDER_Rn) %>%
+  miss_var_summary()
+
+Yayperu<-variablemissingsbygenderperu%>%
+  ggplot() +
+    geom_bar(aes(x=variable, y=n_miss, fill=GENDER_Rn), stat = 'identity') +
+    labs(x='variable', y="number of missing values", 
+         title='Number of  ICT missing values by gender') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+Yayperu
+
+
+```
+

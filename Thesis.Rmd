@@ -21,8 +21,8 @@ library(FactoMineR)
 library("factoextra")
 library(factoextra)
 
-Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgmexp1.csv")
-#Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
+#Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgmexp1.csv")
+Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
 
 Mexico %>% count(EARNHRBONUSPPP) 
 ```
@@ -949,6 +949,12 @@ ICTSKILLS <-subMexico %>%
 
 softskills <-subMexico %>% 
   select ("F_Q01bn" ,"F_Q02bn", "F_Q02cn", "F_Q02dn" ,"F_Q02en", "F_Q03bn", "F_Q04an", "F_Q05an", "F_Q05bn")
+
+Literacyskills <- subMexico%>% 
+  select( "G_Q01an", "G_Q02an", "G_Q02bn", "G_Q02cn","G_Q02dn")
+
+
+
 ```
 
 
@@ -963,40 +969,39 @@ standardize= function(x)
 
 #Apply function to the dataset 
 
-
 std_dataM= as.data.frame(apply(subMexico,2,standardize))
 
 # Creation of the first index of ICT skills for work 
 
-std_dataM$meanict <- (std_dataM$G_Q05an + std_dataM$G_Q05cn + std_dataM$G_Q05dn + std_dataM$G_Q05en + std_dataM$G_Q05gn + std_dataM$G_Q06n + std_dataM$G_Q07n + std_dataM$G_Q08n)/8
+subMexico$meanict <- (std_dataM$G_Q05an + std_dataM$G_Q05cn + std_dataM$G_Q05dn + std_dataM$G_Q05en + std_dataM$G_Q05gn + std_dataM$G_Q06n + std_dataM$G_Q07n + std_dataM$G_Q08n)/8
 
 # Creation  of a more general index of ICT with only 3  variables 
 
-std_dataM$meanictBasic <- (std_dataM$G_Q04n + std_dataM$G_Q04_Tn + std_dataM$COMPUTEREXPERIENCE)/3
+subMexico$meanictBasic <- (std_dataM$G_Q04n + std_dataM$G_Q04_Tn + std_dataM$COMPUTEREXPERIENCE)/3
 
 # Index of Education status
 
-std_dataM$meanEducation <- (std_dataM$B_Q01an + std_dataM$B_Q01a_Tn + std_dataM$B_Q02an + std_dataM$B_Q01bn)/4
+subMexico$meanEducation <- (std_dataM$B_Q01an + std_dataM$B_Q01a_Tn + std_dataM$B_Q02an + std_dataM$B_Q01bn)/4
 
 # Index of Work status
 
-std_dataM$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+subMexico$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
 
 # Index of Work status
 
-std_dataM$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
+subMexico$meanWorkS <- (std_dataM$C_Q01an + std_dataM$D_Q03n + std_dataM$D_Q14n + std_dataM$D_Q18a_T)/4
 
 # Index of Soft skills 
 
-std_dataM$meanSoftS <- (std_dataM$F_Q01bn + std_dataM$F_Q02bn + std_dataM$F_Q02cn + std_dataM$F_Q02dn + std_dataM$F_Q02en + std_dataM$F_Q03bn + std_dataM$F_Q04an + std_dataM$F_Q05an + std_dataM$F_Q05bn)/9
+subMexico$meanSoftS <- (std_dataM$F_Q01bn + std_dataM$F_Q02bn + std_dataM$F_Q02cn + std_dataM$F_Q02dn + std_dataM$F_Q02en + std_dataM$F_Q03bn + std_dataM$F_Q04an + std_dataM$F_Q05an + std_dataM$F_Q05bn)/9
 
 # Index of Numeracy skills 
 
-std_dataM$meanNumeracyS <- (std_dataM$G_Q03bn + std_dataM$G_Q03cn + std_dataM$G_Q03dn + std_dataM$G_Q03fn + std_dataM$G_Q03gn + std_dataM$G_Q03hn)/6
+subMexico$meanNumeracyS <- (std_dataM$G_Q03bn + std_dataM$G_Q03cn + std_dataM$G_Q03dn + std_dataM$G_Q03fn + std_dataM$G_Q03gn + std_dataM$G_Q03hn)/6
 
 # Index of Literacy skills 
 
-std_dataM$meanLiteracyS <- (std_dataM$G_Q01an + std_dataM$G_Q02an + std_dataM$G_Q02bn + std_dataM$G_Q02cn + std_dataM$G_Q02dn)/5
+subMexico$meanLiteracyS <- (std_dataM$G_Q01an + std_dataM$G_Q02an + std_dataM$G_Q02bn + std_dataM$G_Q02cn + std_dataM$G_Q02dn)/5
 
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
@@ -1006,9 +1011,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 ```{r warning=FALSE, message=FALSE}
 
 
-variablemissingsbygender<-newMexico1%>%
-  group_by(GENDER_Rn) %>%
-  miss_var_summary()
+
 
 
 ```
@@ -1308,7 +1311,14 @@ summary(Skillsreg)
 ```
 
 ```{r}
-missing.values <- subMexico %>%
+GRAPH1(view)
+# ICT variables by gender 
+variablemissingsbygender<-GRAPH1%>%
+  group_by(GENDER_Rn) %>%
+  miss_var_summary()
+
+
+missing.values7 <- GRAPH1%>%
     gather(key = "key", value = "val") %>%
     mutate(is.missing = is.na(val)) %>%
     group_by(key, is.missing) %>%
@@ -1318,28 +1328,55 @@ missing.values <- subMexico %>%
     arrange(desc(num.missing))
 
 
-missing.values %>%
+missing.values7 %>%
+  ggplot() +
+    geom_bar(aes(x=key, y=num.missing, fill=num.missing), stat = 'identity') +
+    labs(x='Variables', y="NAs", 
+         title='Number of missing values') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+YAY<-variablemissingsbygender%>%
+  ggplot() +
+    geom_bar(aes(x=variable, y=n_miss, fill=GENDER_Rn), stat = 'identity') +
+    labs(x='variable', y="number of missing values", 
+         title='Number of  ICT missing values by gender') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+  
+
+missing.values7 %>%
   ggplot() +
     geom_bar(aes(x=key, y=num.missing), stat = 'identity') +
-    labs(x='variable', y="number of missing values", 
+    labs(x='Variables', y="Number of NAs", 
          title='Number of missing values') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
+ggplot(GRAPH1,geom_bar(aes(x=AGE_R, y=num.missing)), fill = "GENDER_Rn") 
 
-ggplot(subMexico, 
-       aes(x =G_Q05an , 
-           y = missing.values)) + 
-  geom_point()
+
+GRAPH1 %>%
+ggplot()+geom_bar(aes(x=AGE_R, y=num.missing), fill = "GENDER_Rn") 
+
+# Variables por genero y edad 
+auxilio<-new_DF1%>%
+ggplot()+geom_bar(aes(x=AGE_R, y=G_Q05an, fill= GENDER_Rn),stat= 'identity')
+auxilio
+
+auxilio2<-new_DF%>%
+ggplot()+geom_bar(aes(x=AGE_R, y=meanict, fill= GENDER_Rn),stat= 'identity')
+                  
 
 ```
 
 
 ```{r}
 
-#Percentage of missings by type of skills 
-missing.values <- ICTSKILLS %>%
+#Percentage of missings by type of skills  (ESTO SI FUNCIONA)
+#ICT SKILLS
+
+missing.values1 <- ICTSKILLS %>%
   gather(key = "key", value = "val") %>%
   mutate(isna = is.na(val)) %>%
   group_by(key) %>%
@@ -1348,7 +1385,7 @@ missing.values <- ICTSKILLS %>%
   summarise(num.isna = n()) %>%
   mutate(pct = num.isna / total * 100)
 
-levels <- (missing.values  %>% filter(isna == T) %>%     
+levels <- (missing.values1  %>% filter(isna == T) %>%     
            arrange(desc(pct)))$key
 
 
@@ -1362,18 +1399,12 @@ percentage.plot <- missing.values %>%
                           values = c('steelblue', 'tomato3'), 
                           labels = c("Present", "Missing")) +
         coord_flip() +
-        labs(title = "Percentage of missing values", 
+        labs(title = "Percentage of missing values ICT skills", 
              x = 'Variable', y = "% of missing values")
-
-
 percentage.plot
 
-# 
-
-
-
-#Percentage of missings by type of skills 
-missing.values1 <- softskills %>%
+#Percentage of missings soft skills 
+missing.values2 <- softskills %>%
   gather(key = "key", value = "val") %>%
   mutate(isna = is.na(val)) %>%
   group_by(key) %>%
@@ -1386,7 +1417,7 @@ levels <- (missing.values1  %>% filter(isna == T) %>%
            arrange(desc(pct)))$key
 
 
-percentage.plot2 <- missing.values1 %>%
+percentage.plot2 <- missing.values2 %>%
       ggplot() +
         geom_bar(aes(x = reorder(key, desc(pct)), 
                      y = pct, fill=isna), 
@@ -1396,16 +1427,51 @@ percentage.plot2 <- missing.values1 %>%
                           values = c('steelblue', 'tomato3'), 
                           labels = c("Present", "Missing")) +
         coord_flip() +
-        labs(title = "Percentage of missing values", 
+        labs(title = "Percentage of missing values soft skills", 
              x = 'Variable', y = "% of missing values")
 percentage.plot2
 
+#Percentage of missings Literacy Skills
+
+missing.values3 <- Literacyskills %>%
+  gather(key = "key", value = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, total, isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.values3  %>% filter(isna == T) %>%     
+           arrange(desc(pct)))$key
+
+percentage.plot3 <- missing.values3 %>%
+      ggplot() +
+        geom_bar(aes(x = reorder(key, desc(pct)), 
+                     y = pct, fill=isna), 
+                  stat = 'identity', alpha=0.8) +
+        scale_x_discrete(limits = levels) +
+        scale_fill_manual(name = "", 
+                          values = c('steelblue', 'tomato3'), 
+                          labels = c("Present", "Missing")) +
+        coord_flip() +
+        labs(title = "Percentage of missing values Literacy skills", 
+             x = 'Variable', y = "% of missing values")
+percentage.plot3
+
+
+
+# SUBSETS 
 
 GRAPH1 <-subMexico %>% 
-  select("GENDER_Rn", "AGE_R", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
 
------
-  
+GRAPH2 <-newMexico1 %>% 
+  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+
+new_DF1 <- GRAPH1[rowSums(is.na(GRAPH1)) > 0,]
+new_DF <- subMexico2[rowSums(is.na(subMexico2)) > 0,]
 
 #AGE in ranges 
 # Creating vectors 
@@ -1417,18 +1483,10 @@ table(wfact)
 #basic info AGE 
 with(subMexico, summary(AGE_R))
 
-tapply(subMexico,
-        list(subMexico$GENDER_Rn,subMexico$AGE_R), mean)
+---
+   
+  
 
-StackedBar = ggplot(subMexico, aes(G_Q05an, AGE_R), fill = "GENDER_Rn", inherit.aes = FALSE) + 
-  geom_bar(stat="summary", fun.y="mean") + 
-  scale_fill_brewer(palette = "Set2") + ggtitle("Humor Chart")
-StackedBar
-
-
-GroupedBar = ggplot(subMexico, aes(GENDER_Rn, GQ05cn, fill = AGE_R),inherit.aes = FALSE) + geom_bar(stat="summary", fun.y="mean", position = "dodge") + 
-  scale_fill_brewer(palette = "Set2") + ggtitle("Humor Chart")
-GroupedBar
 
 
 

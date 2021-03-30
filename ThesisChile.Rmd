@@ -26,6 +26,8 @@ library(nnet)
 library(MASS)
 library(Hmisc)
 library(reshape2)
+library(naniar)
+library(wesanderson)
 
 
 Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgchlp1.csv")
@@ -947,9 +949,8 @@ subChile <- newChile1 %>%
 ```
 
 
-<br>
 
-**Dropping NAs**
+<br>
 
 
 <br>
@@ -1016,48 +1017,90 @@ subChile$meanLiteracyS_cat <-ntile(subChile$meanLiteracyS,5)
 
 ```{r}
 
-#Income and gender 
+#Income and gender with 5 ICT variavles
 
-subChile$YEARLYINCPR= factor (subChile$YEARLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE)
+subChile$MONTHLYINCPR= factor (subChile$MONTHLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE)
 
-test <- polr(as.factor(YEARLYINCPR) ~ meanict_cat+ GENDER_Rn + meanEducation_cat, data = subChile, Hess=TRUE)
+test <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat+ GENDER_Rn + AGE_R + meanEducation_cat, data = subChile, Hess=TRUE)
 
 summary(test)
 
-(ctable <- coef(summary(test)))
-p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+(ctable1 <- coef(summary(test)))
+p1 <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
 
-(ctable <- cbind(ctable, "p value" = p))
-
-summary(subChile$YEARLYINCPR)
-
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataC)
-
-IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataC)
-
-summary(IncomeICTgenderplus) 
-summary(std_dataC$meanict)
-summary(std_dataC$YEARLYINCPR)
-summary(Chile$YEARLYINCPR)
+(ctable1 <- cbind(ctable, "p value" = p1))
 
 
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataC)
+#Income and gender with 3 basic ICT variables
 
-summary(IncomeICTgender) 
-
-
-IncomeICTgender2 <- lm(YEARLYINCPR ~ meanictBasic + GENDER_Rn + meanEducation +(meanictBasic*GENDER_Rn),std_dataC)
-
-summary(IncomeICTgender2) 
+subChile$MONTHLYINCPR= factor (subChile$MONTHLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE) 
 
 
-IncomesoftICT <- lm(YEARLYINCPR ~  meanict + GENDER_Rn + meanSoftS + meanEducation + (meanict *meanSoftS),std_dataC)
+BasicICT <- polr(as.factor(MONTHLYINCPR) ~ meanict_catBasic + GENDER_Rn + AGE_R + meanEducation_cat, data = subChile, Hess=TRUE)
 
-summary(IncomesoftICT) 
+summary(BasicICT)
+
+(ctable3 <- coef(summary(BasicICT)))
+p3 <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+
+(ctable3 <- cbind(ctable, "p value" = p3))
+
+#Income and gender with 5 ICT variables
+
+BasicICTplus <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + meanLiteracyS_cat + meanSoftS_cat + meanNumeracyS_cat + J_Q03an, data = subChile, Hess=TRUE)
+
+summary(BasicICTplus)
+
+# Gender and ICT 
+
+GenderxICT <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + (meanict_cat*GENDER_Rn) , data = subChile, Hess=TRUE)
+
+summary(GenderxICT)
+
+# MeanICT - Education
+
+ICTxEducation <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + (meanict_cat*meanEducation_cat) , data = subChile, Hess=TRUE)
+
+summary(ICTxEducation)
+
+# MeanICT - Numeracy
 
 
-IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNumeracyS + meanEducation  + J_Q03an +J_Q06bn+C_Q01an+ J_Q07bn + (meanict *meanNumeracyS),std_dataC)
+ICTxNumeracy <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + meanNumeracyS_cat +(meanict_cat*meanNumeracyS_cat) , data = subChile, Hess=TRUE)
 
-summary(IncomeNumeracy)
+summary(ICTxNumeracy)
+
+
+```
+
+```{r}
+
+
+#Graphs
+
+GRAPH1 <-subChile %>% 
+  select("GENDER_Rn", "AGE_R", "meanict_cat")
+
+GRAPH1$AGE_Rn <- cut(GRAPH1$AGE_R, 3, labels = c('Young', 'Medium', 'Aged')) 
+
+Graph2 <- GRAPH1 %>% 
+  select( "AGE_Rn", "meanict_cat", "GENDER_Rn")
+
+variablemissingsbyAGE<-Graph2%>%
+  group_by(AGE_Rn) %>%
+  miss_var_summary()
+
+
+pal <- wes_palette("Zissou1", 100, type = "continuous")
+
+Agemissings<- ggplot(data=variablemissingsbyAGE, aes(x=AGE_Rn, y=n_miss)) +
+    geom_bar(stat = "identity", width =0.5, fill="cyan3") +
+    labs(x='variable', y="number of missing values", 
+         title='Number of  ICT missing values by age') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)+  
+            theme_classic())
+
+Agemissings
+
 
 ```

@@ -22,7 +22,7 @@ library(factoextra)
 
 
 
-Ecuador <- read.csv("/Users/mac/Desktop/wORKING dIRECTORY/prgecup1.csv")
+Ecuador <- read.csv("//Users/mac/Dropbox/Thesis/Thesis-/prgecup1.csv")
 ```
 
 <br>
@@ -66,7 +66,7 @@ table(is.na(newEcuador$MONTHLYINCPR))
 #droping NAs from the independent variable 
 
 
-newEcuador1 <- drop_na(newEcuador, YEARLYINCPR)
+newEcuador1 <- drop_na(newEcuador, MONTHLYINCPR)
 
 # Number of women and men 
 
@@ -271,6 +271,11 @@ newEcuador1$B_Q01bn[newEcuador1$B_Q01b == "9"] = 9
 
 # C_Q01c
 newEcuador1$C_Q01cn[newEcuador1$C_Q01c == "V"] = NA
+
+#C_Q01a
+newEcuador1$C_Q01an[newEcuador1$C_Q01a == "D"] = NA
+newEcuador1$C_Q01an[newEcuador1$C_Q01a == "1"] = 0
+newEcuador1$C_Q01an[newEcuador1$C_Q01a == "2"] = 1
 
 #C_Q02a
 
@@ -942,3 +947,74 @@ newEcuador1$J_Q07bn[newEcuador1$J_Q07b== "R"] = NA
 **Dropping NAs**
 
 <br>
+
+```{r}
+
+# Creation of new subset 
+
+subEcuador <- newEcuador1 %>% 
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+```
+
+```{r}
+ICTSKILLSecuador <-subEcuador %>% 
+  select("G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+softskillsecuador <-subEcuador %>% 
+  select ("F_Q01bn" ,"F_Q02bn", "F_Q02cn", "F_Q02dn" ,"F_Q02en", "F_Q03bn", "F_Q04an", "F_Q05an", "F_Q05bn")
+
+Literacyskillsecuador <- subEcuador %>% 
+  select( "G_Q01an", "G_Q02an", "G_Q02bn", "G_Q02cn","G_Q02dn")
+
+#Percentage of missings by type of skills  (ESTO SI FUNCIONA)
+#ICT SKILLS
+
+missing.valuesecuador <- ICTSKILLSecuador %>%
+  gather(key = "key", value = "val") %>%
+  mutate(isna = is.na(val)) %>%
+  group_by(key) %>%
+  mutate(total = n()) %>%
+  group_by(key, total, isna) %>%
+  summarise(num.isna = n()) %>%
+  mutate(pct = num.isna / total * 100)
+
+levels <- (missing.valuesecuador  %>% filter(isna == T) %>%     
+           arrange(desc(pct)))$key
+
+
+percentage.plotecuador <- missing.valuesecuador %>%
+      ggplot() +
+        geom_bar(aes(x = reorder(key, desc(pct)), 
+                     y = pct, fill=isna), 
+                  stat = 'identity', alpha=0.8) +
+        scale_x_discrete(limits = levels) +
+        scale_fill_manual(name = "", 
+                          values = c('steelblue', 'tomato3'), 
+                          labels = c("Present", "Missing")) +
+        coord_flip() +
+        labs(title = "Percentage of missing values ICT skills", 
+             x = 'Variable', y = "% of missing values")
+percentage.plotecuador
+```
+
+
+```{r}
+GRAPH1ecuador <-subEcuador %>% 
+  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
+# ICT variables by gender 
+variablemissingsbygenderecuador<-GRAPH1%>%
+  group_by(GENDER_Rn) %>%
+  miss_var_summary()
+
+Yayecuador<-variablemissingsbygenderecuador%>%
+  ggplot() +
+    geom_bar(aes(x=variable, y=n_miss, fill=GENDER_Rn), stat = 'identity') +
+    labs(x='variable', y="number of missing values", 
+         title='Number of  ICT missing values by gender') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+Yayecuador
+
+```
+
