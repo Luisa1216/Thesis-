@@ -20,6 +20,11 @@ library(car)
 library(carData)
 library(FactoMineR)
 library(factoextra)
+library(nnet)
+library(MASS)
+library(Hmisc)
+library(reshape2)
+library(naniar)
 
 Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
 #Peru <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgperp1.csv")
@@ -1005,7 +1010,6 @@ subPeru$meanLiteracyS_cat <-ntile(subPeru$meanLiteracyS,5)
 
 <br>
 ```{r}
-
 #Income and gender 
 
 #Income and gender with 5 ICT variables
