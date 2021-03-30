@@ -1008,13 +1008,6 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 
 
-```{r warning=FALSE, message=FALSE}
-
-
-
-
-
-```
 
 ```{r warning=FALSE, message=FALSE}
 
@@ -1311,29 +1304,18 @@ summary(Skillsreg)
 ```
 
 ```{r}
-GRAPH1(view)
+
+
+# SUBSETS 
+
+GRAPH1 <-subMexico %>% 
+  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
+
 # ICT variables by gender 
+
 variablemissingsbygender<-GRAPH1%>%
   group_by(GENDER_Rn) %>%
   miss_var_summary()
-
-
-missing.values7 <- GRAPH1%>%
-    gather(key = "key", value = "val") %>%
-    mutate(is.missing = is.na(val)) %>%
-    group_by(key, is.missing) %>%
-    summarise(num.missing = n()) %>%
-    filter(is.missing==T) %>%
-    select(-is.missing) %>%
-    arrange(desc(num.missing))
-
-
-missing.values7 %>%
-  ggplot() +
-    geom_bar(aes(x=key, y=num.missing, fill=num.missing), stat = 'identity') +
-    labs(x='Variables', y="NAs", 
-         title='Number of missing values') +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 YAY<-variablemissingsbygender%>%
   ggplot() +
@@ -1343,7 +1325,6 @@ YAY<-variablemissingsbygender%>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
   
   
-
 missing.values7 %>%
   ggplot() +
     geom_bar(aes(x=key, y=num.missing), stat = 'identity') +
@@ -1353,20 +1334,15 @@ missing.values7 %>%
 
 
 
-ggplot(GRAPH1,geom_bar(aes(x=AGE_R, y=num.missing)), fill = "GENDER_Rn") 
-
-
-GRAPH1 %>%
-ggplot()+geom_bar(aes(x=AGE_R, y=num.missing), fill = "GENDER_Rn") 
-
 # Variables por genero y edad 
+
+new_DF1 <- GRAPH1[rowSums(is.na(GRAPH1)) > 0,]
+
+
 auxilio<-new_DF1%>%
 ggplot()+geom_bar(aes(x=AGE_R, y=G_Q05an, fill= GENDER_Rn),stat= 'identity')
 auxilio
 
-auxilio2<-new_DF%>%
-ggplot()+geom_bar(aes(x=AGE_R, y=meanict, fill= GENDER_Rn),stat= 'identity')
-                  
 
 ```
 
@@ -1413,7 +1389,7 @@ missing.values2 <- softskills %>%
   summarise(num.isna = n()) %>%
   mutate(pct = num.isna / total * 100)
 
-levels <- (missing.values1  %>% filter(isna == T) %>%     
+levels <- (missing.values2 %>% filter(isna == T) %>%     
            arrange(desc(pct)))$key
 
 
@@ -1460,19 +1436,6 @@ percentage.plot3 <- missing.values3 %>%
 percentage.plot3
 
 
-
-# SUBSETS 
-
-GRAPH1 <-subMexico %>% 
-  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
-
-GRAPH2 <-newMexico1 %>% 
-  select("GENDER_Rn", "G_Q05an", "G_Q05cn","G_Q05dn", "G_Q05en",  "G_Q05gn",  "G_Q06n" ,  "G_Q07n", "G_Q08n")
-
-
-new_DF1 <- GRAPH1[rowSums(is.na(GRAPH1)) > 0,]
-new_DF <- subMexico2[rowSums(is.na(subMexico2)) > 0,]
-
 #AGE in ranges 
 # Creating vectors 
 AGE_R <- c(16:65) 
@@ -1483,7 +1446,7 @@ table(wfact)
 #basic info AGE 
 with(subMexico, summary(AGE_R))
 
----
+
    
   
 

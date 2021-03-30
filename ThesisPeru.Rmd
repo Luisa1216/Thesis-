@@ -21,9 +21,8 @@ library(carData)
 library(FactoMineR)
 library(factoextra)
 
-#Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/R/prgperp1.csv")
-#Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
-Peru <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgperp1.csv")
+Peru <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgperp1.csv")
+#Peru <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgperp1.csv")
 ```
 
 
@@ -959,35 +958,45 @@ std_dataP = as.data.frame(apply(subPeru,2,standardize))
 
 # Creation of the first index of ICT skills for work 
 
-std_dataP$meanict <- (std_dataP$G_Q05an + std_dataP$G_Q05cn + std_dataP$G_Q05dn + std_dataP$G_Q05en + std_dataP$G_Q05gn + std_dataP$G_Q06n + std_dataP$G_Q07n + std_dataP$G_Q08n)/8
+subPeru$meanict <- (std_dataP$G_Q05an + std_dataP$G_Q05cn + std_dataP$G_Q05dn + std_dataP$G_Q05en + std_dataP$G_Q05gn + std_dataP$G_Q06n + std_dataP$G_Q07n + std_dataP$G_Q08n)/8
+
+subPeru$meanict_cat <-ntile(subPeru$meanict,5)  
 
 # Creation  of a more general index of ICT with only 3  variables 
 
-std_dataP$meanictBasic <- (std_dataP$G_Q04n + std_dataP$G_Q04_Tn + std_dataP$COMPUTEREXPERIENCE)/3
+subPeru$meanictBasic <- (std_dataP$G_Q04n + std_dataP$G_Q04_Tn + std_dataP$COMPUTEREXPERIENCE)/3
+
+subPeru$meanict_catBasic <-ntile(subPeru$meanictBasic,3)  
 
 # Index of Education status
 
-std_dataP$meanEducation <- (std_dataP$B_Q01an + std_dataP$B_Q01a_Tn + std_dataP$B_Q02an + std_dataP$B_Q01bn)/4
+subPeru$meanEducation <- (std_dataP$B_Q01an + std_dataP$B_Q01a_Tn + std_dataP$B_Q02an + std_dataP$B_Q01bn)/4
+
+subPeru$meanEducation_cat <-ntile(subPeru$meanEducation,5)  
 
 # Index of Work status
 
-std_dataP$meanWorkS <- (std_dataP$C_Q01an + std_dataP$D_Q03n + std_dataP$D_Q14n + std_dataP$D_Q18a_T)/4
+subPeru$meanWorkS <- (std_dataP$C_Q01an + std_dataP$D_Q03n + std_dataP$D_Q14n + std_dataP$D_Q18a_T)/4
 
-# Index of Work status
+subPeru$meanWorkS_cat <-ntile(subPeru$meanWorkS,5)  
 
-std_dataP$meanWorkS <- (std_dataP$C_Q01an + std_dataP$D_Q03n + std_dataP$D_Q14n + std_dataP$D_Q18a_T)/4
 
 # Index of Soft skills 
 
-std_dataP$meanSoftS <- (std_dataP$F_Q01bn + std_dataP$F_Q02bn + std_dataP$F_Q02cn + std_dataP$F_Q02dn + std_dataP$F_Q02en + std_dataP$F_Q03bn + std_dataP$F_Q04an + std_dataP$F_Q05an + std_dataP$F_Q05bn)/9
+subPeru$meanSoftS <- (std_dataP$F_Q01bn + std_dataP$F_Q02bn + std_dataP$F_Q02cn + std_dataP$F_Q02dn + std_dataP$F_Q02en + std_dataP$F_Q03bn + std_dataP$F_Q04an + std_dataP$F_Q05an + std_dataP$F_Q05bn)/9
+
+subPeru$meanSoftS_cat <-ntile(subPeru$meanSoftS,5)  
 
 # Index of Numeracy skills 
 
-std_dataP$meanNumeracyS <- (std_dataP$G_Q03bn + std_dataP$G_Q03cn + std_dataP$G_Q03dn + std_dataP$G_Q03fn + std_dataP$G_Q03gn + std_dataP$G_Q03hn)/6
+subPeru$meanNumeracyS <- (std_dataP$G_Q03bn + std_dataP$G_Q03cn + std_dataP$G_Q03dn + std_dataP$G_Q03fn + std_dataP$G_Q03gn + std_dataP$G_Q03hn)/6
+
+subPeru$meanNumeracyS_cat <-ntile(subPeru$meanNumeracyS,5)  
 
 # Index of Literacy skills 
+subPeru$meanLiteracyS <- (std_dataP$G_Q01an + std_dataP$G_Q02an + std_dataP$G_Q02bn + std_dataP$G_Q02cn + std_dataP$G_Q02dn)/5
 
-std_dataP$meanLiteracyS <- (std_dataP$G_Q01an + std_dataP$G_Q02an + std_dataP$G_Q02bn + std_dataP$G_Q02cn + std_dataP$G_Q02dn)/5
+subPeru$meanLiteracyS_cat <-ntile(subPeru$meanLiteracyS,5) 
 
 ```
 
@@ -999,31 +1008,59 @@ std_dataP$meanLiteracyS <- (std_dataP$G_Q01an + std_dataP$G_Q02an + std_dataP$G_
 
 #Income and gender 
 
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + J_Q03an +(meanict*GENDER_Rn),std_dataP)
+#Income and gender with 5 ICT variables
 
-IncomeICTgenderplus <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation +meanLiteracyS + meanSoftS +  meanNumeracyS+ J_Q03an  +J_Q06bn + J_Q07bn + (meanict*GENDER_Rn),std_dataP)
+subPeru$MONTHLYINCPR= factor (subPeru$MONTHLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE)
 
-summary(IncomeICTgenderplus) 
+testp <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat+ GENDER_Rn + AGE_R + meanEducation_cat, data = subPeru, Hess=TRUE)
 
+summary(testp)
 
-IncomeICTgender <- lm(YEARLYINCPR ~ meanict + GENDER_Rn + meanEducation + J_Q03an + (meanict*GENDER_Rn),std_dataP)
+(ctable1 <- coef(summary(testp)))
+p1 <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
 
-summary(IncomeICTgender) 
-
-
-IncomeICTgender2 <- lm(YEARLYINCPR ~ meanictBasic + GENDER_Rn + meanEducation +(meanictBasic*GENDER_Rn),std_dataP)
-
-summary(IncomeICTgender2) 
+(ctable1 <- cbind(ctable, "p value" = p1))
 
 
-IncomesoftICT <- lm(YEARLYINCPR ~  meanict + GENDER_Rn + meanSoftS + meanEducation + (meanict *meanSoftS),std_dataP)
+#Income and gender with 3 basic ICT variables
 
-summary(IncomesoftICT) 
+subPeru$MONTHLYINCPR= factor (subPeru$MONTHLYINCPR, levels = c("1", "2", "3", "4", "5", "6"), ordered = TRUE) 
 
 
-IncomeNumeracy <- lm(YEARLYINCPR ~   meanict + GENDER_Rn + meanSoftS +  meanNumeracyS + meanEducation  + J_Q03an +J_Q06bn+C_Q01an+ J_Q07bn + (meanict *meanNumeracyS),std_dataP)
+BasicICTp <- polr(as.factor(MONTHLYINCPR) ~ meanict_catBasic + GENDER_Rn + AGE_R + meanEducation_cat, data = subPeru, Hess=TRUE)
 
-summary(IncomeNumeracy)
+summary(BasicICTp)
+
+(ctable3 <- coef(summary(BasicICTp)))
+p3 <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+
+(ctable3 <- cbind(ctable, "p value" = p3))
+
+#Income and gender with 5 ICT variables
+
+BasicICTplusp <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + meanLiteracyS_cat + meanSoftS_cat + meanNumeracyS_cat + J_Q03an, data = subPeru, Hess=TRUE)
+
+summary(BasicICTplusp)
+
+# Gender and ICT 
+
+GenderxICTp <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + (meanict_cat*GENDER_Rn) , data = subPeru, Hess=TRUE)
+
+summary(GenderxICTp)
+
+# MeanICT - Education
+
+ICTxEducationp <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + (meanict_cat*meanEducation_cat) , data = subPeru, Hess=TRUE)
+
+summary(ICTxEducationp)
+
+# MeanICT - Numeracy
+
+
+ICTxNumeracyp <- polr(as.factor(MONTHLYINCPR) ~ meanict_cat + GENDER_Rn + AGE_R + meanEducation_cat + J_Q03an + meanNumeracyS_cat +(meanict_cat*meanNumeracyS_cat) , data = subPeru, Hess=TRUE)
+
+summary(ICTxNumeracyp)
+
 
 ```
 
@@ -1085,6 +1122,30 @@ Yayperu<-variablemissingsbygenderperu%>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 Yayperu
+
+
+GRAPH3p <-subPeru %>% 
+  select("GENDER_Rn", "AGE_R", "meanict_cat")
+
+GRAPH3p$AGE_Rn <- cut(GRAPH3p$AGE_R, 3, labels = c('Young', 'Medium', 'Aged')) 
+
+Graph4p <- GRAPH3p %>% 
+  select( "AGE_Rn", "meanict_cat", "GENDER_Rn")
+
+variablemissAGEp<-Graph4p%>%
+  group_by(AGE_Rn) %>%
+  miss_var_summary()
+
+
+
+AgemissPeru<- ggplot(data=variablemissingsbyAGEp, aes(x=AGE_Rn, y=pct_miss)) +
+    geom_bar(stat = "identity", width =0.5, fill="cyan3") +
+    labs(x='variable', y="number of missing values", 
+         title='Number of  ICT missing values by age') +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)+  
+            theme_classic())
+
+AgemissPeru
 
 
 ```
