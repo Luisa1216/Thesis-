@@ -7,9 +7,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
-
-knitr::opts_chunk$set(echo = TRUE)
 set.seed(42) #for consistent results
 library(haven)
 library(foreign)
@@ -28,10 +25,9 @@ library(Hmisc)
 library(reshape2)
 library(naniar)
 
-
+#Chile<-read.csv("//Users/mac/Dropbox/Thesis/Thesis-/prgchlp1.csv")
 
 Chile <-read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgchlp1.csv")
-#Chile<-read.csv("//Users/mac/Dropbox/Thesis/Thesis-/prgchlp1.csv")
 ```
 
 ## R Markdown
@@ -939,10 +935,16 @@ newChile1$J_Q07bn[newChile1$J_Q07b== "D"] = NA
 newChile1$J_Q07bn[newChile1$J_Q07b== "N"] = NA
 newChile1$J_Q07bn[newChile1$J_Q07b== "R"] = NA
 
+# G_Q04_T
+
+newChile1$COMPUTEREXPERIENCEn[newChile1$COMPUTEREXPERIENCE == "N"] = NA
+newChile1$COMPUTEREXPERIENCEn[newChile1$COMPUTEREXPERIENCE == "1"] = 0
+newChile1$COMPUTEREXPERIENCEn[newChile1$COMPUTEREXPERIENCE == "2"] = 1
+
 # Creation of new subset 
 
 subChile <- newChile1 %>% 
-  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR")
+  select("AGE_R", "GENDER_Rn","B_Q01an", "B_Q01a_Tn", "B_Q02an", "B_Q02cn", "B_Q10cn", "B_Q01bn", "C_Q01an", "D_Q03n", "D_Q14n", "D_Q16an", "D_Q18a_T", "F_Q01bn","F_Q02bn","F_Q02cn","F_Q02dn","F_Q02en","F_Q03bn","F_Q04an","F_Q04bn","F_Q05an","F_Q05bn","F_Q07bn","G_Q01an","G_Q02an","G_Q02bn","G_Q02cn","G_Q02dn","G_Q03bn","G_Q03cn","G_Q03dn","G_Q03fn","G_Q03gn","G_Q03hn", "G_Q04n", "G_Q04_Tn", "G_Q05an", "G_Q05cn", "G_Q05dn", "G_Q05en", "G_Q05gn", "G_Q05hn", "G_Q06n", "G_Q07n", "G_Q08n", "H_Q01an", "H_Q01bn", "H_Q01b_Tn", "H_Q01cn", "H_Q01c_Tn", "H_Q01dn", "H_Q01en", "H_Q01e_Tn", "H_Q01fn", "H_Q01gn", "H_Q01hn", "H_Q02an", "H_Q02bn","H_Q02cn", "H_Q02dn", "H_Q03bn", "H_Q03cn", "H_Q03dn", "H_Q03fn", "H_Q03gn", "H_Q03hn","H_Q04an", "H_Q04bn", "H_Q05an", "H_Q05cn", "H_Q05dn", "H_Q05en", "H_Q05fn", "H_Q05gn", "H_Q05hn", "J_Q03an", "J_Q03bn", "J_Q06bn", "J_Q07bn","COMPUTEREXPERIENCEn", "MONTHLYINCPRn","YEARLYINCPR")
 
 
 ```
@@ -1157,7 +1159,7 @@ variablemissAGEchile<-Graph4c%>%
 
 Agemisschile<- ggplot(data=variablemissingsbyAGEchile, aes(x=AGE_Rn, y=pct_miss)) +
     geom_bar(stat = "identity", width =0.5, fill="cyan3") +
-    labs(x='variable', y="number of missing values", 
+    labs(x='variable', y="Percentage of missing values", 
          title='Number of  ICT missing values by age') +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)+  
             theme_classic())

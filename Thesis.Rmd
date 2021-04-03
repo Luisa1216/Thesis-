@@ -18,13 +18,11 @@ library(naniar)
 library(car)
 library(carData)
 library(FactoMineR)
-library("factoextra")
 library(factoextra)
 
-#Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgmexp1.csv")
-Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
+Mexico <- read.csv("/Users/lu/Dropbox/Hertie/3/Thesis/Thesis-/prgmexp1.csv")
+#Mexico <- read.csv("/Users/mac/Dropbox/Thesis/Thesis-/prgmexp1.csv")
 
-Mexico %>% count(EARNHRBONUSPPP) 
 ```
 
 ## R Markdown
@@ -55,10 +53,11 @@ Mexico %>% count(EARNHRBONUSPPP)
 
 ```{r cars}
 
+INCOME <- Mexico %>% 
+  dplyr::select("C_Q01a", "D_Q16b", "D_Q18a", "EARNMTHALLPPP", "EARNMTHBONUSPPP")
+
 newMexico <- Mexico %>% 
-  select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04","G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
-
-
+  dplyr::select("AGE_R", "GENDER_R","B_Q01a", "B_Q01a_T", "B_Q02a", "B_Q02c", "B_Q10c", "B_Q01b", "C_Q01a", "C_Q01c", "C_Q02a", "D_Q03", "D_Q14", "D_Q16a", "D_Q18a_T", "F_Q01b","F_Q02b","F_Q02c","F_Q02d","F_Q02e","F_Q03b","F_Q04a","F_Q04b","F_Q05a","F_Q05b","F_Q07b","G_Q01a","G_Q02a","G_Q02b","G_Q02c","G_Q02d","G_Q03b","G_Q03c","G_Q03d","G_Q03f","G_Q03g","G_Q03h", "G_Q04","G_Q04_T", "G_Q05a", "G_Q05c", "G_Q05d", "G_Q05e", "G_Q05g", "G_Q05h", "G_Q06", "G_Q07", "G_Q08", "H_Q01a", "H_Q01b", "H_Q01b_T", "H_Q01c", "H_Q01c_T", "H_Q01d", "H_Q01e", "H_Q01e_T", "H_Q01f", "H_Q01g", "H_Q01h", "H_Q02a", "H_Q02b","H_Q02c", "H_Q02d", "H_Q03b", "H_Q03c", "H_Q03d", "H_Q03f", "H_Q03g", "H_Q03h","H_Q04a", "H_Q04b", "H_Q05a", "H_Q05c", "H_Q05d", "H_Q05e", "H_Q05f", "H_Q05g", "H_Q05h", "J_Q03a", "J_Q03b", "J_Q06b", "J_Q07b","COMPUTEREXPERIENCE", "MONTHLYINCPR","YEARLYINCPR", "REG_TL2")
 
   
 ## Missing variables
@@ -185,9 +184,11 @@ Mexico %>% count(ICTWORK)
 
 Mexico %>% count(EARNHRBONUSPPP) # 97 vacios usd 
 
+Mexico %>% count(D_Q16b)
 
 Mexico %>% count(EARNFLAG) #2548
 
+Mexico %>% count(EARNMTHALLPPP)
 ```
 <br>
 
@@ -198,6 +199,7 @@ Since there are non numeric factor in our dataset such as V, N and R we had to c
 <br>
 ```{r warning=FALSE, message=FALSE}
 
+#Income
 
 
 #Gender
@@ -936,6 +938,14 @@ newMexico1$J_Q07bn[newMexico1$J_Q07b== "D"] = NA
 newMexico1$J_Q07bn[newMexico1$J_Q07b== "N"] = NA
 newMexico1$J_Q07bn[newMexico1$J_Q07b== "R"] = NA
 
+
+INCOME <- Mexico %>% 
+  dplyr::select("C_Q01a", "D_Q16b", "D_Q18a", "EARNMTHALLPPP", "EARNMTHBONUSPPP")
+
+INCOME$EARNMTHALLPPP[INCOME$EARNMTHBONUSPPP == "V"] <- 0   
+
+INCOME$EARNMTHALLPPP[INCOME$EARNMTHBONUSPPP=="V"] = 0
+
 # Creation of new subset 
 
 subMexico <- newMexico1 %>% 
@@ -952,7 +962,6 @@ softskills <-subMexico %>%
 
 Literacyskills <- subMexico%>% 
   select( "G_Q01an", "G_Q02an", "G_Q02bn", "G_Q02cn","G_Q02dn")
-
 
 
 ```
@@ -1273,7 +1282,10 @@ fviz_pca_var(LiteracyWork2.pca, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
              repel = TRUE # Avoid text overlapping
              )
+INCOME <- Mexico %>% 
+  dplyr::select("C_Q01a", "D_Q16b", "D_Q18a", "EARNMTHALLPPP", "EARNMTHBONUSPPP")
 
+INCOME$EARNMTHALLPPPn<-replace(INCOME$EARNMTHALLPPP, "V",0)
 
 ```
 
@@ -1441,7 +1453,10 @@ percentage.plot3
 AGE_R <- c(16:65) 
 # Creating a factor corresponding to age with labels 
 wfact = cut(subMexico$AGE_R, 3, labels = c('Young', 'Medium', 'Aged')) 
-table(wfact) 
+table(wfact)
+summary(wfact)
+
+View(Wfact)
 
 #basic info AGE 
 with(subMexico, summary(AGE_R))
